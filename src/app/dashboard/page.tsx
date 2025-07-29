@@ -36,6 +36,49 @@ import {
 } from '../../lib/matches-2025-26'
 import { calculatePoints } from '@/lib/points'
 
+// Automatický import dat z lokálního localStorage
+const importLocalData = () => {
+  // Kontrola, zda už byla data importována
+  if (localStorage.getItem('dataImported')) {
+    return;
+  }
+
+  try {
+    // Data z lokálního localStorage (zde vlož svá data)
+    const localData: Record<string, string> = {
+      "tips1_Rybča": "[{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Haaland\"},{\"home\":\"1\",\"away\":\"0\",\"scorer\":\"Salah\"},{\"home\":\"3\",\"away\":\"2\",\"scorer\":\"Kane\"},{\"home\":\"0\",\"away\":\"0\",\"scorer\":\"\"},{\"home\":\"2\",\"away\":\"2\",\"scorer\":\"Vardy\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"Aubameyang\"},{\"home\":\"3\",\"away\":\"1\",\"scorer\":\"Son\"},{\"home\":\"0\",\"away\":\"1\",\"scorer\":\"Wilson\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Calvert-Lewin\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Watkins\"}]",
+      "tips2_Rybča": "[{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Haaland\"},{\"home\":\"0\",\"away\":\"0\",\"scorer\":\"\"},{\"home\":\"3\",\"away\":\"1\",\"scorer\":\"Kane\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Salah\"},{\"home\":\"2\",\"away\":\"2\",\"scorer\":\"Vardy\"},{\"home\":\"0\",\"away\":\"1\",\"scorer\":\"Wilson\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Son\"},{\"home\":\"1\",\"away\":\"0\",\"scorer\":\"Aubameyang\"}]",
+      "tips1_Kořda": "[{\"home\":\"1\",\"away\":\"0\",\"scorer\":\"Haaland\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Salah\"},{\"home\":\"2\",\"away\":\"2\",\"scorer\":\"Kane\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"\"},{\"home\":\"3\",\"away\":\"1\",\"scorer\":\"Vardy\"},{\"home\":\"0\",\"away\":\"0\",\"scorer\":\"\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Son\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Wilson\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Watkins\"}]",
+      "tips2_Kořda": "[{\"home\":\"0\",\"away\":\"0\",\"scorer\":\"\"},{\"home\":\"3\",\"away\":\"1\",\"scorer\":\"Haaland\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Kane\"},{\"home\":\"0\",\"away\":\"1\",\"scorer\":\"Salah\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Vardy\"},{\"home\":\"1\",\"away\":\"0\",\"scorer\":\"Wilson\"},{\"home\":\"2\",\"away\":\"2\",\"scorer\":\"\"},{\"home\":\"0\",\"away\":\"1\",\"scorer\":\"Son\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Aubameyang\"}]",
+      "tips1_Jozeve": "[{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Haaland\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"\"},{\"home\":\"3\",\"away\":\"2\",\"scorer\":\"Kane\"},{\"home\":\"0\",\"away\":\"0\",\"scorer\":\"\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Vardy\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Aubameyang\"},{\"home\":\"1\",\"away\":\"0\",\"scorer\":\"Son\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Calvert-Lewin\"},{\"home\":\"0\",\"away\":\"1\",\"scorer\":\"Watkins\"}]",
+      "tips2_Jozeve": "[{\"home\":\"1\",\"away\":\"0\",\"scorer\":\"Haaland\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Salah\"},{\"home\":\"0\",\"away\":\"0\",\"scorer\":\"\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Kane\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Salah\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"\"},{\"home\":\"0\",\"away\":\"1\",\"scorer\":\"Wilson\"},{\"home\":\"1\",\"away\":\"0\",\"scorer\":\"Son\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Aubameyang\"},{\"home\":\"0\",\"away\":\"0\",\"scorer\":\"\"}]",
+      "tips1_Špinavovlas": "[{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Salah\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Kane\"},{\"home\":\"0\",\"away\":\"0\",\"scorer\":\"\"},{\"home\":\"3\",\"away\":\"1\",\"scorer\":\"Vardy\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"\"},{\"home\":\"0\",\"away\":\"2\",\"scorer\":\"Son\"},{\"home\":\"1\",\"away\":\"0\",\"scorer\":\"Wilson\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Watkins\"}]",
+      "tips2_Špinavovlas": "[{\"home\":\"0\",\"away\":\"0\",\"scorer\":\"\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Haaland\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"\"},{\"home\":\"3\",\"away\":\"0\",\"scorer\":\"Kane\"},{\"home\":\"0\",\"away\":\"1\",\"scorer\":\"Salah\"},{\"home\":\"2\",\"away\":\"2\",\"scorer\":\"Vardy\"},{\"home\":\"1\",\"away\":\"0\",\"scorer\":\"Wilson\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"\"},{\"home\":\"0\",\"away\":\"1\",\"scorer\":\"Son\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Aubameyang\"}]",
+      "tips1_Netáhlo": "[{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Haaland\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Kane\"},{\"home\":\"0\",\"away\":\"0\",\"scorer\":\"\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Vardy\"},{\"home\":\"1\",\"away\":\"0\",\"scorer\":\"Aubameyang\"},{\"home\":\"3\",\"away\":\"1\",\"scorer\":\"Son\"},{\"home\":\"0\",\"away\":\"1\",\"scorer\":\"Wilson\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Watkins\"}]",
+      "tips2_Netáhlo": "[{\"home\":\"1\",\"away\":\"0\",\"scorer\":\"Haaland\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Salah\"},{\"home\":\"0\",\"away\":\"0\",\"scorer\":\"\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Kane\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Salah\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"\"},{\"home\":\"0\",\"away\":\"1\",\"scorer\":\"Wilson\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Son\"},{\"home\":\"1\",\"away\":\"0\",\"scorer\":\"Aubameyang\"},{\"home\":\"0\",\"away\":\"0\",\"scorer\":\"\"}]",
+      "results1_2025_26": "[{\"home\":\"2\",\"away\":\"1\",\"scorers\":\"Haaland, Foden\"},{\"home\":\"1\",\"away\":\"0\",\"scorers\":\"Salah\"},{\"home\":\"3\",\"away\":\"2\",\"scorers\":\"Kane, Son\"},{\"home\":\"0\",\"away\":\"0\",\"scorers\":\"\"},{\"home\":\"2\",\"away\":\"2\",\"scorers\":\"Vardy, Barnes\"},{\"home\":\"1\",\"away\":\"1\",\"scorers\":\"Aubameyang, Lacazette\"},{\"home\":\"3\",\"away\":\"1\",\"scorers\":\"Son, Kane\"},{\"home\":\"0\",\"away\":\"1\",\"scorers\":\"Wilson\"},{\"home\":\"2\",\"away\":\"0\",\"scorers\":\"Calvert-Lewin, Richarlison\"},{\"home\":\"1\",\"away\":\"2\",\"scorers\":\"Watkins, Ings\"}]",
+      "results2_2025_26": "[{\"home\":\"1\",\"away\":\"1\",\"scorers\":\"\"},{\"home\":\"2\",\"away\":\"0\",\"scorers\":\"Haaland, De Bruyne\"},{\"home\":\"0\",\"away\":\"0\",\"scorers\":\"\"},{\"home\":\"3\",\"away\":\"1\",\"scorers\":\"Kane, Son\"},{\"home\":\"1\",\"away\":\"2\",\"scorers\":\"Salah, Mane\"},{\"home\":\"2\",\"away\":\"2\",\"scorers\":\"Vardy, Barnes\"},{\"home\":\"0\",\"away\":\"1\",\"scorers\":\"Wilson\"},{\"home\":\"1\",\"away\":\"1\",\"scorers\":\"\"},{\"home\":\"2\",\"away\":\"0\",\"scorers\":\"Son, Kane\"},{\"home\":\"1\",\"away\":\"0\",\"scorers\":\"Aubameyang\"}]"
+    };
+
+    // Import všech dat
+    Object.keys(localData).forEach(key => {
+      localStorage.setItem(key, localData[key]);
+    });
+
+    // Označ, že data byla importována
+    localStorage.setItem('dataImported', 'true');
+    
+    console.log('Data úspěšně naimportována z lokálního localStorage!');
+  } catch (error) {
+    console.error('Chyba při importu dat:', error);
+  }
+};
+
+// Spusť import při načtení stránky
+if (typeof window !== 'undefined') {
+  importLocalData();
+}
+
 const USERS = [
   { nickname: 'Rybča', password: 'rybca123' },
   { nickname: 'Kořda', password: 'korda123' },

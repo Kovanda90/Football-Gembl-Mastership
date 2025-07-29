@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Export FGM Data</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        button { padding: 10px 20px; margin: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        textarea { width: 100%; height: 300px; margin: 10px 0; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Export FGM Data</h1>
+    
+    <div class="section">
+        <h3>1. Export všech dat z localStorage</h3>
+        <button onclick="exportAllData()">Exportovat všechna data</button>
+        <textarea id="exportData" placeholder="Zde se zobrazí exportovaná data..."></textarea>
+    </div>
+    
+    <div class="section">
+        <h3>2. Import dat do online aplikace</h3>
+        <p>Zkopíruj data z výše a vlož je do konzole online aplikace:</p>
+        <button onclick="showImportCode()">Zobrazit import kód</button>
+        <textarea id="importCode" placeholder="Zde se zobrazí kód pro import..."></textarea>
+    </div>
+
+    <script>
+        function exportAllData() {
+            const data = {};
+            
+            // Export tipů pro všechny hráče a všechna kola
+            const players = ['Rybča', 'Kořda', 'Jozeve', 'Špinavovlas', 'Netáhlo'];
+            const rounds = Array.from({length: 30}, (_, i) => i + 1);
+            
+            players.forEach(player => {
+                rounds.forEach(round => {
+                    const tipsKey = `tips${round}_${player}`;
+                    const tips = localStorage.getItem(tipsKey);
+                    if (tips) {
+                        data[tipsKey] = tips;
+                    }
+                });
+            });
+            
+            // Export výsledků pro všechna kola
+            rounds.forEach(round => {
+                const resultsKey = `results${round}_2025_26`;
+                const results = localStorage.getItem(resultsKey);
+                if (results) {
+                    data[resultsKey] = results;
+                }
+            });
+            
+            // Export admin tipů pro všechna kola
+            rounds.forEach(round => {
+                const allTipsKey = `allTips${round}`;
+                const allTips = localStorage.getItem(allTipsKey);
+                if (allTips) {
+                    data[allTipsKey] = allTips;
+                }
+            });
+            
+            const exportText = JSON.stringify(data, null, 2);
+            document.getElementById('exportData').value = exportText;
+        }
+        
+        function showImportCode() {
+            const exportData = document.getElementById('exportData').value;
+            if (!exportData) {
+                alert('Nejdříve exportuj data!');
+                return;
+            }
+            
+            const importCode = `
+// Kód pro import do konzole online aplikace:
+const data = ${exportData};
+
+// Import všech dat
+Object.keys(data).forEach(key => {
+    localStorage.setItem(key, data[key]);
+});
+
+console.log('Data úspěšně naimportována!');
+alert('Data úspěšně naimportována! Obnov stránku.');
+            `;
+            
+            document.getElementById('importCode').value = importCode;
+        }
+    </script>
+</body>
+</html> 
