@@ -1,0 +1,1482 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import {
+  MATCHES_ROUND_1,
+  MATCHES_ROUND_2,
+  MATCHES_ROUND_3,
+  MATCHES_ROUND_4,
+  MATCHES_ROUND_5,
+  MATCHES_ROUND_6,
+  MATCHES_ROUND_7,
+  MATCHES_ROUND_8,
+  MATCHES_ROUND_9,
+  MATCHES_ROUND_10,
+  MATCHES_ROUND_11,
+  MATCHES_ROUND_12,
+  MATCHES_ROUND_13,
+  MATCHES_ROUND_14,
+  MATCHES_ROUND_15,
+} from '../../lib/matches-2025-26'
+import { calculatePoints } from '@/lib/points'
+
+const USERS = [
+  { nickname: 'Rybča', password: 'rybca123' },
+  { nickname: 'Kořda', password: 'korda123' },
+  { nickname: 'Jozeve', password: 'jozeve123' },
+  { nickname: 'Špinavovlas', password: 'spinavovlas123' },
+  { nickname: 'Netáhlo', password: 'netahlo123' },
+  { nickname: 'admin', password: 'admin123' },
+]
+
+const ADMIN_NICK = 'admin'
+
+// Přidám typy pro zápasy a tipy
+interface Tip {
+  home: string;
+  away: string;
+  scorer: string;
+}
+interface Result {
+  home: string;
+  away: string;
+  scorers: string;
+}
+
+function getInitialTips(matches: any[]): Tip[] {
+  return matches.map(() => ({ home: '', away: '', scorer: '' }))
+}
+
+function getInitialResults(matches: any[]): Result[] {
+  return matches.map(() => ({ home: '', away: '', scorers: '' }))
+}
+
+// SMAŽU TENTO BLOK:
+// Odstraním všechny duplicitní importy MATCHES_ROUND_1, MATCHES_ROUND_2, ...
+// Ponechám pouze tento jediný import na začátku souboru:
+// import {
+//   MATCHES_ROUND_1,
+//   MATCHES_ROUND_2,
+//   MATCHES_ROUND_3,
+//   MATCHES_ROUND_4,
+//   MATCHES_ROUND_5,
+//   MATCHES_ROUND_6,
+//   MATCHES_ROUND_7,
+//   // ... případně další kola až do 30
+// } from '../../lib/matches-2025-26'
+
+const ALL_MATCHES = [
+  MATCHES_ROUND_1,
+  MATCHES_ROUND_2,
+  MATCHES_ROUND_3,
+  MATCHES_ROUND_4,
+  MATCHES_ROUND_5,
+  MATCHES_ROUND_6,
+  MATCHES_ROUND_7,
+]
+
+export default function Dashboard() {
+  const [user, setUser] = useState<any>(null)
+  // Stav pro 1. a 2. kolo
+  const [tips1, setTips1] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_1))
+  const [tips2, setTips2] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_2))
+  const [tips3, setTips3] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_3))
+  const [tips4, setTips4] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_4))
+  const [tips5, setTips5] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_5))
+  const [tips6, setTips6] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_6))
+  const [tips7, setTips7] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_7))
+  const [tips8, setTips8] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_8))
+  const [tips9, setTips9] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_9))
+  const [tips10, setTips10] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_10))
+  const [tips11, setTips11] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_11))
+  const [tips12, setTips12] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_12))
+  const [tips13, setTips13] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_13))
+  const [tips14, setTips14] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_14))
+  const [tips15, setTips15] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_15))
+  const [results1, setResults1] = useState<Result[]>(getInitialResults(MATCHES_ROUND_1))
+  const [results2, setResults2] = useState<Result[]>(getInitialResults(MATCHES_ROUND_2))
+  const [results3, setResults3] = useState<Result[]>(getInitialResults(MATCHES_ROUND_3))
+  const [results4, setResults4] = useState<Result[]>(getInitialResults(MATCHES_ROUND_4))
+  const [results5, setResults5] = useState<Result[]>(getInitialResults(MATCHES_ROUND_5))
+  const [results6, setResults6] = useState<Result[]>(getInitialResults(MATCHES_ROUND_6))
+  const [results7, setResults7] = useState<Result[]>(getInitialResults(MATCHES_ROUND_7))
+  const [results8, setResults8] = useState<Result[]>(getInitialResults(MATCHES_ROUND_8))
+  const [results9, setResults9] = useState<Result[]>(getInitialResults(MATCHES_ROUND_9))
+  const [results10, setResults10] = useState<Result[]>(getInitialResults(MATCHES_ROUND_10))
+  const [results11, setResults11] = useState<Result[]>(getInitialResults(MATCHES_ROUND_11))
+  const [results12, setResults12] = useState<Result[]>(getInitialResults(MATCHES_ROUND_12))
+  const [results13, setResults13] = useState<Result[]>(getInitialResults(MATCHES_ROUND_13))
+  const [results14, setResults14] = useState<Result[]>(getInitialResults(MATCHES_ROUND_14))
+  const [results15, setResults15] = useState<Result[]>(getInitialResults(MATCHES_ROUND_15))
+  const [allTips1, setAllTips1] = useState<Record<string, Tip[]>>({})
+  const [allTips2, setAllTips2] = useState<Record<string, Tip[]>>({})
+  const [allTips3, setAllTips3] = useState<Record<string, Tip[]>>({})
+  const [allTips4, setAllTips4] = useState<Record<string, Tip[]>>({})
+  const [allTips5, setAllTips5] = useState<Record<string, Tip[]>>({})
+  const [allTips6, setAllTips6] = useState<Record<string, Tip[]>>({})
+  const [allTips7, setAllTips7] = useState<Record<string, Tip[]>>({})
+  const [allTips8, setAllTips8] = useState<Record<string, Tip[]>>({})
+  const [allTips9, setAllTips9] = useState<Record<string, Tip[]>>({})
+  const [allTips10, setAllTips10] = useState<Record<string, Tip[]>>({})
+  const [allTips11, setAllTips11] = useState<Record<string, Tip[]>>({})
+  const [allTips12, setAllTips12] = useState<Record<string, Tip[]>>({})
+  const [allTips13, setAllTips13] = useState<Record<string, Tip[]>>({})
+  const [allTips14, setAllTips14] = useState<Record<string, Tip[]>>({})
+  const [allTips15, setAllTips15] = useState<Record<string, Tip[]>>({})
+
+  const router = useRouter()
+
+  // Odhlášení
+  function handleLogout() {
+    localStorage.removeItem('user');
+    router.push('/');
+  }
+
+
+
+  // Načtení uživatele a tipů
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user')
+    if (!storedUser) {
+      router.push('/')
+      return
+    }
+    const parsedUser = JSON.parse(storedUser)
+    setUser(parsedUser)
+    // --- MIGRACE STARÝCH DAT ---
+    // 1. kolo tipy pro všechny hráče (včetně Netáhlo)
+    USERS.forEach(u => {
+      const tipsKey1 = `tips1_${u.nickname}`
+      const oldTipsKey = `tips_${u.nickname}`
+      const storedTips1 = localStorage.getItem(tipsKey1)
+      if (!storedTips1) {
+        const oldTips = localStorage.getItem(oldTipsKey)
+        if (oldTips) {
+          localStorage.setItem(tipsKey1, oldTips)
+        }
+      }
+    })
+    // 1. kolo výsledky (jen admin)
+    const oldResults = localStorage.getItem('results_2025_26')
+    const storedResults1 = localStorage.getItem('results1_2025_26')
+    if (!storedResults1 && oldResults) {
+      localStorage.setItem('results1_2025_26', oldResults)
+    }
+    // --- KONEC MIGRACE ---
+    // 1. kolo
+    const tipsKey1 = `tips1_${parsedUser.nickname}`
+    const tips1Now = localStorage.getItem(tipsKey1)
+    if (tips1Now) setTips1(JSON.parse(tips1Now))
+    // 2. kolo
+    const tipsKey2 = `tips2_${parsedUser.nickname}`
+    const storedTips2 = localStorage.getItem(tipsKey2)
+    if (storedTips2) setTips2(JSON.parse(storedTips2))
+    // 3. kolo
+    const tipsKey3 = `tips3_${parsedUser.nickname}`
+    const storedTips3 = localStorage.getItem(tipsKey3)
+    if (storedTips3) setTips3(JSON.parse(storedTips3))
+    // 4. kolo
+    const tipsKey4 = `tips4_${parsedUser.nickname}`
+    const storedTips4 = localStorage.getItem(tipsKey4)
+    if (storedTips4) setTips4(JSON.parse(storedTips4))
+    // 5. kolo
+    const tipsKey5 = `tips5_${parsedUser.nickname}`
+    const storedTips5 = localStorage.getItem(tipsKey5)
+    if (storedTips5) setTips5(JSON.parse(storedTips5))
+    // 6. kolo
+    const tipsKey6 = `tips6_${parsedUser.nickname}`
+    const storedTips6 = localStorage.getItem(tipsKey6)
+    if (storedTips6) setTips6(JSON.parse(storedTips6))
+    // 7. kolo
+    const tipsKey7 = `tips7_${parsedUser.nickname}`
+    const storedTips7 = localStorage.getItem(tipsKey7)
+    if (storedTips7) setTips7(JSON.parse(storedTips7))
+    // 8. kolo
+    const tipsKey8 = `tips8_${parsedUser.nickname}`
+    const storedTips8 = localStorage.getItem(tipsKey8)
+    if (storedTips8) setTips8(JSON.parse(storedTips8))
+    // 9. kolo
+    const tipsKey9 = `tips9_${parsedUser.nickname}`
+    const storedTips9 = localStorage.getItem(tipsKey9)
+    if (storedTips9) setTips9(JSON.parse(storedTips9))
+    // 10. kolo
+    const tipsKey10 = `tips10_${parsedUser.nickname}`
+    const storedTips10 = localStorage.getItem(tipsKey10)
+    if (storedTips10) setTips10(JSON.parse(storedTips10))
+    // 11. kolo
+    const tipsKey11 = `tips11_${parsedUser.nickname}`
+    const storedTips11 = localStorage.getItem(tipsKey11)
+    if (storedTips11) setTips11(JSON.parse(storedTips11))
+    // 12. kolo
+    const tipsKey12 = `tips12_${parsedUser.nickname}`
+    const storedTips12 = localStorage.getItem(tipsKey12)
+    if (storedTips12) setTips12(JSON.parse(storedTips12))
+    // 13. kolo
+    const tipsKey13 = `tips13_${parsedUser.nickname}`
+    const storedTips13 = localStorage.getItem(tipsKey13)
+    if (storedTips13) setTips13(JSON.parse(storedTips13))
+    // 14. kolo
+    const tipsKey14 = `tips14_${parsedUser.nickname}`
+    const storedTips14 = localStorage.getItem(tipsKey14)
+    if (storedTips14) setTips14(JSON.parse(storedTips14))
+    // 15. kolo
+    const tipsKey15 = `tips15_${parsedUser.nickname}`
+    const storedTips15 = localStorage.getItem(tipsKey15)
+    if (storedTips15) setTips15(JSON.parse(storedTips15))
+
+    // Výsledky (jen pro admina)
+    if (parsedUser.nickname === ADMIN_NICK) {
+      const storedResults1 = localStorage.getItem('results1_2025_26')
+      if (storedResults1) setResults1(JSON.parse(storedResults1))
+      const storedResults2 = localStorage.getItem('results2_2025_26')
+      if (storedResults2) setResults2(JSON.parse(storedResults2))
+      const storedResults3 = localStorage.getItem('results3_2025_26')
+      if (storedResults3) setResults3(JSON.parse(storedResults3))
+      const storedResults4 = localStorage.getItem('results4_2025_26')
+      if (storedResults4) setResults4(JSON.parse(storedResults4))
+      const storedResults5 = localStorage.getItem('results5_2025_26')
+      if (storedResults5) setResults5(JSON.parse(storedResults5))
+      const storedResults6 = localStorage.getItem('results6_2025_26')
+      if (storedResults6) setResults6(JSON.parse(storedResults6))
+      const storedResults7 = localStorage.getItem('results7_2025_26')
+      if (storedResults7) setResults7(JSON.parse(storedResults7))
+      const storedResults8 = localStorage.getItem('results8_2025_26')
+      if (storedResults8) setResults8(JSON.parse(storedResults8))
+      const storedResults9 = localStorage.getItem('results9_2025_26')
+      if (storedResults9) setResults9(JSON.parse(storedResults9))
+      const storedResults10 = localStorage.getItem('results10_2025_26')
+      if (storedResults10) setResults10(JSON.parse(storedResults10))
+      const storedResults11 = localStorage.getItem('results11_2025_26')
+      if (storedResults11) setResults11(JSON.parse(storedResults11))
+      const storedResults12 = localStorage.getItem('results12_2025_26')
+      if (storedResults12) setResults12(JSON.parse(storedResults12))
+      const storedResults13 = localStorage.getItem('results13_2025_26')
+      if (storedResults13) setResults13(JSON.parse(storedResults13))
+      const storedResults14 = localStorage.getItem('results14_2025_26')
+      if (storedResults14) setResults14(JSON.parse(storedResults14))
+      const storedResults15 = localStorage.getItem('results15_2025_26')
+      if (storedResults15) setResults15(JSON.parse(storedResults15))
+      // Tipy všech hráčů (včetně Netáhlo)
+      const tipsObj1: Record<string, Tip[]> = {}
+      const tipsObj2: Record<string, Tip[]> = {}
+      const tipsObj3: Record<string, Tip[]> = {}
+      const tipsObj4: Record<string, Tip[]> = {}
+      const tipsObj5: Record<string, Tip[]> = {}
+      const tipsObj6: Record<string, Tip[]> = {}
+      const tipsObj7: Record<string, Tip[]> = {}
+      const tipsObj8: Record<string, Tip[]> = {}
+      const tipsObj9: Record<string, Tip[]> = {}
+      const tipsObj10: Record<string, Tip[]> = {}
+      const tipsObj11: Record<string, Tip[]> = {}
+      const tipsObj12: Record<string, Tip[]> = {}
+      const tipsObj13: Record<string, Tip[]> = {}
+      const tipsObj14: Record<string, Tip[]> = {}
+      const tipsObj15: Record<string, Tip[]> = {}
+      USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
+        const t1 = localStorage.getItem(`tips1_${u.nickname}`)
+        tipsObj1[u.nickname] = t1 ? JSON.parse(t1) : getInitialTips(MATCHES_ROUND_1)
+        const t2 = localStorage.getItem(`tips2_${u.nickname}`)
+        tipsObj2[u.nickname] = t2 ? JSON.parse(t2) : getInitialTips(MATCHES_ROUND_2)
+        const t3 = localStorage.getItem(`tips3_${u.nickname}`)
+        tipsObj3[u.nickname] = t3 ? JSON.parse(t3) : getInitialTips(MATCHES_ROUND_3)
+        const t4 = localStorage.getItem(`tips4_${u.nickname}`)
+        tipsObj4[u.nickname] = t4 ? JSON.parse(t4) : getInitialTips(MATCHES_ROUND_4)
+        const t5 = localStorage.getItem(`tips5_${u.nickname}`)
+        tipsObj5[u.nickname] = t5 ? JSON.parse(t5) : getInitialTips(MATCHES_ROUND_5)
+        const t6 = localStorage.getItem(`tips6_${u.nickname}`)
+        tipsObj6[u.nickname] = t6 ? JSON.parse(t6) : getInitialTips(MATCHES_ROUND_6)
+        const t7 = localStorage.getItem(`tips7_${u.nickname}`)
+        tipsObj7[u.nickname] = t7 ? JSON.parse(t7) : getInitialTips(MATCHES_ROUND_7)
+        const t8 = localStorage.getItem(`tips8_${u.nickname}`)
+        tipsObj8[u.nickname] = t8 ? JSON.parse(t8) : getInitialTips(MATCHES_ROUND_8)
+        const t9 = localStorage.getItem(`tips9_${u.nickname}`)
+        tipsObj9[u.nickname] = t9 ? JSON.parse(t9) : getInitialTips(MATCHES_ROUND_9)
+        const t10 = localStorage.getItem(`tips10_${u.nickname}`)
+        tipsObj10[u.nickname] = t10 ? JSON.parse(t10) : getInitialTips(MATCHES_ROUND_10)
+        const t11 = localStorage.getItem(`tips11_${u.nickname}`)
+        tipsObj11[u.nickname] = t11 ? JSON.parse(t11) : getInitialTips(MATCHES_ROUND_11)
+        const t12 = localStorage.getItem(`tips12_${u.nickname}`)
+        tipsObj12[u.nickname] = t12 ? JSON.parse(t12) : getInitialTips(MATCHES_ROUND_12)
+        const t13 = localStorage.getItem(`tips13_${u.nickname}`)
+        tipsObj13[u.nickname] = t13 ? JSON.parse(t13) : getInitialTips(MATCHES_ROUND_13)
+        const t14 = localStorage.getItem(`tips14_${u.nickname}`)
+        tipsObj14[u.nickname] = t14 ? JSON.parse(t14) : getInitialTips(MATCHES_ROUND_14)
+        const t15 = localStorage.getItem(`tips15_${u.nickname}`)
+        tipsObj15[u.nickname] = t15 ? JSON.parse(t15) : getInitialTips(MATCHES_ROUND_15)
+      })
+      setAllTips1(tipsObj1)
+      setAllTips2(tipsObj2)
+      setAllTips3(tipsObj3)
+      setAllTips4(tipsObj4)
+      setAllTips5(tipsObj5)
+      setAllTips6(tipsObj6)
+      setAllTips7(tipsObj7)
+      setAllTips8(tipsObj8)
+      setAllTips9(tipsObj9)
+      setAllTips10(tipsObj10)
+      setAllTips11(tipsObj11)
+      setAllTips12(tipsObj12)
+      setAllTips13(tipsObj13)
+      setAllTips14(tipsObj14)
+      setAllTips15(tipsObj15)
+    }
+  }, [router])
+  // Ukládání tipů hráče
+  useEffect(() => {
+    if (user && user.nickname !== ADMIN_NICK) {
+      localStorage.setItem(`tips1_${user.nickname}` , JSON.stringify(tips1))
+      localStorage.setItem(`tips2_${user.nickname}` , JSON.stringify(tips2))
+      localStorage.setItem(`tips3_${user.nickname}` , JSON.stringify(tips3))
+      localStorage.setItem(`tips4_${user.nickname}` , JSON.stringify(tips4))
+      localStorage.setItem(`tips5_${user.nickname}` , JSON.stringify(tips5))
+      localStorage.setItem(`tips6_${user.nickname}` , JSON.stringify(tips6))
+      localStorage.setItem(`tips7_${user.nickname}` , JSON.stringify(tips7))
+      localStorage.setItem(`tips8_${user.nickname}` , JSON.stringify(tips8))
+      localStorage.setItem(`tips9_${user.nickname}` , JSON.stringify(tips9))
+      localStorage.setItem(`tips10_${user.nickname}` , JSON.stringify(tips10))
+      localStorage.setItem(`tips11_${user.nickname}` , JSON.stringify(tips11))
+      localStorage.setItem(`tips12_${user.nickname}` , JSON.stringify(tips12))
+      localStorage.setItem(`tips13_${user.nickname}` , JSON.stringify(tips13))
+      localStorage.setItem(`tips14_${user.nickname}` , JSON.stringify(tips14))
+      localStorage.setItem(`tips15_${user.nickname}` , JSON.stringify(tips15))
+    }
+  }, [tips1, tips2, tips3, tips4, tips5, tips6, tips7, tips8, tips9, tips10, tips11, tips12, tips13, tips14, tips15, user])
+  // Ukládání výsledků admina
+  useEffect(() => {
+    if (user && user.nickname === ADMIN_NICK) {
+      localStorage.setItem('results1_2025_26', JSON.stringify(results1))
+      localStorage.setItem('results2_2025_26', JSON.stringify(results2))
+      localStorage.setItem('results3_2025_26', JSON.stringify(results3))
+      localStorage.setItem('results4_2025_26', JSON.stringify(results4))
+      localStorage.setItem('results5_2025_26', JSON.stringify(results5))
+      localStorage.setItem('results6_2025_26', JSON.stringify(results6))
+      localStorage.setItem('results7_2025_26', JSON.stringify(results7))
+      localStorage.setItem('results8_2025_26', JSON.stringify(results8))
+      localStorage.setItem('results9_2025_26', JSON.stringify(results9))
+      localStorage.setItem('results10_2025_26', JSON.stringify(results10))
+      localStorage.setItem('results11_2025_26', JSON.stringify(results11))
+      localStorage.setItem('results12_2025_26', JSON.stringify(results12))
+      localStorage.setItem('results13_2025_26', JSON.stringify(results13))
+      localStorage.setItem('results14_2025_26', JSON.stringify(results14))
+      localStorage.setItem('results15_2025_26', JSON.stringify(results15))
+    }
+  }, [results1, results2, results3, results4, results5, results6, results7, results8, results9, results10, results11, results12, results13, results14, results15, user])
+
+  if (!user) return <div className="min-h-screen flex items-center justify-center">Načítání...</div>
+  // Hráčská větev
+  if (user.nickname !== ADMIN_NICK) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 flex flex-col items-center py-8 px-2">
+        <button
+          onClick={handleLogout}
+          className="absolute top-4 right-4 bg-white text-blue-900 border border-blue-300 rounded px-4 py-2 shadow hover:bg-blue-50 transition"
+        >
+          Odhlásit
+        </button>
+        {/* 1. kolo */}
+        <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-2xl mb-12">
+          <div className="mb-8 text-center">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">1. kolo</h1>
+            <p className="text-gray-500">Všechny zápasy 1. kola. Tipuj výsledek a střelce.</p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full border rounded-lg overflow-hidden">
+              <thead className="bg-blue-100">
+                <tr>
+                  <th className="py-2 px-3 text-center">Zápas</th>
+                  <th className="py-2 px-3 text-center">Datum a čas</th>
+                  <th className="py-2 px-3 text-center">Tip (domácí:hosté)</th>
+                  <th className="py-2 px-3 text-center">Střelec</th>
+                </tr>
+              </thead>
+              <tbody>
+                {MATCHES_ROUND_1.map((match, idx) => (
+                  <tr key={match.home + match.away} className={`border-b border-blue-200 ${idx % 2 === 0 ? 'bg-white' : 'bg-blue-50'}`}>
+                    <td className="py-2 px-3 font-medium text-gray-900">{match.home} vs {match.away}</td>
+                    <td className="py-2 px-3 text-gray-500">{new Date(match.kickoff).toLocaleString('cs-CZ')}</td>
+                    <td className="py-2 px-3 text-center">
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(tips1[idx]?.home ?? '')}
+                        onChange={e => setTips1(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].home = e.target.value; return n; })}
+                      />
+                      <span className="text-xl font-bold text-gray-500 mx-1">:</span>
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(tips1[idx]?.away ?? '')}
+                        onChange={e => setTips1(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].away = e.target.value; return n; })}
+                      />
+                    </td>
+                    <td className="py-2 px-3 text-center">
+                      <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm" placeholder="Střelec (nebo prázdné pro 0:0)"
+                        value={(tips1[idx]?.scorer ?? '')}
+                        onChange={e => setTips1(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].scorer = e.target.value; return n; })}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        {/* Oddělovací čára a 2. kolo */}
+        <hr className="my-8 border-2 border-blue-300 w-full max-w-2xl" />
+        <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-2xl">
+          <div className="mb-8 text-center">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">2. kolo</h1>
+            <p className="text-gray-500">Všechny zápasy 2. kola. Tipuj výsledek a střelce.</p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full border rounded-lg overflow-hidden">
+              <thead className="bg-blue-100">
+                <tr>
+                  <th className="py-2 px-3 text-center">Zápas</th>
+                  <th className="py-2 px-3 text-center">Datum a čas</th>
+                  <th className="py-2 px-3 text-center">Tip (domácí:hosté)</th>
+                  <th className="py-2 px-3 text-center">Střelec</th>
+                </tr>
+              </thead>
+              <tbody>
+                {MATCHES_ROUND_2.map((match, idx) => (
+                  <tr key={match.home + match.away} className={`border-b border-blue-200 ${idx % 2 === 0 ? 'bg-white' : 'bg-blue-50'}`}>
+                    <td className="py-2 px-3 font-medium text-gray-900">{match.home} vs {match.away}</td>
+                    <td className="py-2 px-3 text-gray-500">{new Date(match.kickoff).toLocaleString('cs-CZ')}</td>
+                    <td className="py-2 px-3 text-center">
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(tips2[idx]?.home ?? '')}
+                        onChange={e => setTips2(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].home = e.target.value; return n; })}
+                      />
+                      <span className="text-xl font-bold text-gray-500 mx-1">:</span>
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(tips2[idx]?.away ?? '')}
+                        onChange={e => setTips2(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].away = e.target.value; return n; })}
+                      />
+                    </td>
+                    <td className="py-2 px-3 text-center">
+                      <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm" placeholder="Střelec (nebo prázdné pro 0:0)"
+                        value={(tips2[idx]?.scorer ?? '')}
+                        onChange={e => setTips2(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].scorer = e.target.value; return n; })}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        {/* Oddělovací čára a 3. kolo */}
+            <hr className="my-8 border-2 border-blue-300 w-full max-w-2xl" />
+            <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-2xl">
+              <div className="mb-8 text-center">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">3. kolo</h1>
+            <p className="text-gray-500">Všechny zápasy 3. kola. Tipuj výsledek a střelce.</p>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="min-w-full border rounded-lg overflow-hidden">
+                  <thead className="bg-blue-100">
+                    <tr>
+                      <th className="py-2 px-3 text-center">Zápas</th>
+                      <th className="py-2 px-3 text-center">Datum a čas</th>
+                      <th className="py-2 px-3 text-center">Tip (domácí:hosté)</th>
+                      <th className="py-2 px-3 text-center">Střelec</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                {MATCHES_ROUND_3.map((match, idx) => (
+                      <tr key={match.home + match.away} className={`border-b border-blue-200 ${idx % 2 === 0 ? 'bg-white' : 'bg-blue-50'}`}>
+                        <td className="py-2 px-3 font-medium text-gray-900">{match.home} vs {match.away}</td>
+                        <td className="py-2 px-3 text-gray-500">{new Date(match.kickoff).toLocaleString('cs-CZ')}</td>
+                        <td className="py-2 px-3 text-center">
+                          <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(tips3[idx]?.home ?? '')}
+                        onChange={e => setTips3(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].home = e.target.value; return n; })}
+                          />
+                          <span className="text-xl font-bold text-gray-500 mx-1">:</span>
+                          <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(tips3[idx]?.away ?? '')}
+                        onChange={e => setTips3(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].away = e.target.value; return n; })}
+                          />
+                        </td>
+                        <td className="py-2 px-3 text-center">
+                          <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm" placeholder="Střelec (nebo prázdné pro 0:0)"
+                        value={(tips3[idx]?.scorer ?? '')}
+                        onChange={e => setTips3(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].scorer = e.target.value; return n; })}
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+        {/* 4. kolo */}
+        <hr className="my-8 border-2 border-blue-300 w-full max-w-2xl" />
+        <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-2xl">
+          <div className="mb-8 text-center">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">4. kolo</h1>
+            <p className="text-gray-500">Všechny zápasy 4. kola. Tipuj výsledek a střelce.</p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full border rounded-lg overflow-hidden">
+              <thead className="bg-blue-100">
+                <tr>
+                  <th className="py-2 px-3 text-center">Zápas</th>
+                  <th className="py-2 px-3 text-center">Datum a čas</th>
+                  <th className="py-2 px-3 text-center">Tip (domácí:hosté)</th>
+                  <th className="py-2 px-3 text-center">Střelec</th>
+                </tr>
+              </thead>
+              <tbody>
+                {MATCHES_ROUND_4.map((match, idx) => (
+                  <tr key={match.home + match.away} className={`border-b border-blue-200 ${idx % 2 === 0 ? 'bg-white' : 'bg-blue-50'}`}>
+                    <td className="py-2 px-3 font-medium text-gray-900">{match.home} vs {match.away}</td>
+                    <td className="py-2 px-3 text-gray-500">{new Date(match.kickoff).toLocaleString('cs-CZ')}</td>
+                    <td className="py-2 px-3 text-center">
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(tips4[idx]?.home ?? '')}
+                        onChange={e => setTips4(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].home = e.target.value; return n; })}
+                      />
+                      <span className="text-xl font-bold text-gray-500 mx-1">:</span>
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(tips4[idx]?.away ?? '')}
+                        onChange={e => setTips4(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].away = e.target.value; return n; })}
+                      />
+                    </td>
+                    <td className="py-2 px-3 text-center">
+                      <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm" placeholder="Střelec (nebo prázdné pro 0:0)"
+                        value={(tips4[idx]?.scorer ?? '')}
+                        onChange={e => setTips4(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].scorer = e.target.value; return n; })}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+      </div>
+        </div>
+        {/* 5. kolo */}
+        <hr className="my-8 border-2 border-blue-300 w-full max-w-2xl" />
+        <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-2xl">
+        <div className="mb-8 text-center">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">5. kolo</h1>
+            <p className="text-gray-500">Všechny zápasy 5. kola. Tipuj výsledek a střelce.</p>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="min-w-full border rounded-lg overflow-hidden">
+            <thead className="bg-blue-100">
+              <tr>
+                <th className="py-2 px-3 text-center">Zápas</th>
+                  <th className="py-2 px-3 text-center">Datum a čas</th>
+                  <th className="py-2 px-3 text-center">Tip (domácí:hosté)</th>
+                  <th className="py-2 px-3 text-center">Střelec</th>
+                </tr>
+              </thead>
+              <tbody>
+                {MATCHES_ROUND_5.map((match, idx) => (
+                  <tr key={match.home + match.away} className={`border-b border-blue-200 ${idx % 2 === 0 ? 'bg-white' : 'bg-blue-50'}`}>
+                    <td className="py-2 px-3 font-medium text-gray-900">{match.home} vs {match.away}</td>
+                    <td className="py-2 px-3 text-gray-500">{new Date(match.kickoff).toLocaleString('cs-CZ')}</td>
+                    <td className="py-2 px-3 text-center">
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(tips5[idx]?.home ?? '')}
+                        onChange={e => setTips5(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].home = e.target.value; return n; })}
+                      />
+                      <span className="text-xl font-bold text-gray-500 mx-1">:</span>
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(tips5[idx]?.away ?? '')}
+                        onChange={e => setTips5(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].away = e.target.value; return n; })}
+                      />
+                    </td>
+                    <td className="py-2 px-3 text-center">
+                      <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm" placeholder="Střelec (nebo prázdné pro 0:0)"
+                        value={(tips5[idx]?.scorer ?? '')}
+                        onChange={e => setTips5(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].scorer = e.target.value; return n; })}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        {/* 6. kolo */}
+        <hr className="my-8 border-2 border-blue-300 w-full max-w-2xl" />
+        <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-2xl">
+          <div className="mb-8 text-center">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">6. kolo</h1>
+            <p className="text-gray-500">Všechny zápasy 6. kola. Tipuj výsledek a střelce.</p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full border rounded-lg overflow-hidden">
+              <thead className="bg-blue-100">
+                <tr>
+                  <th className="py-2 px-3 text-center">Zápas</th>
+                  <th className="py-2 px-3 text-center">Datum a čas</th>
+                  <th className="py-2 px-3 text-center">Tip (domácí:hosté)</th>
+                  <th className="py-2 px-3 text-center">Střelec</th>
+              </tr>
+            </thead>
+            <tbody>
+                {MATCHES_ROUND_6.map((match, idx) => (
+                <tr key={match.home + match.away} className={`border-b border-blue-200 ${idx % 2 === 0 ? 'bg-white' : 'bg-blue-50'}`}>
+                  <td className="py-2 px-3 font-medium text-gray-900">{match.home} vs {match.away}</td>
+                    <td className="py-2 px-3 text-gray-500">{new Date(match.kickoff).toLocaleString('cs-CZ')}</td>
+                    <td className="py-2 px-3 text-center">
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(tips6[idx]?.home ?? '')}
+                        onChange={e => setTips6(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].home = e.target.value; return n; })}
+                      />
+                      <span className="text-xl font-bold text-gray-500 mx-1">:</span>
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(tips6[idx]?.away ?? '')}
+                        onChange={e => setTips6(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].away = e.target.value; return n; })}
+                      />
+                    </td>
+                    <td className="py-2 px-3 text-center">
+                      <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm" placeholder="Střelec (nebo prázdné pro 0:0)"
+                        value={(tips6[idx]?.scorer ?? '')}
+                        onChange={e => setTips6(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].scorer = e.target.value; return n; })}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        {/* 7. kolo */}
+        <hr className="my-8 border-2 border-blue-300 w-full max-w-2xl" />
+        <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-2xl">
+          <div className="mb-8 text-center">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">7. kolo</h1>
+            <p className="text-gray-500">Všechny zápasy 7. kola. Tipuj výsledek a střelce.</p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full border rounded-lg overflow-hidden">
+              <thead className="bg-blue-100">
+                <tr>
+                  <th className="py-2 px-3 text-center">Zápas</th>
+                  <th className="py-2 px-3 text-center">Datum a čas</th>
+                  <th className="py-2 px-3 text-center">Tip (domácí:hosté)</th>
+                  <th className="py-2 px-3 text-center">Střelec</th>
+                </tr>
+              </thead>
+              <tbody>
+                {MATCHES_ROUND_7.map((match, idx) => (
+                  <tr key={match.home + match.away} className={`border-b border-blue-200 ${idx % 2 === 0 ? 'bg-white' : 'bg-blue-50'}`}>
+                    <td className="py-2 px-3 font-medium text-gray-900">{match.home} vs {match.away}</td>
+                    <td className="py-2 px-3 text-gray-500">{new Date(match.kickoff).toLocaleString('cs-CZ')}</td>
+                  <td className="py-2 px-3 text-center">
+                    <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(tips7[idx]?.home ?? '')}
+                        onChange={e => setTips7(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].home = e.target.value; return n; })}
+                    />
+                    <span className="text-xl font-bold text-gray-500 mx-1">:</span>
+                    <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(tips7[idx]?.away ?? '')}
+                        onChange={e => setTips7(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].away = e.target.value; return n; })}
+                    />
+                  </td>
+                  <td className="py-2 px-3 text-center">
+                      <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm" placeholder="Střelec (nebo prázdné pro 0:0)"
+                        value={(tips7[idx]?.scorer ?? '')}
+                        onChange={e => setTips7(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].scorer = e.target.value; return n; })}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+            </table>
+          </div>
+        </div>
+        {/* Oddělovací čára a 8. kolo */}
+        <hr className="my-8 border-2 border-blue-300 w-full max-w-2xl" />
+        <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-2xl">
+          <div className="mb-8 text-center">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">8. kolo</h1>
+            <p className="text-gray-500">Všechny zápasy 8. kola. Tipuj výsledek a střelce.</p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full border rounded-lg overflow-hidden">
+              <thead className="bg-blue-100">
+                <tr>
+                  <th className="py-2 px-3 text-center">Zápas</th>
+                  <th className="py-2 px-3 text-center">Datum a čas</th>
+                  <th className="py-2 px-3 text-center">Tip (domácí:hosté)</th>
+                  <th className="py-2 px-3 text-center">Střelec</th>
+              </tr>
+              </thead>
+              <tbody>
+                {MATCHES_ROUND_8.map((match, idx) => (
+                  <tr key={match.home + match.away} className={`border-b border-blue-200 ${idx % 2 === 0 ? 'bg-white' : 'bg-blue-50'}`}>
+                    <td className="py-2 px-3 font-medium text-gray-900">{match.home} vs {match.away}</td>
+                    <td className="py-2 px-3 text-gray-500">{new Date(match.kickoff).toLocaleString('cs-CZ')}</td>
+                    <td className="py-2 px-3 text-center">
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(tips8[idx]?.home ?? '')}
+                        onChange={e => setTips8(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].home = e.target.value; return n; })}
+                      />
+                      <span className="text-xl font-bold text-gray-500 mx-1">:</span>
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(tips8[idx]?.away ?? '')}
+                        onChange={e => setTips8(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].away = e.target.value; return n; })}
+                      />
+                    </td>
+                    <td className="py-2 px-3 text-center">
+                      <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm" placeholder="Střelec (nebo prázdné pro 0:0)"
+                        value={(tips8[idx]?.scorer ?? '')}
+                        onChange={e => setTips8(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].scorer = e.target.value; return n; })}
+                      />
+                    </td>
+              </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        {/* Oddělovací čára a 9. kolo */}
+        <hr className="my-8 border-2 border-blue-300 w-full max-w-2xl" />
+        <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-2xl">
+          <div className="mb-8 text-center">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">9. kolo</h1>
+            <p className="text-gray-500">Všechny zápasy 9. kola. Tipuj výsledek a střelce.</p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full border rounded-lg overflow-hidden">
+              <thead className="bg-blue-100">
+                <tr>
+                  <th className="py-2 px-3 text-center">Zápas</th>
+                  <th className="py-2 px-3 text-center">Datum a čas</th>
+                  <th className="py-2 px-3 text-center">Tip (domácí:hosté)</th>
+                  <th className="py-2 px-3 text-center">Střelec</th>
+                  </tr>
+              </thead>
+              <tbody>
+                {MATCHES_ROUND_9.map((match, idx) => (
+                  <tr key={match.home + match.away} className={`border-b border-blue-200 ${idx % 2 === 0 ? 'bg-white' : 'bg-blue-50'}`}>
+                    <td className="py-2 px-3 font-medium text-gray-900">{match.home} vs {match.away}</td>
+                    <td className="py-2 px-3 text-gray-500">{new Date(match.kickoff).toLocaleString('cs-CZ')}</td>
+                    <td className="py-2 px-3 text-center">
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(tips9[idx]?.home ?? '')}
+                        onChange={e => setTips9(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].home = e.target.value; return n; })}
+                      />
+                      <span className="text-xl font-bold text-gray-500 mx-1">:</span>
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(tips9[idx]?.away ?? '')}
+                        onChange={e => setTips9(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].away = e.target.value; return n; })}
+                      />
+                    </td>
+                    <td className="py-2 px-3 text-center">
+                      <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm" placeholder="Střelec (nebo prázdné pro 0:0)"
+                        value={(tips9[idx]?.scorer ?? '')}
+                        onChange={e => setTips9(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].scorer = e.target.value; return n; })}
+                      />
+                    </td>
+              </tr>
+                ))}
+              </tbody>
+          </table>
+        </div>
+      </div>
+        {/* Oddělovací čára a 10. kolo */}
+        <hr className="my-8 border-2 border-blue-300 w-full max-w-2xl" />
+        <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-2xl">
+        <div className="mb-8 text-center">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">10. kolo</h1>
+            <p className="text-gray-500">Všechny zápasy 10. kola. Tipuj výsledek a střelce.</p>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="min-w-full border rounded-lg overflow-hidden">
+            <thead className="bg-blue-100">
+              <tr>
+                <th className="py-2 px-3 text-center">Zápas</th>
+                  <th className="py-2 px-3 text-center">Datum a čas</th>
+                  <th className="py-2 px-3 text-center">Tip (domácí:hosté)</th>
+                  <th className="py-2 px-3 text-center">Střelec</th>
+                </tr>
+              </thead>
+              <tbody>
+                {MATCHES_ROUND_10.map((match, idx) => (
+                  <tr key={match.home + match.away} className={`border-b border-blue-200 ${idx % 2 === 0 ? 'bg-white' : 'bg-blue-50'}`}>
+                    <td className="py-2 px-3 font-medium text-gray-900">{match.home} vs {match.away}</td>
+                    <td className="py-2 px-3 text-gray-500">{new Date(match.kickoff).toLocaleString('cs-CZ')}</td>
+                    <td className="py-2 px-3 text-center">
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(tips10[idx]?.home ?? '')}
+                        onChange={e => setTips10(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].home = e.target.value; return n; })}
+                      />
+                      <span className="text-xl font-bold text-gray-500 mx-1">:</span>
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(tips10[idx]?.away ?? '')}
+                        onChange={e => setTips10(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].away = e.target.value; return n; })}
+                      />
+                    </td>
+                    <td className="py-2 px-3 text-center">
+                      <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm" placeholder="Střelec (nebo prázdné pro 0:0)"
+                        value={(tips10[idx]?.scorer ?? '')}
+                        onChange={e => setTips10(t => { const n = [...t]; if (!n[idx]) n[idx] = { home: '', away: '', scorer: '' }; n[idx].scorer = e.target.value; return n; })}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        {/* Oddělovací čára a 11. kolo */}
+        <hr className="my-8 border-2 border-blue-300 w-full max-w-2xl" />
+        <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-2xl">
+          <div className="mb-8 text-center">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">11. kolo</h1>
+            <p className="text-gray-500">Všechny zápasy 11. kola. Tipuj výsledek a střelce.</p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full border rounded-lg overflow-hidden">
+              <thead className="bg-blue-100">
+                <tr>
+                  <th className="py-2 px-3 text-center">Zápas</th>
+                  {USERS.filter(u => u.nickname !== ADMIN_NICK).map(u => (
+                    <th key={u.nickname} className="py-2 px-3 text-center">{u.nickname}</th>
+                  ))}
+                  <th className="py-2 px-3 text-center">Výsledek</th>
+                  <th className="py-2 px-3 text-center">Střelci</th>
+                </tr>
+              </thead>
+              <tbody>
+                {MATCHES_ROUND_11.map((match, idx) => (
+                  <tr key={match.home + match.away} className={`border-b border-blue-200 ${idx % 2 === 0 ? 'bg-white' : 'bg-blue-50'}`}>
+                    <td className="py-2 px-3 font-medium text-gray-900">{match.home} vs {match.away}</td>
+                    {USERS.filter(u => u.nickname !== ADMIN_NICK).map(u => (
+                      <td key={u.nickname} className="py-2 px-3 text-center">
+                        {allTips11[u.nickname]?.[idx] && allTips11[u.nickname][idx].home !== '' && allTips11[u.nickname][idx].away !== '' ? (
+                          <span>
+                            {allTips11[u.nickname][idx].home}:{allTips11[u.nickname][idx].away}
+                            {allTips11[u.nickname][idx].scorer ? ` – ${allTips11[u.nickname][idx].scorer}` : ''}
+                          </span>
+                        ) : (
+                          <span className="text-gray-400">-</span>
+                        )}
+                      </td>
+                    ))}
+                    <td className="py-2 px-3 text-center">
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(results11[idx]?.home ?? '')}
+                        onChange={e => setResults11(r => { const n = [...r]; if (!n[idx]) n[idx] = { home: '', away: '', scorers: '' }; n[idx].home = e.target.value; return n; })}
+                      />
+                      <span className="text-xl font-bold text-gray-500 mx-1">:</span>
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(results11[idx]?.away ?? '')}
+                        onChange={e => setResults11(r => { const n = [...r]; if (!n[idx]) n[idx] = { home: '', away: '', scorers: '' }; n[idx].away = e.target.value; return n; })}
+                      />
+                    </td>
+                    <td className="py-2 px-3 text-center">
+                      <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm" placeholder="Střelci (čárkou odděleno)"
+                        value={(results11[idx]?.scorers ?? '')}
+                        onChange={e => setResults11(r => { const n = [...r]; if (!n[idx]) n[idx] = { home: '', away: '', scorers: '' }; n[idx].scorers = e.target.value; return n; })}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr className="bg-blue-50 font-semibold">
+                  <td className="py-2 px-3 text-right">Body za výsledek</td>
+                  {(() => {
+                    const playerNicks = USERS.filter(u => u.nickname !== ADMIN_NICK).map(u => u.nickname);
+                    const scorersPerPlayer = {};
+                    playerNicks.forEach(nick => {
+                      let sum = 0;
+                      allTips11[nick]?.forEach((tip, idx) => {
+                        const res = results11[idx];
+                        if (!tip || tip.home === '' || tip.away === '' || !res || res.home === '' || res.away === '') return;
+                        const parsedTip = {
+                          matchIndex: idx,
+                          predictedResult: { home: Number(tip.home), away: Number(tip.away) },
+                          predictedScorer: tip.scorer || ''
+                        };
+                        const parsedResult = { home: Number(res.home), away: Number(res.away) };
+                        const scorers = (res.scorers || '').split(',').map(s => s.trim()).filter(Boolean);
+                        const points = calculatePoints(parsedTip, parsedResult, scorers);
+                        sum += points.correctScorer;
+                      });
+                      scorersPerPlayer[nick] = sum;
+                    });
+                    const maxScorers = Math.max(...Object.values(scorersPerPlayer));
+                    const winners = playerNicks.filter(nick => scorersPerPlayer[nick] === maxScorers && maxScorers > 0);
+                    return playerNicks.map(nick => {
+                      let sum = 0;
+                      allTips11[nick]?.forEach((tip, idx) => {
+                        const res = results11[idx];
+                        if (!tip || tip.home === '' || tip.away === '' || !res || res.home === '' || res.away === '') return;
+                        const parsedTip = {
+                          matchIndex: idx,
+                          predictedResult: { home: Number(tip.home), away: Number(tip.away) },
+                          predictedScorer: tip.scorer || ''
+                        };
+                        const parsedResult = { home: Number(res.home), away: Number(res.away) };
+                        const scorers = (res.scorers || '').split(',').map(s => s.trim()).filter(Boolean);
+                        const points = calculatePoints(parsedTip, parsedResult, scorers);
+                        sum += points.exactResult + points.correctWinnerAndDifference + points.correctWinner + points.correctDraw;
+                      });
+                      if (winners.includes(nick)) sum += 1;
+                      return <td key={nick} className="py-2 px-3 text-center text-blue-900">{sum}</td>;
+                    });
+                  })()}
+                  <td colSpan={2}></td>
+                </tr>
+                <tr className="bg-blue-50 font-semibold">
+                  <td className="py-2 px-3 text-right">Body za střelce</td>
+                  {USERS.filter(u => u.nickname !== ADMIN_NICK).map(u => {
+                    let sum = 0;
+                    allTips11[u.nickname]?.forEach((tip, idx) => {
+                      const res = results11[idx];
+                      if (!tip || tip.home === '' || tip.away === '' || !res || res.home === '' || res.away === '') return;
+                      const parsedTip = {
+                        matchIndex: idx,
+                        predictedResult: { home: Number(tip.home), away: Number(tip.away) },
+                        predictedScorer: tip.scorer || ''
+                      };
+                      const parsedResult = { home: Number(res.home), away: Number(res.away) };
+                      const scorers = (res.scorers || '').split(',').map(s => s.trim()).filter(Boolean);
+                      const points = calculatePoints(parsedTip, parsedResult, scorers);
+                      sum += points.correctScorer + points.noScorer + points.bonusPoints;
+                    });
+                    return <td key={u.nickname} className="py-2 px-3 text-center text-blue-900">{sum}</td>;
+                  })}
+                  <td colSpan={2}></td>
+                </tr>
+                {/* Výpočet financí za výsledek */}
+                {(() => {
+                  const playerNicks = USERS.filter(u => u.nickname !== ADMIN_NICK).map(u => u.nickname);
+                  const pointsPerPlayer = {};
+                  const scorersPerPlayer = {};
+                  playerNicks.forEach(nick => {
+                    let sum = 0;
+                    allTips11[nick]?.forEach((tip, idx) => {
+                      const res = results11[idx];
+                      if (!tip || tip.home === '' || tip.away === '' || !res || res.home === '' || res.away === '') return;
+                      const parsedTip = {
+                        matchIndex: idx,
+                        predictedResult: { home: Number(tip.home), away: Number(tip.away) },
+                        predictedScorer: tip.scorer || ''
+                      };
+                      const parsedResult = { home: Number(res.home), away: Number(res.away) };
+                      const scorers = (res.scorers || '').split(',').map(s => s.trim()).filter(Boolean);
+                      const points = calculatePoints(parsedTip, parsedResult, scorers);
+                      sum += points.correctScorer;
+                    });
+                    scorersPerPlayer[nick] = sum;
+                  });
+                  const maxScorers = Math.max(...Object.values(scorersPerPlayer));
+                  const winnersScorers = playerNicks.filter(nick => scorersPerPlayer[nick] === maxScorers && maxScorers > 0);
+                  playerNicks.forEach(nick => {
+                    let sum = 0;
+                    allTips11[nick]?.forEach((tip, idx) => {
+                      const res = results11[idx];
+                      if (!tip || tip.home === '' || tip.away === '' || !res || res.home === '' || res.away === '') return;
+                      const parsedTip = {
+                        matchIndex: idx,
+                        predictedResult: { home: Number(tip.home), away: Number(tip.away) },
+                        predictedScorer: tip.scorer || ''
+                      };
+                      const parsedResult = { home: Number(res.home), away: Number(res.away) };
+                      const scorers = (res.scorers || '').split(',').map(s => s.trim()).filter(Boolean);
+                      const points = calculatePoints(parsedTip, parsedResult, scorers);
+                      sum += points.correctScorer;
+                    });
+                    if (winnersScorers.includes(nick)) sum += 1;
+                    pointsPerPlayer[nick] = sum;
+                  });
+                  const maxPoints = Math.max(...Object.values(pointsPerPlayer));
+                  const winners = playerNicks.filter(nick => pointsPerPlayer[nick] === maxPoints && maxPoints > 0);
+                  const losers = playerNicks.filter(nick => !winners.includes(nick));
+                  const perLoser = 250;
+                  const nWinners = winners.length;
+                  const nLosers = losers.length;
+                  const finance = {};
+                  if (nWinners === 0) {
+                    playerNicks.forEach(nick => { finance[nick] = 0; });
+                  } else {
+                    const total = nLosers * perLoser;
+                    winners.forEach(nick => {
+                      finance[nick] = nLosers === 0 ? 0 : +(total / nWinners).toFixed(2);
+                    });
+                    losers.forEach(nick => {
+                      finance[nick] = -perLoser;
+                    });
+                  }
+                  return (
+                    <tr className="bg-blue-100 font-semibold">
+                      <td className="py-2 px-3 text-right">Finance za výsledek</td>
+                      {playerNicks.map(nick => (
+                        <td key={nick} className={`py-2 px-3 text-center ${finance[nick] > 0 ? 'text-green-700' : finance[nick] < 0 ? 'text-red-700' : 'text-gray-700'}`}>{finance[nick] === 0 ? '0 Kč' : `${finance[nick] > 0 ? '+' : ''}${finance[nick]} Kč`}</td>
+                      ))}
+                      <td colSpan={2}></td>
+                    </tr>
+                  );
+                })()}
+                <tr className="bg-blue-100 font-semibold">
+                  <td className="py-2 px-3 text-right">Finance za střelce</td>
+                  {(() => {
+                    const playerNicks = USERS.filter(u => u.nickname !== ADMIN_NICK).map(u => u.nickname);
+                    const scorersPerPlayer = {};
+                    playerNicks.forEach(nick => {
+                      let sum = 0;
+                      allTips11[nick]?.forEach((tip, idx) => {
+                        const res = results11[idx];
+                        if (!tip || tip.home === '' || tip.away === '' || !res || res.home === '' || res.away === '') return;
+                        const parsedTip = {
+                          matchIndex: idx,
+                          predictedResult: { home: Number(tip.home), away: Number(tip.away) },
+                          predictedScorer: tip.scorer || ''
+                        };
+                        const parsedResult = { home: Number(res.home), away: Number(res.away) };
+                        const scorers = (res.scorers || '').split(',').map(s => s.trim()).filter(Boolean);
+                        const points = calculatePoints(parsedTip, parsedResult, scorers);
+                        sum += points.correctScorer;
+                      });
+                      scorersPerPlayer[nick] = sum;
+                    });
+                    const maxScorers = Math.max(...Object.values(scorersPerPlayer));
+                    const winners = playerNicks.filter(nick => scorersPerPlayer[nick] === maxScorers && maxScorers > 0);
+                    const losers = playerNicks.filter(nick => scorersPerPlayer[nick] < maxScorers);
+                    const perScorer = 50;
+                    const nWinners = winners.length;
+                    const finance = {};
+                    let total = 0;
+                    if (nWinners === 0) {
+                      playerNicks.forEach(nick => { finance[nick] = 0; });
+                    } else {
+                      losers.forEach(nick => {
+                        const diff = maxScorers - scorersPerPlayer[nick];
+                        const loss = diff * perScorer;
+                        finance[nick] = -loss;
+                        total += loss;
+                      });
+                      winners.forEach(nick => {
+                        finance[nick] = nWinners === 0 ? 0 : +(total / nWinners).toFixed(2);
+                      });
+                    }
+                    return playerNicks.map(nick => (
+                      <td key={nick} className={`py-2 px-3 text-center ${finance[nick] > 0 ? 'text-green-700' : finance[nick] < 0 ? 'text-red-700' : 'text-gray-700'}`}>{finance[nick] === 0 ? '0 Kč' : `${finance[nick] > 0 ? '+' : ''}${finance[nick]} Kč`}</td>
+                    ));
+                  })()}
+                  <td colSpan={2}></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+        {/* 12. kolo admin */}
+        <hr className="my-8 border-2 border-blue-300 w-full max-w-5xl" />
+        <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-5xl">
+          <div className="mb-8 text-center">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">Admin: Tipy všech hráčů na 12. kolo</h1>
+            <p className="text-gray-500">Pod tipy můžeš zadat reálný výsledek a střelce.</p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full border rounded-lg overflow-hidden">
+              <thead className="bg-blue-100">
+                <tr>
+                  <th className="py-2 px-3 text-center">Zápas</th>
+                  {USERS.filter(u => u.nickname !== ADMIN_NICK).map(u => (
+                    <th key={u.nickname} className="py-2 px-3 text-center">{u.nickname}</th>
+                  ))}
+                  <th className="py-2 px-3 text-center">Výsledek</th>
+                  <th className="py-2 px-3 text-center">Střelci</th>
+                </tr>
+              </thead>
+              <tbody>
+                {MATCHES_ROUND_12.map((match, idx) => (
+                  <tr key={match.home + match.away} className={`border-b border-blue-200 ${idx % 2 === 0 ? 'bg-white' : 'bg-blue-50'}`}>
+                    <td className="py-2 px-3 font-medium text-gray-900">{match.home} vs {match.away}</td>
+                    {USERS.filter(u => u.nickname !== ADMIN_NICK).map(u => (
+                      <td key={u.nickname} className="py-2 px-3 text-center">
+                        {allTips12[u.nickname]?.[idx] && allTips12[u.nickname][idx].home !== '' && allTips12[u.nickname][idx].away !== '' ? (
+                          <span>
+                            {allTips12[u.nickname][idx].home}:{allTips12[u.nickname][idx].away}
+                            {allTips12[u.nickname][idx].scorer ? ` – ${allTips12[u.nickname][idx].scorer}` : ''}
+                          </span>
+                        ) : (
+                          <span className="text-gray-400">-</span>
+                        )}
+                      </td>
+                    ))}
+                    <td className="py-2 px-3 text-center">
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(results12[idx]?.home ?? '')}
+                        onChange={e => setResults12(r => { const n = [...r]; if (!n[idx]) n[idx] = { home: '', away: '', scorers: '' }; n[idx].home = e.target.value; return n; })}
+                      />
+                      <span className="text-xl font-bold text-gray-500 mx-1">:</span>
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(results12[idx]?.away ?? '')}
+                        onChange={e => setResults12(r => { const n = [...r]; if (!n[idx]) n[idx] = { home: '', away: '', scorers: '' }; n[idx].away = e.target.value; return n; })}
+                      />
+                    </td>
+                    <td className="py-2 px-3 text-center">
+                      <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm" placeholder="Střelci (čárkou odděleno)"
+                        value={(results12[idx]?.scorers ?? '')}
+                        onChange={e => setResults12(r => { const n = [...r]; if (!n[idx]) n[idx] = { home: '', away: '', scorers: '' }; n[idx].scorers = e.target.value; return n; })}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr className="bg-blue-50 font-semibold">
+                  <td className="py-2 px-3 text-right">Body za výsledek</td>
+                  {USERS.filter(u => u.nickname !== ADMIN_NICK).map(u => {
+                    let sum = 0;
+                    allTips12[u.nickname]?.forEach((tip, idx) => {
+                      const res = results12[idx];
+                      if (!tip || tip.home === '' || tip.away === '' || !res || res.home === '' || res.away === '') return;
+                      const parsedTip = {
+                        matchIndex: idx,
+                        predictedResult: { home: Number(tip.home), away: Number(tip.away) },
+                        predictedScorer: tip.scorer || ''
+                      };
+                      const parsedResult = { home: Number(res.home), away: Number(res.away) };
+                      const scorers = (res.scorers || '').split(',').map(s => s.trim()).filter(Boolean);
+                      const points = calculatePoints(parsedTip, parsedResult, scorers);
+                      sum += points.exactResult + points.correctWinnerAndDifference + points.correctWinner + points.correctDraw;
+                    });
+                    return <td key={u.nickname} className="py-2 px-3 text-center text-blue-900">{sum}</td>;
+                  })}
+                  <td colSpan={2}></td>
+                </tr>
+                <tr className="bg-blue-50 font-semibold">
+                  <td className="py-2 px-3 text-right">Body za střelce</td>
+                  {USERS.filter(u => u.nickname !== ADMIN_NICK).map(u => {
+                    let sum = 0;
+                    allTips12[u.nickname]?.forEach((tip, idx) => {
+                      const res = results12[idx];
+                      if (!tip || tip.home === '' || tip.away === '' || !res || res.home === '' || res.away === '') return;
+                      const parsedTip = {
+                        matchIndex: idx,
+                        predictedResult: { home: Number(tip.home), away: Number(tip.away) },
+                        predictedScorer: tip.scorer || ''
+                      };
+                      const parsedResult = { home: Number(res.home), away: Number(res.away) };
+                      const scorers = (res.scorers || '').split(',').map(s => s.trim()).filter(Boolean);
+                      const points = calculatePoints(parsedTip, parsedResult, scorers);
+                      sum += points.correctScorer + points.noScorer + points.bonusPoints;
+                    });
+                    return <td key={u.nickname} className="py-2 px-3 text-center text-blue-900">{sum}</td>;
+                  })}
+                  <td colSpan={2}></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+        {/* 13. kolo admin */}
+        <hr className="my-8 border-2 border-blue-300 w-full max-w-5xl" />
+        <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-5xl">
+          <div className="mb-8 text-center">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">Admin: Tipy všech hráčů na 13. kolo</h1>
+            <p className="text-gray-500">Pod tipy můžeš zadat reálný výsledek a střelce.</p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full border rounded-lg overflow-hidden">
+              <thead className="bg-blue-100">
+                <tr>
+                  <th className="py-2 px-3 text-center">Zápas</th>
+                  {USERS.filter(u => u.nickname !== ADMIN_NICK).map(u => (
+                    <th key={u.nickname} className="py-2 px-3 text-center">{u.nickname}</th>
+                  ))}
+                  <th className="py-2 px-3 text-center">Výsledek</th>
+                  <th className="py-2 px-3 text-center">Střelci</th>
+                </tr>
+              </thead>
+              <tbody>
+                {MATCHES_ROUND_13.map((match, idx) => (
+                  <tr key={match.home + match.away} className={`border-b border-blue-200 ${idx % 2 === 0 ? 'bg-white' : 'bg-blue-50'}`}>
+                    <td className="py-2 px-3 font-medium text-gray-900">{match.home} vs {match.away}</td>
+                    {USERS.filter(u => u.nickname !== ADMIN_NICK).map(u => (
+                      <td key={u.nickname} className="py-2 px-3 text-center">
+                        {allTips13[u.nickname]?.[idx] && allTips13[u.nickname][idx].home !== '' && allTips13[u.nickname][idx].away !== '' ? (
+                          <span>
+                            {allTips13[u.nickname][idx].home}:{allTips13[u.nickname][idx].away}
+                            {allTips13[u.nickname][idx].scorer ? ` – ${allTips13[u.nickname][idx].scorer}` : ''}
+                          </span>
+                        ) : (
+                          <span className="text-gray-400">-</span>
+                        )}
+                      </td>
+                    ))}
+                    <td className="py-2 px-3 text-center">
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(results13[idx]?.home ?? '')}
+                        onChange={e => setResults13(r => { const n = [...r]; if (!n[idx]) n[idx] = { home: '', away: '', scorers: '' }; n[idx].home = e.target.value; return n; })}
+                      />
+                      <span className="text-xl font-bold text-gray-500 mx-1">:</span>
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(results13[idx]?.away ?? '')}
+                        onChange={e => setResults13(r => { const n = [...r]; if (!n[idx]) n[idx] = { home: '', away: '', scorers: '' }; n[idx].away = e.target.value; return n; })}
+                      />
+                    </td>
+                    <td className="py-2 px-3 text-center">
+                      <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm" placeholder="Střelci (čárkou odděleno)"
+                        value={(results13[idx]?.scorers ?? '')}
+                        onChange={e => setResults13(r => { const n = [...r]; if (!n[idx]) n[idx] = { home: '', away: '', scorers: '' }; n[idx].scorers = e.target.value; return n; })}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr className="bg-blue-50 font-semibold">
+                  <td className="py-2 px-3 text-right">Body za výsledek</td>
+                  {USERS.filter(u => u.nickname !== ADMIN_NICK).map(u => {
+                    let sum = 0;
+                    allTips13[u.nickname]?.forEach((tip, idx) => {
+                      const res = results13[idx];
+                      if (!tip || tip.home === '' || tip.away === '' || !res || res.home === '' || res.away === '') return;
+                      const parsedTip = {
+                        matchIndex: idx,
+                        predictedResult: { home: Number(tip.home), away: Number(tip.away) },
+                        predictedScorer: tip.scorer || ''
+                      };
+                      const parsedResult = { home: Number(res.home), away: Number(res.away) };
+                      const scorers = (res.scorers || '').split(',').map(s => s.trim()).filter(Boolean);
+                      const points = calculatePoints(parsedTip, parsedResult, scorers);
+                      sum += points.exactResult + points.correctWinnerAndDifference + points.correctWinner + points.correctDraw;
+                    });
+                    return <td key={u.nickname} className="py-2 px-3 text-center text-blue-900">{sum}</td>;
+                  })}
+                  <td colSpan={2}></td>
+                </tr>
+                <tr className="bg-blue-50 font-semibold">
+                  <td className="py-2 px-3 text-right">Body za střelce</td>
+                  {USERS.filter(u => u.nickname !== ADMIN_NICK).map(u => {
+                    let sum = 0;
+                    allTips13[u.nickname]?.forEach((tip, idx) => {
+                      const res = results13[idx];
+                      if (!tip || tip.home === '' || tip.away === '' || !res || res.home === '' || res.away === '') return;
+                      const parsedTip = {
+                        matchIndex: idx,
+                        predictedResult: { home: Number(tip.home), away: Number(tip.away) },
+                        predictedScorer: tip.scorer || ''
+                      };
+                      const parsedResult = { home: Number(res.home), away: Number(res.away) };
+                      const scorers = (res.scorers || '').split(',').map(s => s.trim()).filter(Boolean);
+                      const points = calculatePoints(parsedTip, parsedResult, scorers);
+                      sum += points.correctScorer + points.noScorer + points.bonusPoints;
+                    });
+                    return <td key={u.nickname} className="py-2 px-3 text-center text-blue-900">{sum}</td>;
+                  })}
+                  <td colSpan={2}></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+        {/* 14. kolo admin */}
+        <hr className="my-8 border-2 border-blue-300 w-full max-w-5xl" />
+        <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-5xl">
+          <div className="mb-8 text-center">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">Admin: Tipy všech hráčů na 14. kolo</h1>
+            <p className="text-gray-500">Pod tipy můžeš zadat reálný výsledek a střelce.</p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full border rounded-lg overflow-hidden">
+              <thead className="bg-blue-100">
+                <tr>
+                  <th className="py-2 px-3 text-center">Zápas</th>
+                  {USERS.filter(u => u.nickname !== ADMIN_NICK).map(u => (
+                    <th key={u.nickname} className="py-2 px-3 text-center">{u.nickname}</th>
+                  ))}
+                  <th className="py-2 px-3 text-center">Výsledek</th>
+                  <th className="py-2 px-3 text-center">Střelci</th>
+                </tr>
+              </thead>
+              <tbody>
+                {MATCHES_ROUND_14.map((match, idx) => (
+                  <tr key={match.home + match.away} className={`border-b border-blue-200 ${idx % 2 === 0 ? 'bg-white' : 'bg-blue-50'}`}>
+                    <td className="py-2 px-3 font-medium text-gray-900">{match.home} vs {match.away}</td>
+                    {USERS.filter(u => u.nickname !== ADMIN_NICK).map(u => (
+                      <td key={u.nickname} className="py-2 px-3 text-center">
+                        {allTips14[u.nickname]?.[idx] && allTips14[u.nickname][idx].home !== '' && allTips14[u.nickname][idx].away !== '' ? (
+                          <span>
+                            {allTips14[u.nickname][idx].home}:{allTips14[u.nickname][idx].away}
+                            {allTips14[u.nickname][idx].scorer ? ` – ${allTips14[u.nickname][idx].scorer}` : ''}
+                          </span>
+                        ) : (
+                          <span className="text-gray-400">-</span>
+                        )}
+                      </td>
+                    ))}
+                    <td className="py-2 px-3 text-center">
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(results14[idx]?.home ?? '')}
+                        onChange={e => setResults14(r => { const n = [...r]; if (!n[idx]) n[idx] = { home: '', away: '', scorers: '' }; n[idx].home = e.target.value; return n; })}
+                      />
+                      <span className="text-xl font-bold text-gray-500 mx-1">:</span>
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(results14[idx]?.away ?? '')}
+                        onChange={e => setResults14(r => { const n = [...r]; if (!n[idx]) n[idx] = { home: '', away: '', scorers: '' }; n[idx].away = e.target.value; return n; })}
+                      />
+                    </td>
+                    <td className="py-2 px-3 text-center">
+                      <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm" placeholder="Střelci (čárkou odděleno)"
+                        value={(results14[idx]?.scorers ?? '')}
+                        onChange={e => setResults14(r => { const n = [...r]; if (!n[idx]) n[idx] = { home: '', away: '', scorers: '' }; n[idx].scorers = e.target.value; return n; })}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr className="bg-blue-50 font-semibold">
+                  <td className="py-2 px-3 text-right">Body za výsledek</td>
+                  {USERS.filter(u => u.nickname !== ADMIN_NICK).map(u => {
+                    let sum = 0;
+                    allTips14[u.nickname]?.forEach((tip, idx) => {
+                      const res = results14[idx];
+                      if (!tip || tip.home === '' || tip.away === '' || !res || res.home === '' || res.away === '') return;
+                      const parsedTip = {
+                        matchIndex: idx,
+                        predictedResult: { home: Number(tip.home), away: Number(tip.away) },
+                        predictedScorer: tip.scorer || ''
+                      };
+                      const parsedResult = { home: Number(res.home), away: Number(res.away) };
+                      const scorers = (res.scorers || '').split(',').map(s => s.trim()).filter(Boolean);
+                      const points = calculatePoints(parsedTip, parsedResult, scorers);
+                      sum += points.exactResult + points.correctWinnerAndDifference + points.correctWinner + points.correctDraw;
+                    });
+                    return <td key={u.nickname} className="py-2 px-3 text-center text-blue-900">{sum}</td>;
+                  })}
+                  <td colSpan={2}></td>
+                </tr>
+                <tr className="bg-blue-50 font-semibold">
+                  <td className="py-2 px-3 text-right">Body za střelce</td>
+                  {USERS.filter(u => u.nickname !== ADMIN_NICK).map(u => {
+                    let sum = 0;
+                    allTips14[u.nickname]?.forEach((tip, idx) => {
+                      const res = results14[idx];
+                      if (!tip || tip.home === '' || tip.away === '' || !res || res.home === '' || res.away === '') return;
+                      const parsedTip = {
+                        matchIndex: idx,
+                        predictedResult: { home: Number(tip.home), away: Number(tip.away) },
+                        predictedScorer: tip.scorer || ''
+                      };
+                      const parsedResult = { home: Number(res.home), away: Number(res.away) };
+                      const scorers = (res.scorers || '').split(',').map(s => s.trim()).filter(Boolean);
+                      const points = calculatePoints(parsedTip, parsedResult, scorers);
+                      sum += points.correctScorer + points.noScorer + points.bonusPoints;
+                    });
+                    return <td key={u.nickname} className="py-2 px-3 text-center text-blue-900">{sum}</td>;
+                  })}
+                  <td colSpan={2}></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+        {/* 15. kolo admin */}
+        <hr className="my-8 border-2 border-blue-300 w-full max-w-5xl" />
+        <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-5xl">
+          <div className="mb-8 text-center">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">Admin: Tipy všech hráčů na 15. kolo</h1>
+            <p className="text-gray-500">Pod tipy můžeš zadat reálný výsledek a střelce.</p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full border rounded-lg overflow-hidden">
+              <thead className="bg-blue-100">
+                <tr>
+                  <th className="py-2 px-3 text-center">Zápas</th>
+                  {USERS.filter(u => u.nickname !== ADMIN_NICK).map(u => (
+                    <th key={u.nickname} className="py-2 px-3 text-center">{u.nickname}</th>
+                  ))}
+                  <th className="py-2 px-3 text-center">Výsledek</th>
+                  <th className="py-2 px-3 text-center">Střelci</th>
+                </tr>
+              </thead>
+              <tbody>
+                {MATCHES_ROUND_15.map((match, idx) => (
+                  <tr key={match.home + match.away} className={`border-b border-blue-200 ${idx % 2 === 0 ? 'bg-white' : 'bg-blue-50'}`}>
+                    <td className="py-2 px-3 font-medium text-gray-900">{match.home} vs {match.away}</td>
+                    {USERS.filter(u => u.nickname !== ADMIN_NICK).map(u => (
+                      <td key={u.nickname} className="py-2 px-3 text-center">
+                        {allTips15[u.nickname]?.[idx] && allTips15[u.nickname][idx].home !== '' && allTips15[u.nickname][idx].away !== '' ? (
+                          <span>
+                            {allTips15[u.nickname][idx].home}:{allTips15[u.nickname][idx].away}
+                            {allTips15[u.nickname][idx].scorer ? ` – ${allTips15[u.nickname][idx].scorer}` : ''}
+                          </span>
+                        ) : (
+                          <span className="text-gray-400">-</span>
+                        )}
+                      </td>
+                    ))}
+                    <td className="py-2 px-3 text-center">
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(results15[idx]?.home ?? '')}
+                        onChange={e => setResults15(r => { const n = [...r]; if (!n[idx]) n[idx] = { home: '', away: '', scorers: '' }; n[idx].home = e.target.value; return n; })}
+                      />
+                      <span className="text-xl font-bold text-gray-500 mx-1">:</span>
+                      <input type="number" min="0" max="20" className="w-12 px-2 py-1 border border-gray-300 rounded text-center font-bold" placeholder="0"
+                        value={(results15[idx]?.away ?? '')}
+                        onChange={e => setResults15(r => { const n = [...r]; if (!n[idx]) n[idx] = { home: '', away: '', scorers: '' }; n[idx].away = e.target.value; return n; })}
+                      />
+                    </td>
+                    <td className="py-2 px-3 text-center">
+                      <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm" placeholder="Střelci (čárkou odděleno)"
+                        value={(results15[idx]?.scorers ?? '')}
+                        onChange={e => setResults15(r => { const n = [...r]; if (!n[idx]) n[idx] = { home: '', away: '', scorers: '' }; n[idx].scorers = e.target.value; return n; })}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr className="bg-blue-50 font-semibold">
+                  <td className="py-2 px-3 text-right">Body za výsledek</td>
+                  {USERS.filter(u => u.nickname !== ADMIN_NICK).map(u => {
+                    let sum = 0;
+                    allTips15[u.nickname]?.forEach((tip, idx) => {
+                      const res = results15[idx];
+                      if (!tip || tip.home === '' || tip.away === '' || !res || res.home === '' || res.away === '') return;
+                      const parsedTip = {
+                        matchIndex: idx,
+                        predictedResult: { home: Number(tip.home), away: Number(tip.away) },
+                        predictedScorer: tip.scorer || ''
+                      };
+                      const parsedResult = { home: Number(res.home), away: Number(res.away) };
+                      const scorers = (res.scorers || '').split(',').map(s => s.trim()).filter(Boolean);
+                      const points = calculatePoints(parsedTip, parsedResult, scorers);
+                      sum += points.exactResult + points.correctWinnerAndDifference + points.correctWinner + points.correctDraw;
+                    });
+                    return <td key={u.nickname} className="py-2 px-3 text-center text-blue-900">{sum}</td>;
+                  })}
+                  <td colSpan={2}></td>
+                </tr>
+                <tr className="bg-blue-50 font-semibold">
+                  <td className="py-2 px-3 text-right">Body za střelce</td>
+                  {USERS.filter(u => u.nickname !== ADMIN_NICK).map(u => {
+                    let sum = 0;
+                    allTips15[u.nickname]?.forEach((tip, idx) => {
+                      const res = results15[idx];
+                      if (!tip || tip.home === '' || tip.away === '' || !res || res.home === '' || res.away === '') return;
+                      const parsedTip = {
+                        matchIndex: idx,
+                        predictedResult: { home: Number(tip.home), away: Number(tip.away) },
+                        predictedScorer: tip.scorer || ''
+                      };
+                      const parsedResult = { home: Number(res.home), away: Number(res.away) };
+                      const scorers = (res.scorers || '').split(',').map(s => s.trim()).filter(Boolean);
+                      const points = calculatePoints(parsedTip, parsedResult, scorers);
+                      sum += points.correctScorer + points.noScorer + points.bonusPoints;
+                    });
+                    return <td key={u.nickname} className="py-2 px-3 text-center text-blue-900">{sum}</td>;
+                  })}
+                  <td colSpan={2}></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
