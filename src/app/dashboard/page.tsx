@@ -3623,12 +3623,12 @@ export default function Dashboard() {
                   });
                   const maxResultPoints = Math.max(...allResultPoints.map(p => p.points));
                   const resultWinners = allResultPoints.filter(p => p.points === maxResultPoints && p.points > 0);
-                  const resultFinance = resultWinners.some(w => w.nickname === u.nickname) ? (resultWinners.length > 0 ? (USERS.filter(u => u.nickname !== ADMIN_NICK).length - resultWinners.length) * 250 / resultWinners.length : 0) : -250;
+                  const resultFinance = resultWinners.some(w => w.nickname === user.nickname) ? (resultWinners.length > 0 ? (USERS.filter(u => u.nickname !== ADMIN_NICK).length - resultWinners.length) * 250 / resultWinners.length : 0) : -250;
                   roundFinance += resultFinance;
                   
                   // Finance za střelce - použijeme původní logiku
                   let sum = 0;
-                  allTips[u.nickname]?.forEach((tip: any, idx: number) => {
+                  allTips[user.nickname]?.forEach((tip: any, idx: number) => {
                     const res = results[idx];
                     if (!tip || tip.home === '' || tip.away === '' || !res || res.home === '' || res.away === '') return;
                     const parsedTip = {
@@ -3674,7 +3674,7 @@ export default function Dashboard() {
                   
                   const winAmount = winners.length > 0 ? totalPot / winners.length : 0;
                   
-                  if (winners.some(w => w.nickname === u.nickname)) {
+                  if (winners.some(w => w.nickname === user.nickname)) {
                     roundFinance += winAmount;
                   } else {
                     // Výpočet platby pro poraženého
