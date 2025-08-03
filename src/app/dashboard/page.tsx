@@ -4452,6 +4452,15 @@ export default function Dashboard() {
                         const scorers = (res.scorers || '').split(',').map((s: string) => s.trim()).filter(Boolean);
                         const pointsCalc = calculatePoints(parsedTip, parsedResult, scorers);
                         points += pointsCalc.correctScorer + pointsCalc.noScorer + pointsCalc.bonusPoints;
+                        
+                        // Debug: zobrazit detaily pro každý zápas
+                        console.log(`Kolo ${round.roundNumber} - ${user.nickname} - Zápas ${idx}:`, {
+                          tip: parsedTip,
+                          result: parsedResult,
+                          scorers: scorers,
+                          pointsCalc: pointsCalc,
+                          totalPoints: points
+                        });
                       });
                       return { nickname: user.nickname, points };
                     });
