@@ -23,9 +23,17 @@ export const migrateAllData = async () => {
       { key: 'tips2_Špinavovlas', value: localStorage.getItem('tips2_Špinavovlas') },
       { key: 'tips2_Netáhlo', value: localStorage.getItem('tips2_Netáhlo') },
       
+      // Tipy pro 3. kolo
+      { key: 'tips3_Rybča', value: localStorage.getItem('tips3_Rybča') },
+      { key: 'tips3_Kořda', value: localStorage.getItem('tips3_Kořda') },
+      { key: 'tips3_Jozeve', value: localStorage.getItem('tips3_Jozeve') },
+      { key: 'tips3_Špinavovlas', value: localStorage.getItem('tips3_Špinavovlas') },
+      { key: 'tips3_Netáhlo', value: localStorage.getItem('tips3_Netáhlo') },
+      
       // Výsledky
       { key: 'results1_2025_26', value: localStorage.getItem('results1_2025_26') },
-      { key: 'results2_2025_26', value: localStorage.getItem('results2_2025_26') }
+      { key: 'results2_2025_26', value: localStorage.getItem('results2_2025_26') },
+      { key: 'results3_2025_26', value: localStorage.getItem('results3_2025_26') }
     ]
 
     let migratedCount = 0
