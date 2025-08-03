@@ -4281,8 +4281,8 @@ export default function Dashboard() {
                   // Bonusový bod pro vítěze ve střelcích
                   const allScorerPoints = USERS.filter(u => u.nickname !== ADMIN_NICK).map(user => {
                     let points = 0;
-                    round.allTips[user.nickname]?.forEach((tip: any, idx: number) => {
-                      const res = round.results[idx];
+                    allTips[user.nickname]?.forEach((tip: any, idx: number) => {
+                      const res = results[idx];
                       if (!tip || tip.home === '' || tip.away === '' || !res || res.home === '' || res.away === '') return;
                       const parsedTip = {
                         matchIndex: idx,
