@@ -4300,8 +4300,13 @@ export default function Dashboard() {
                   const maxScorerPoints = Math.max(...allScorerPoints.map(p => p.points));
                   const scorerWinners = allScorerPoints.filter(p => p.points === maxScorerPoints && p.points > 0);
                   
+                  console.log(`Kolo ${roundNumber} - Body za střelce:`, allScorerPoints);
+                  console.log(`Kolo ${roundNumber} - Vítězové:`, scorerWinners.map(w => w.nickname));
+                  console.log(`Kolo ${roundNumber} - Aktuální hráč:`, u.nickname);
+                  
                   // Pokud je aktuální hráč vítězem ve střelcích, přidá +1 bod do výsledků
                   if (scorerWinners.some(w => w.nickname === u.nickname)) {
+                    console.log(`Kolo ${roundNumber} - Přidávám bonusový bod pro ${u.nickname}`);
                     roundResultPoints += 1;
                   }
                   
