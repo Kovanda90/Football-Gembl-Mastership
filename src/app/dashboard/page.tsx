@@ -4446,12 +4446,15 @@ export default function Dashboard() {
                 });
                 
                 // Bonusový bod pro vítěze ve střelcích - POČÍTÁM JEDNOU PRO CELÉ KOLO
+                console.log('=== ZAČÁTEK BONUSOVÉ LOGIKY ===');
                 rounds.forEach((round) => {
                   const hasResults = round.results && round.results.length > 0 && 
                     round.results.every((result: any) => 
                       result && result.home !== '' && result.home !== null && result.home !== undefined &&
                       result.away !== '' && result.away !== null && result.away !== undefined
                     );
+                  
+                  console.log(`Kolo ${round.roundNumber} - hasResults pro bonus:`, hasResults);
                   
                   if (hasResults) {
                     console.log(`Kolo ${round.roundNumber} - Debug: allTips pro Kořda:`, round.allTips['Kořda']);
