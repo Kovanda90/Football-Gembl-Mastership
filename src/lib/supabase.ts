@@ -42,13 +42,6 @@ export const localStorageFallback = {
 export const safeLoadData = async (key: string) => {
   console.log(`=== SAFE LOAD DATA: ${key} ===`)
   
-  // Pro tipy hráčů prioritně používáme localStorage
-  if (key.startsWith('tips')) {
-    const localData = localStorageFallback.getItem(key)
-    console.log('Načítám tipy z localStorage:', key, localData ? 'EXISTUJE' : 'NEEXISTUJE')
-    return localData
-  }
-  
   try {
     if (supabase) {
       console.log('Zkouším Supabase pro:', key)
@@ -82,8 +75,12 @@ export const safeLoadData = async (key: string) => {
 
 // Bezpečná funkce pro uložení dat (Supabase + fallback na localStorage)
 export const safeSaveData = async (key: string, value: string) => {
+  console.log(`=== SAFE SAVE DATA: ${key} ===`)
+  
   try {
     if (supabase) {
+      console.log('Zkouším Supabase pro:', key)
+      
       // Zkusíme Supabase - nejdřív smažeme stará data pro tento klíč, pak vložíme nová
       const { error: deleteError } = await supabase
         .from('app_data')
@@ -101,10 +98,14 @@ export const safeSaveData = async (key: string, value: string) => {
       
       if (!insertError) {
         console.log('Data uložena do Supabase')
+        // Také uložíme do localStorage jako backup
+        localStorageFallback.setItem(key, value)
         return
       } else {
         console.log('Chyba při ukládání do Supabase:', insertError)
       }
+    } else {
+      console.log('Supabase není dostupné')
     }
   } catch (error) {
     console.log('Supabase nedostupné, ukládáme do localStorage:', error)
@@ -112,4 +113,5 @@ export const safeSaveData = async (key: string, value: string) => {
   
   // Fallback na localStorage
   localStorageFallback.setItem(key, value)
+  console.log('Data uložena do localStorage:', key)
 } 
