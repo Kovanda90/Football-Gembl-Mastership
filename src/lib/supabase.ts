@@ -39,8 +39,11 @@ export const localStorageFallback = {
 
 // Bezpečná funkce pro načtení dat (Supabase + fallback na localStorage)
 export const safeLoadData = async (key: string) => {
+  console.log(`=== SAFE LOAD DATA: ${key} ===`)
+  
   try {
     if (supabase) {
+      console.log('Zkouším Supabase pro:', key)
       // Zkusíme Supabase
       const { data, error } = await supabase
         .from('app_data')
@@ -48,16 +51,25 @@ export const safeLoadData = async (key: string) => {
         .eq('key', key)
         .single()
       
+      console.log('Supabase response:', { data, error })
+      
       if (!error && data) {
+        console.log('Načteno ze Supabase:', key)
         return data.value
+      } else {
+        console.log('Supabase chyba nebo žádná data:', error)
       }
+    } else {
+      console.log('Supabase není dostupné')
     }
   } catch (error) {
-    console.log('Supabase nedostupné, používáme localStorage')
+    console.log('Supabase nedostupné, používáme localStorage:', error)
   }
   
   // Fallback na localStorage
-  return localStorageFallback.getItem(key)
+  const localData = localStorageFallback.getItem(key)
+  console.log('Fallback na localStorage:', key, localData ? 'EXISTUJE' : 'NEEXISTUJE')
+  return localData
 }
 
 // Bezpečná funkce pro uložení dat (Supabase + fallback na localStorage)
