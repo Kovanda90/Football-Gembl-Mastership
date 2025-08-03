@@ -81,19 +81,46 @@ export const safeSaveData = async (key: string, value: string) => {
     if (supabase) {
       console.log('Zkouším Supabase pro:', key)
       
-      // Zkusíme Supabase - použijeme upsert místo delete + insert
-      const { error: upsertError } = await supabase
+      // Nejdříve zkontrolujeme, jestli záznam existuje
+      const { data: existingData, error: selectError } = await supabase
         .from('app_data')
-        .upsert({ key, value, updated_at: new Date().toISOString() })
+        .select('key')
+        .eq('key', key)
+        .single()
       
-      if (!upsertError) {
-        console.log('Data uložena do Supabase')
+      console.log('Kontrola existujícího záznamu:', { existingData, selectError })
+      
+      let saveError = null
+      
+      if (existingData) {
+        // Záznam existuje - použijeme UPDATE
+        console.log('Záznam existuje, používám UPDATE')
+        const { error: updateError } = await supabase
+          .from('app_data')
+          .update({ value, updated_at: new Date().toISOString() })
+          .eq('key', key)
+        
+        saveError = updateError
+        console.log('UPDATE výsledek:', { updateError })
+      } else {
+        // Záznam neexistuje - použijeme INSERT
+        console.log('Záznam neexistuje, používám INSERT')
+        const { error: insertError } = await supabase
+          .from('app_data')
+          .insert({ key, value, updated_at: new Date().toISOString() })
+        
+        saveError = insertError
+        console.log('INSERT výsledek:', { insertError })
+      }
+      
+      if (!saveError) {
+        console.log('Data úspěšně uložena do Supabase')
         // Také uložíme do localStorage jako backup
         localStorageFallback.setItem(key, value)
         console.log('Data také uložena do localStorage jako backup')
         return
       } else {
-        console.log('Chyba při ukládání do Supabase:', upsertError)
+        console.log('Chyba při ukládání do Supabase:', saveError)
       }
     } else {
       console.log('Supabase není dostupné')
