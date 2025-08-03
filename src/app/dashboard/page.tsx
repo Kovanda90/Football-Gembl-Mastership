@@ -4421,6 +4421,7 @@ export default function Dashboard() {
                   { allTips: allTips30, results: results30, roundNumber: 30 }
                 ];
                 
+                // Bonusový bod pro vítěze ve střelcích - POČÍTÁM JEDNOU PRO CELÉ KOLO
                 rounds.forEach((round) => {
                   // Kontrola, zda jsou alespoň výsledky vyplněny (pro bonusový bod za střelce)
                   const hasResults = round.results && round.results.length > 0 && 
@@ -4437,7 +4438,22 @@ export default function Dashboard() {
                     totalResultPoints += roundResultPoints;
                     totalScorerPoints += roundScorerPoints;
                     
-                    // Bonusový bod pro vítěze ve střelcích - POUŽÍVÁM STEJNOU LOGIKU JAKO V TABULCE
+                    // Finance pouze pro uzavřená kola
+                    if (isRoundComplete(round.results)) {
+                      totalFinance += calculateRoundFinance(round.allTips, round.results);
+                    }
+                  }
+                });
+                
+                // Bonusový bod pro vítěze ve střelcích - POČÍTÁM JEDNOU PRO CELÉ KOLO
+                rounds.forEach((round) => {
+                  const hasResults = round.results && round.results.length > 0 && 
+                    round.results.every((result: any) => 
+                      result && result.home !== '' && result.home !== null && result.home !== undefined &&
+                      result.away !== '' && result.away !== null && result.away !== undefined
+                    );
+                  
+                  if (hasResults) {
                     console.log(`Kolo ${round.roundNumber} - Debug: allTips pro Kořda:`, round.allTips['Kořda']);
                     console.log(`Kolo ${round.roundNumber} - Debug: results:`, round.results);
                     
@@ -4475,17 +4491,11 @@ export default function Dashboard() {
                     
                     console.log(`Kolo ${round.roundNumber} - Body za střelce:`, allScorerPoints);
                     console.log(`Kolo ${round.roundNumber} - Vítězové:`, scorerWinners.map(w => w.nickname));
-                    console.log(`Kolo ${round.roundNumber} - Aktuální hráč:`, u.nickname);
                     
                     // Pokud je aktuální hráč vítězem ve střelcích, přidá +1 bod do výsledků
                     if (scorerWinners.some(w => w.nickname === u.nickname)) {
                       console.log(`Kolo ${round.roundNumber} - Přidávám bonusový bod pro ${u.nickname}`);
                       totalResultPoints += 1;
-                    }
-                    
-                    // Finance pouze pro uzavřená kola
-                    if (isRoundComplete(round.results)) {
-                      totalFinance += calculateRoundFinance(round.allTips, round.results);
                     }
                   }
                 });
