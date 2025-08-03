@@ -4490,7 +4490,7 @@ export default function Dashboard() {
                     });
                     
                     const maxScorerPoints = Math.max(...allScorerPoints.map(p => p.points));
-                    const scorerWinners = allScorerPoints.filter(p => p.points === maxScorerPoints && p.points > 0);
+                    const scorerWinners = allScorerPoints.filter(p => p.points === maxScorerPoints);
                     
                     console.log(`Kolo ${round.roundNumber} - Body za střelce:`, allScorerPoints);
                     console.log(`Kolo ${round.roundNumber} - Vítězové:`, scorerWinners.map(w => w.nickname));
@@ -4502,6 +4502,9 @@ export default function Dashboard() {
                     }
                   }
                 });
+                
+                // Final debug log for totalResultPoints
+                console.log(`FINAL DEBUG - ${u.nickname}: totalResultPoints = ${totalResultPoints}, totalScorerPoints = ${totalScorerPoints}, totalPoints = ${totalResultPoints + totalScorerPoints}`);
                 
                 return (
                   <tr key={u.nickname} className={`border-b border-blue-200 ${(totalResultPoints + totalScorerPoints) > 0 ? 'bg-green-50' : 'bg-white'}`}>
