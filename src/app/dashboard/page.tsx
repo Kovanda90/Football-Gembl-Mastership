@@ -47,26 +47,11 @@ console.log('=== KONEC DASHBOARD DEBUG ===')
 
 // Automatický import dat z lokálního localStorage
 const importLocalData = () => {
-  // Vyčisti localStorage pro první a druhé kolo, aby se načetla nová data
-  localStorage.removeItem('dataImported');
-  localStorage.removeItem('tips1_Rybča');
-  localStorage.removeItem('tips1_Kořda');
-  localStorage.removeItem('tips1_Jozeve');
-  localStorage.removeItem('tips1_Špinavovlas');
-  localStorage.removeItem('tips1_Netáhlo');
-  localStorage.removeItem('results1_2025_26');
-  localStorage.removeItem('tips2_Rybča');
-  localStorage.removeItem('tips2_Kořda');
-  localStorage.removeItem('tips2_Jozeve');
-  localStorage.removeItem('tips2_Špinavovlas');
-  localStorage.removeItem('tips2_Netáhlo');
-  localStorage.removeItem('results2_2025_26');
-  
   // Kontrola, zda už byla data importována
   if (localStorage.getItem('dataImported')) {
     return;
   }
-
+  
   try {
     // Data z lokálního localStorage (zde vlož svá data)
     const localData: Record<string, string> = {
