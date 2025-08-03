@@ -49,7 +49,7 @@ export const migrateAllData = async () => {
             console.log(`Migrováno: ${item.key}`)
           }
         } catch (error) {
-          errors.push(`${item.key}: ${error}`)
+          errors.push(`${item.key}: ${String(error)}`)
         }
       }
     }
@@ -64,7 +64,7 @@ export const migrateAllData = async () => {
     return {
       success: false,
       message: `Chyba při migraci: ${error}`,
-      errors: [error.toString()]
+      errors: [String(error)]
     }
   }
 }
@@ -87,6 +87,6 @@ export const testSupabaseConnection = async () => {
     
     return { success: true, message: 'Připojení k Supabase úspěšné!' }
   } catch (error) {
-    return { success: false, message: `Chyba připojení: ${error}` }
+    return { success: false, message: `Chyba připojení: ${String(error)}` }
   }
 } 
