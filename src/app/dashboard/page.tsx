@@ -36,7 +36,7 @@ import {
 } from '../../lib/matches-2025-26'
 import { calculatePoints } from '@/lib/points'
 import { migrateAllData, testSupabaseConnection } from '@/lib/migrate'
-import { supabase, safeLoadData } from '@/lib/supabase'
+import { supabase, safeLoadData, safeSaveData } from '@/lib/supabase'
 
 // Debug informace pro kontrolu Supabase
 console.log('=== DASHBOARD DEBUG ===')
@@ -1148,7 +1148,7 @@ export default function Dashboard() {
   useEffect(() => {
     if (user) {
       console.log(`Ukládám tips3 pro ${user.nickname}:`, tips3)
-      localStorage.setItem(`tips3_${user.nickname}`, JSON.stringify(tips3))
+      safeSaveData(`tips3_${user.nickname}`, JSON.stringify(tips3))
     }
   }, [tips3, user])
 
