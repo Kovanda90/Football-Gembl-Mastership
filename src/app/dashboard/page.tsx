@@ -140,8 +140,7 @@ function getInitialResults(matches: any[]): Result[] {
 
 export default function Dashboard() {
   const [user, setUser] = useState<any>(null)
-  const [migrationStatus, setMigrationStatus] = useState<string>('')
-  const [isMigrating, setIsMigrating] = useState<boolean>(false)
+
   const [tips1, setTips1] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_1))
   const [tips2, setTips2] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_2))
   const [tips3, setTips3] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_3))
@@ -4106,56 +4105,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Supabase Migrace */}
-      <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-6xl mb-8">
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Supabase Migrace</h1>
-          <p className="text-gray-500">Migrace dat z localStorage do Supabase databáze</p>
-        </div>
-        <div className="flex flex-col gap-4 items-center">
-          <div className="flex gap-4">
-            <button
-              onClick={handleTestConnection}
-              disabled={isMigrating}
-              className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isMigrating ? 'Testuji...' : 'Test připojení'}
-            </button>
-            <button
-              onClick={handleMigrateData}
-              disabled={isMigrating}
-              className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isMigrating ? 'Migruji...' : 'Migrovat data'}
-            </button>
-            <button
-              onClick={restoreMissingTips}
-              disabled={isMigrating}
-              className="bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isMigrating ? 'Obnovuji...' : 'Obnovit tipy'}
-            </button>
-            <button
-              onClick={safeRestoreTips}
-              disabled={isMigrating}
-              className="bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isMigrating ? 'Bezpečně obnovuji...' : 'Bezpečně obnovit'}
-            </button>
-          </div>
-          {migrationStatus && (
-            <div className={`mt-4 p-4 rounded-lg ${
-              migrationStatus.includes('úspěš') || migrationStatus.includes('Úspěš') 
-                ? 'bg-green-100 text-green-800' 
-                : migrationStatus.includes('Chyba') 
-                ? 'bg-red-100 text-red-800' 
-                : 'bg-blue-100 text-blue-800'
-            }`}>
-              {migrationStatus}
-            </div>
-          )}
-        </div>
-      </div>
+
 
       {/* Admin: Tipy všech hráčů na 1. kolo */}
       <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-6xl mb-8">
