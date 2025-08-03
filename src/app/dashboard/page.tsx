@@ -72,7 +72,7 @@ const importLocalData = () => {
       "tips1_Netáhlo": "[{\"home\":\"0\",\"away\":\"2\",\"scorer\":\"Šulc\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Ewerton\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Kozák\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Vecheta\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Haraslín\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Janošek\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Hlavatý\"},{\"home\":\"3\",\"away\":\"0\",\"scorer\":\"Kušej\"}]",
       "tips2_Netáhlo": "[{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Vašulín\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"Krmenčík\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Šulc\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"van Buren\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Chorý\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Krollis\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Šín\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Kuchta\"}]",
       "results1_2025_26": "[{\"home\":\"1\",\"away\":\"5\",\"scorers\":\"Vydra, Vydra, Šulc\"},{\"home\":\"1\",\"away\":\"0\",\"scorers\":\"Yusuf\"},{\"home\":\"1\",\"away\":\"3\",\"scorers\":\"Pulkrab, Kanu, Nombil\"},{\"home\":\"2\",\"away\":\"0\",\"scorers\":\"Sinhateh\"},{\"home\":\"1\",\"away\":\"1\",\"scorers\":\"Kuchta\"},{\"home\":\"0\",\"away\":\"1\",\"scorers\":\"Vašulín\"},{\"home\":\"3\",\"away\":\"3\",\"scorers\":\"Pech, Macek, Krollis, Hlavatý, Mašel\"},{\"home\":\"2\",\"away\":\"2\",\"scorers\":\"Sojka, Chorý, Zafeiris, Hodek\"}]",
-      "results2_2025_26": "[{\"home\":\"1\",\"away\":\"1\",\"scorers\":\"\"},{\"home\":\"1\",\"away\":\"1\",\"scorers\":\"\"},{\"home\":\"1\",\"away\":\"1\",\"scorers\":\"\"},{\"home\":\"1\",\"away\":\"1\",\"scorers\":\"\"},{\"home\":\"1\",\"away\":\"1\",\"scorers\":\"\"},{\"home\":\"1\",\"away\":\"1\",\"scorers\":\"\"},{\"home\":\"1\",\"away\":\"1\",\"scorers\":\"\"},{\"home\":\"1\",\"away\":\"1\",\"scorers\":\"\"}]"
+      "results2_2025_26": "[{\"home\":\"0\",\"away\":\"0\",\"scorers\":\"nikdo\"},{\"home\":\"1\",\"away\":\"1\",\"scorers\":\"Cupák\"},{\"home\":\"1\",\"away\":\"1\",\"scorers\":\"Vydra, Tekijaški\"},{\"home\":\"1\",\"away\":\"2\",\"scorers\":\"Gning, Vlkanova, Štorman\"},{\"home\":\"0\",\"away\":\"2\",\"scorers\":\"Provod, Kušej\"},{\"home\":\"2\",\"away\":\"1\",\"scorers\":\"Ghali, Patrák, Letenay\"},{\"home\":\"1\",\"away\":\"0\",\"scorers\":\"Nedohráno\"},{\"home\":\"3\",\"away\":\"2\",\"scorers\":\"Rrahmani, Pech, Vojta, Kuchta, Haraslín\"}]"
     };
 
     // Import všech dat
@@ -170,7 +170,16 @@ export default function Dashboard() {
     { home: "3", away: "3", scorers: "Pech, Macek, Krollis, Hlavatý, Mašel" },
     { home: "2", away: "2", scorers: "Sojka, Chorý, Zafeiris, Hodek" }
   ])
-  const [results2, setResults2] = useState<Result[]>(getInitialResults(MATCHES_ROUND_2))
+  const [results2, setResults2] = useState<Result[]>([
+    { home: "0", away: "0", scorers: "nikdo" },
+    { home: "1", away: "1", scorers: "Cupák" },
+    { home: "1", away: "1", scorers: "Vydra, Tekijaški" },
+    { home: "1", away: "2", scorers: "Gning, Vlkanova, Štorman" },
+    { home: "0", away: "2", scorers: "Provod, Kušej" },
+    { home: "2", away: "1", scorers: "Ghali, Patrák, Letenay" },
+    { home: "1", away: "0", scorers: "Nedohráno" },
+    { home: "3", away: "2", scorers: "Rrahmani, Pech, Vojta, Kuchta, Haraslín" }
+  ])
   const [results3, setResults3] = useState<Result[]>(getInitialResults(MATCHES_ROUND_3))
   const [results4, setResults4] = useState<Result[]>(getInitialResults(MATCHES_ROUND_4))
   const [results5, setResults5] = useState<Result[]>(getInitialResults(MATCHES_ROUND_5))
