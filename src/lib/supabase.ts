@@ -11,7 +11,6 @@ console.log('supabaseAnonKey:', supabaseAnonKey ? 'EXISTUJE' : 'NEEXISTUJE')
 console.log('Supabase URL: NASTAVENO')
 console.log('Supabase Key: NASTAVENO')
 console.log('=== SUPABASE DEBUG END ===')
-console.log('Force redeploy for Vercel sync')
 
 // Vytvoření Supabase klienta (pokud jsou k dispozici credentials)
 export const supabase = supabaseUrl && supabaseAnonKey 
