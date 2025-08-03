@@ -77,41 +77,29 @@ export const safeLoadData = async (key: string) => {
 export const safeSaveData = async (key: string, value: string) => {
   console.log(`=== SAFE SAVE DATA: ${key} ===`)
   
+  // Nejdřív uložíme do localStorage jako backup
+  localStorageFallback.setItem(key, value)
+  console.log('Data uložena do localStorage jako backup:', key)
+  
   try {
     if (supabase) {
       console.log('Zkouším Supabase pro:', key)
       
-      // Zkusíme Supabase - nejdřív smažeme stará data pro tento klíč, pak vložíme nová
-      const { error: deleteError } = await supabase
+      // Zkusíme Supabase - použijeme upsert místo delete + insert
+      const { error: upsertError } = await supabase
         .from('app_data')
-        .delete()
-        .eq('key', key)
+        .upsert({ key, value, updated_at: new Date().toISOString() })
       
-      if (deleteError) {
-        console.log('Chyba při mazání starých dat:', deleteError)
-      }
-      
-      // Vložíme nová data
-      const { error: insertError } = await supabase
-        .from('app_data')
-        .insert({ key, value, updated_at: new Date().toISOString() })
-      
-      if (!insertError) {
+      if (!upsertError) {
         console.log('Data uložena do Supabase')
-        // Také uložíme do localStorage jako backup
-        localStorageFallback.setItem(key, value)
         return
       } else {
-        console.log('Chyba při ukládání do Supabase:', insertError)
+        console.log('Chyba při ukládání do Supabase:', upsertError)
       }
     } else {
       console.log('Supabase není dostupné')
     }
   } catch (error) {
-    console.log('Supabase nedostupné, ukládáme do localStorage:', error)
+    console.log('Supabase nedostupné, data jsou v localStorage:', error)
   }
-  
-  // Fallback na localStorage
-  localStorageFallback.setItem(key, value)
-  console.log('Data uložena do localStorage:', key)
 } 
