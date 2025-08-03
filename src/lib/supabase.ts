@@ -76,18 +76,30 @@ export const safeLoadData = async (key: string) => {
 export const safeSaveData = async (key: string, value: string) => {
   try {
     if (supabase) {
-      // Zkusíme Supabase
-      const { error } = await supabase
+      // Zkusíme Supabase - nejdřív smažeme stará data, pak vložíme nová
+      const { error: deleteError } = await supabase
         .from('app_data')
-        .upsert({ key, value, updated_at: new Date().toISOString() })
+        .delete()
+        .eq('key', key)
       
-      if (!error) {
+      if (deleteError) {
+        console.log('Chyba při mazání starých dat:', deleteError)
+      }
+      
+      // Vložíme nová data
+      const { error: insertError } = await supabase
+        .from('app_data')
+        .insert({ key, value, updated_at: new Date().toISOString() })
+      
+      if (!insertError) {
         console.log('Data uložena do Supabase')
         return
+      } else {
+        console.log('Chyba při ukládání do Supabase:', insertError)
       }
     }
   } catch (error) {
-    console.log('Supabase nedostupné, ukládáme do localStorage')
+    console.log('Supabase nedostupné, ukládáme do localStorage:', error)
   }
   
   // Fallback na localStorage
