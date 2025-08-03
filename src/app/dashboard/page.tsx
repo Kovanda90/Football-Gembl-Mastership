@@ -35,6 +35,7 @@ import {
   MATCHES_ROUND_30,
 } from '../../lib/matches-2025-26'
 import { calculatePoints } from '@/lib/points'
+import { migrateAllData, testSupabaseConnection } from '@/lib/migrate'
 
 // Automatický import dat z lokálního localStorage
 const importLocalData = () => {
@@ -129,6 +130,8 @@ function getInitialResults(matches: any[]): Result[] {
 
 export default function Dashboard() {
   const [user, setUser] = useState<any>(null)
+  const [migrationStatus, setMigrationStatus] = useState<string>('')
+  const [isMigrating, setIsMigrating] = useState<boolean>(false)
   const [tips1, setTips1] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_1))
   const [tips2, setTips2] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_2))
   const [tips3, setTips3] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_3))
@@ -1338,6 +1341,36 @@ export default function Dashboard() {
   function handleLogout() {
     localStorage.removeItem('user')
     router.push('/')
+  }
+
+  // Funkce pro testování Supabase připojení
+  const handleTestConnection = async () => {
+    setIsMigrating(true)
+    setMigrationStatus('Testuji připojení k Supabase...')
+    
+    try {
+      const result = await testSupabaseConnection()
+      setMigrationStatus(result.message)
+    } catch (error) {
+      setMigrationStatus(`Chyba: ${error}`)
+    } finally {
+      setIsMigrating(false)
+    }
+  }
+
+  // Funkce pro migraci dat
+  const handleMigrateData = async () => {
+    setIsMigrating(true)
+    setMigrationStatus('Migruji data z localStorage do Supabase...')
+    
+    try {
+      const result = await migrateAllData()
+      setMigrationStatus(result.message)
+    } catch (error) {
+      setMigrationStatus(`Chyba při migraci: ${error}`)
+    } finally {
+      setIsMigrating(false)
+    }
   }
 
 
@@ -3766,6 +3799,43 @@ export default function Dashboard() {
               })}
             </tbody>
           </table>
+        </div>
+      </div>
+
+      {/* Supabase Migrace */}
+      <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-6xl mb-8">
+        <div className="mb-8 text-center">
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">Supabase Migrace</h1>
+          <p className="text-gray-500">Migrace dat z localStorage do Supabase databáze</p>
+        </div>
+        <div className="flex flex-col gap-4 items-center">
+          <div className="flex gap-4">
+            <button
+              onClick={handleTestConnection}
+              disabled={isMigrating}
+              className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isMigrating ? 'Testuji...' : 'Test připojení'}
+            </button>
+            <button
+              onClick={handleMigrateData}
+              disabled={isMigrating}
+              className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isMigrating ? 'Migruji...' : 'Migrovat data'}
+            </button>
+          </div>
+          {migrationStatus && (
+            <div className={`mt-4 p-4 rounded-lg ${
+              migrationStatus.includes('úspěš') || migrationStatus.includes('Úspěš') 
+                ? 'bg-green-100 text-green-800' 
+                : migrationStatus.includes('Chyba') 
+                ? 'bg-red-100 text-red-800' 
+                : 'bg-blue-100 text-blue-800'
+            }`}>
+              {migrationStatus}
+            </div>
+          )}
         </div>
       </div>
 
