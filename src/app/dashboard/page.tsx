@@ -4438,6 +4438,9 @@ export default function Dashboard() {
                     totalScorerPoints += roundScorerPoints;
                     
                     // Bonusový bod pro vítěze ve střelcích - POUŽÍVÁM STEJNOU LOGIKU JAKO V TABULCE
+                    console.log(`Kolo ${round.roundNumber} - Debug: allTips pro Kořda:`, round.allTips['Kořda']);
+                    console.log(`Kolo ${round.roundNumber} - Debug: results:`, round.results);
+                    
                     const allScorerPoints = USERS.filter(u => u.nickname !== ADMIN_NICK).map(user => {
                       let sum = 0;
                       round.allTips[user.nickname]?.forEach((tip: any, idx: number) => {
@@ -4452,6 +4455,17 @@ export default function Dashboard() {
                         const scorers = (res.scorers || '').split(',').map(s => s.trim()).filter(Boolean);
                         const points = calculatePoints(parsedTip, parsedResult, scorers);
                         sum += points.correctScorer + points.noScorer + points.bonusPoints;
+                        
+                        // Debug pro Kořdu
+                        if (user.nickname === 'Kořda') {
+                          console.log(`Kolo ${round.roundNumber} - Kořda zápas ${idx}:`, {
+                            tip: parsedTip,
+                            result: parsedResult,
+                            scorers: scorers,
+                            points: points,
+                            sum: sum
+                          });
+                        }
                       });
                       return { nickname: user.nickname, points: sum };
                     });
