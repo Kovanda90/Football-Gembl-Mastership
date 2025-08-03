@@ -4429,6 +4429,9 @@ export default function Dashboard() {
                       result.away !== '' && result.away !== null && result.away !== undefined
                     );
                   
+                  console.log(`Kolo ${round.roundNumber} - hasResults:`, hasResults);
+                  console.log(`Kolo ${round.roundNumber} - results:`, round.results);
+                  
                   if (hasResults) {
                     const { roundResultPoints, roundScorerPoints } = calculateRoundPoints(round.allTips, round.results, round.roundNumber);
                     totalResultPoints += roundResultPoints;
