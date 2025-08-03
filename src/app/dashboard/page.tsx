@@ -98,47 +98,7 @@ const importLocalData = () => {
   }
 };
 
-// Funkce pro doplnění chybějících tipů do Supabase
-const restoreMissingTips = async () => {
-  setIsMigrating(true);
-  setMigrationStatus('🔄 Obnovuji chybějící tipy...');
-  
-  try {
-    console.log('🔄 Obnovuji chybějící tipy...');
-    
-    // Data podle tabulky
-    const tipsData = {
-      "tips1_Rybča": "[{\"home\":\"0\",\"away\":\"3\",\"scorer\":\"Šulc\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"Drchal\"},{\"home\":\"1\",\"away\":\"0\",\"scorer\":\"Kozák\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Gning\"},{\"home\":\"1\",\"away\":\"3\",\"scorer\":\"Kuchta\"},{\"home\":\"0\",\"away\":\"2\",\"scorer\":\"Janošek\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Krollis\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Chorý\"}]",
-      "tips1_Kořda": "[{\"home\":\"0\",\"away\":\"2\",\"scorer\":\"Vydra\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Ewerton\"},{\"home\":\"1\",\"away\":\"0\",\"scorer\":\"Kozák\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"Milla\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Kuchta\"},{\"home\":\"0\",\"away\":\"1\",\"scorer\":\"Vašulín\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Krollis\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Kušej\"}]",
-      "tips1_Jozeve": "[{\"home\":\"0\",\"away\":\"3\",\"scorer\":\"Vydra\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Ewerton\"},{\"home\":\"1\",\"away\":\"0\",\"scorer\":\"Krejčí\"},{\"home\":\"3\",\"away\":\"1\",\"scorer\":\"Gning\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Kuchta\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Mikulenka\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Krollis\"},{\"home\":\"3\",\"away\":\"0\",\"scorer\":\"Kušej\"}]",
-      "tips1_Špinavovlas": "[{\"home\":\"0\",\"away\":\"2\",\"scorer\":\"Prince Adu\"},{\"home\":\"0\",\"away\":\"1\",\"scorer\":\"Ewerton\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Pulkrab\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Gning\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Kuchta\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"Janošek\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"Vojta\"},{\"home\":\"3\",\"away\":\"0\",\"scorer\":\"Chorý\"}]",
-      "tips1_Netáhlo": "[{\"home\":\"0\",\"away\":\"2\",\"scorer\":\"Šulc\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Ewerton\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Kozák\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Vecheta\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Haraslín\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Janošek\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Hlavatý\"},{\"home\":\"3\",\"away\":\"0\",\"scorer\":\"Kušej\"}]",
-      "tips2_Rybča": "[{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Vašulín\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Nombil\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Vydra\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"van Buren\"},{\"home\":\"0\",\"away\":\"2\",\"scorer\":\"Chorý\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Krollis\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Šín\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Kuchta\"}]",
-      "tips2_Kořda": "[{\"home\":\"1\",\"away\":\"0\",\"scorer\":\"Vašulín\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Kanu\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Vydra\"},{\"home\":\"3\",\"away\":\"1\",\"scorer\":\"Vlkanova\"},{\"home\":\"1\",\"away\":\"3\",\"scorer\":\"Chorý\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Krollis\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Šín\"},{\"home\":\"3\",\"away\":\"1\",\"scorer\":\"Kuchta\"}]",
-      "tips2_Jozeve": "[{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Vašulín\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"Kanu\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Vydra\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Pilař\"},{\"home\":\"0\",\"away\":\"3\",\"scorer\":\"Chorý\"},{\"home\":\"3\",\"away\":\"0\",\"scorer\":\"Krollis\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Prekop\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Haraslín\"}]",
-      "tips2_Špinavovlas": "[{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Vašulín\"},{\"home\":\"1\",\"away\":\"0\",\"scorer\":\"Kanu\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Šulc\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"van Buren\"},{\"home\":\"0\",\"away\":\"2\",\"scorer\":\"Chorý\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Krollis\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Šín\"},{\"home\":\"3\",\"away\":\"1\",\"scorer\":\"Kuchta\"}]",
-      "tips2_Netáhlo": "[{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Vašulín\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"Krmenčík\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Šulc\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"van Buren\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Chorý\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Krollis\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Šín\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Kuchta\"}]",
-      "results1_2025_26": "[{\"home\":\"1\",\"away\":\"5\",\"scorers\":\"Vydra, Vydra, Šulc\"},{\"home\":\"1\",\"away\":\"0\",\"scorers\":\"Yusuf\"},{\"home\":\"1\",\"away\":\"3\",\"scorers\":\"Pulkrab, Kanu, Nombil\"},{\"home\":\"2\",\"away\":\"0\",\"scorers\":\"Sinhateh\"},{\"home\":\"1\",\"away\":\"1\",\"scorers\":\"Kuchta\"},{\"home\":\"0\",\"away\":\"1\",\"scorers\":\"Vašulín\"},{\"home\":\"3\",\"away\":\"3\",\"scorers\":\"Pech, Macek, Krollis, Hlavatý, Mašel\"},{\"home\":\"2\",\"away\":\"2\",\"scorers\":\"Sojka, Chorý, Zafeiris, Hodek\"}]",
-      "results2_2025_26": "[{\"home\":\"0\",\"away\":\"0\",\"scorers\":\"nikdo\"},{\"home\":\"1\",\"away\":\"1\",\"scorers\":\"Cupák\"},{\"home\":\"1\",\"away\":\"1\",\"scorers\":\"Vydra, Tekijaški\"},{\"home\":\"1\",\"away\":\"2\",\"scorers\":\"Gning, Vlkanova, Štorman\"},{\"home\":\"0\",\"away\":\"2\",\"scorers\":\"Provod, Kušej\"},{\"home\":\"2\",\"away\":\"1\",\"scorers\":\"Ghali, Patrák, Letenay\"},{\"home\":\"1\",\"away\":\"0\",\"scorers\":\"Nedohráno\"},{\"home\":\"3\",\"away\":\"2\",\"scorers\":\"Rrahmani, Pech, Vojta, Kuchta, Haraslín\"}]"
-    };
 
-    // Ulož všechna data do Supabase
-    for (const [key, value] of Object.entries(tipsData)) {
-      await safeSaveData(key, value);
-      console.log(`✅ Uloženo: ${key}`);
-    }
-
-    console.log('🎉 Všechny tipy byly úspěšně obnoveny!');
-    setMigrationStatus('✅ Všechny tipy byly úspěšně obnoveny!');
-    return true;
-  } catch (error) {
-    console.error('❌ Chyba při obnovování tipů:', error);
-    setMigrationStatus(`❌ Chyba při obnovování tipů: ${error}`);
-    return false;
-  } finally {
-    setIsMigrating(false);
-  }
-};
 
 // Spusť import při načtení stránky
 if (typeof window !== 'undefined') {
@@ -1632,6 +1592,48 @@ export default function Dashboard() {
       setIsMigrating(false)
     }
   }
+
+  // Funkce pro obnovení chybějících tipů
+  const restoreMissingTips = async () => {
+    setIsMigrating(true);
+    setMigrationStatus('🔄 Obnovuji chybějící tipy...');
+    
+    try {
+      console.log('🔄 Obnovuji chybějící tipy...');
+      
+      // Data podle tabulky
+      const tipsData = {
+        "tips1_Rybča": "[{\"home\":\"0\",\"away\":\"3\",\"scorer\":\"Šulc\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"Drchal\"},{\"home\":\"1\",\"away\":\"0\",\"scorer\":\"Kozák\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Gning\"},{\"home\":\"1\",\"away\":\"3\",\"scorer\":\"Kuchta\"},{\"home\":\"0\",\"away\":\"2\",\"scorer\":\"Janošek\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Krollis\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Chorý\"}]",
+        "tips1_Kořda": "[{\"home\":\"0\",\"away\":\"2\",\"scorer\":\"Vydra\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Ewerton\"},{\"home\":\"1\",\"away\":\"0\",\"scorer\":\"Kozák\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"Milla\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Kuchta\"},{\"home\":\"0\",\"away\":\"1\",\"scorer\":\"Vašulín\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Krollis\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Kušej\"}]",
+        "tips1_Jozeve": "[{\"home\":\"0\",\"away\":\"3\",\"scorer\":\"Vydra\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Ewerton\"},{\"home\":\"1\",\"away\":\"0\",\"scorer\":\"Krejčí\"},{\"home\":\"3\",\"away\":\"1\",\"scorer\":\"Gning\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Kuchta\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Mikulenka\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Krollis\"},{\"home\":\"3\",\"away\":\"0\",\"scorer\":\"Kušej\"}]",
+        "tips1_Špinavovlas": "[{\"home\":\"0\",\"away\":\"2\",\"scorer\":\"Prince Adu\"},{\"home\":\"0\",\"away\":\"1\",\"scorer\":\"Ewerton\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Pulkrab\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Gning\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Kuchta\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"Janošek\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"Vojta\"},{\"home\":\"3\",\"away\":\"0\",\"scorer\":\"Chorý\"}]",
+        "tips1_Netáhlo": "[{\"home\":\"0\",\"away\":\"2\",\"scorer\":\"Šulc\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Ewerton\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Kozák\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Vecheta\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Haraslín\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Janošek\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Hlavatý\"},{\"home\":\"3\",\"away\":\"0\",\"scorer\":\"Kušej\"}]",
+        "tips2_Rybča": "[{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Vašulín\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Nombil\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Vydra\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"van Buren\"},{\"home\":\"0\",\"away\":\"2\",\"scorer\":\"Chorý\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Krollis\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Šín\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Kuchta\"}]",
+        "tips2_Kořda": "[{\"home\":\"1\",\"away\":\"0\",\"scorer\":\"Vašulín\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Kanu\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Vydra\"},{\"home\":\"3\",\"away\":\"1\",\"scorer\":\"Vlkanova\"},{\"home\":\"1\",\"away\":\"3\",\"scorer\":\"Chorý\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Krollis\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Šín\"},{\"home\":\"3\",\"away\":\"1\",\"scorer\":\"Kuchta\"}]",
+        "tips2_Jozeve": "[{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Vašulín\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"Kanu\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Vydra\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Pilař\"},{\"home\":\"0\",\"away\":\"3\",\"scorer\":\"Chorý\"},{\"home\":\"3\",\"away\":\"0\",\"scorer\":\"Krollis\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Prekop\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Haraslín\"}]",
+        "tips2_Špinavovlas": "[{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Vašulín\"},{\"home\":\"1\",\"away\":\"0\",\"scorer\":\"Kanu\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Šulc\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"van Buren\"},{\"home\":\"0\",\"away\":\"2\",\"scorer\":\"Chorý\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Krollis\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Šín\"},{\"home\":\"3\",\"away\":\"1\",\"scorer\":\"Kuchta\"}]",
+        "tips2_Netáhlo": "[{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Vašulín\"},{\"home\":\"1\",\"away\":\"1\",\"scorer\":\"Krmenčík\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Šulc\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"van Buren\"},{\"home\":\"1\",\"away\":\"2\",\"scorer\":\"Chorý\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Krollis\"},{\"home\":\"2\",\"away\":\"0\",\"scorer\":\"Šín\"},{\"home\":\"2\",\"away\":\"1\",\"scorer\":\"Kuchta\"}]",
+        "results1_2025_26": "[{\"home\":\"1\",\"away\":\"5\",\"scorers\":\"Vydra, Vydra, Šulc\"},{\"home\":\"1\",\"away\":\"0\",\"scorers\":\"Yusuf\"},{\"home\":\"1\",\"away\":\"3\",\"scorers\":\"Pulkrab, Kanu, Nombil\"},{\"home\":\"2\",\"away\":\"0\",\"scorers\":\"Sinhateh\"},{\"home\":\"1\",\"away\":\"1\",\"scorers\":\"Kuchta\"},{\"home\":\"0\",\"away\":\"1\",\"scorers\":\"Vašulín\"},{\"home\":\"3\",\"away\":\"3\",\"scorers\":\"Pech, Macek, Krollis, Hlavatý, Mašel\"},{\"home\":\"2\",\"away\":\"2\",\"scorers\":\"Sojka, Chorý, Zafeiris, Hodek\"}]",
+        "results2_2025_26": "[{\"home\":\"0\",\"away\":\"0\",\"scorers\":\"nikdo\"},{\"home\":\"1\",\"away\":\"1\",\"scorers\":\"Cupák\"},{\"home\":\"1\",\"away\":\"1\",\"scorers\":\"Vydra, Tekijaški\"},{\"home\":\"1\",\"away\":\"2\",\"scorers\":\"Gning, Vlkanova, Štorman\"},{\"home\":\"0\",\"away\":\"2\",\"scorers\":\"Provod, Kušej\"},{\"home\":\"2\",\"away\":\"1\",\"scorers\":\"Ghali, Patrák, Letenay\"},{\"home\":\"1\",\"away\":\"0\",\"scorers\":\"Nedohráno\"},{\"home\":\"3\",\"away\":\"2\",\"scorers\":\"Rrahmani, Pech, Vojta, Kuchta, Haraslín\"}]"
+      };
+
+      // Ulož všechna data do Supabase
+      for (const [key, value] of Object.entries(tipsData)) {
+        await safeSaveData(key, value);
+        console.log(`✅ Uloženo: ${key}`);
+      }
+
+      console.log('🎉 Všechny tipy byly úspěšně obnoveny!');
+      setMigrationStatus('✅ Všechny tipy byly úspěšně obnoveny!');
+      return true;
+    } catch (error) {
+      console.error('❌ Chyba při obnovování tipů:', error);
+      setMigrationStatus(`❌ Chyba při obnovování tipů: ${error}`);
+      return false;
+    } finally {
+      setIsMigrating(false);
+    }
+  };
 
 
 
