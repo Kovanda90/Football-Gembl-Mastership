@@ -1349,7 +1349,22 @@ export default function Dashboard() {
     if (user) {
       const saveTips = async () => {
         console.log(`Ukládám tips3 pro ${user.nickname}:`, tips3)
-        await safeSaveData(`tips3_${user.nickname}`, JSON.stringify(tips3))
+        console.log(`tips3 je:`, tips3)
+        console.log(`tips3 typ:`, typeof tips3)
+        
+        if (!tips3) {
+          console.log(`tips3 je prázdné pro ${user.nickname}`)
+          return
+        }
+        
+        try {
+          const jsonString = JSON.stringify(tips3)
+          console.log(`JSON string pro tips3:`, jsonString)
+          await safeSaveData(`tips3_${user.nickname}`, jsonString)
+          console.log(`Úspěšně uloženo tips3 pro ${user.nickname}`)
+        } catch (error) {
+          console.error(`Chyba při ukládání tips3 pro ${user.nickname}:`, error)
+        }
       }
       saveTips()
     }

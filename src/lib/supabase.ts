@@ -75,6 +75,7 @@ export const safeLoadData = async (key: string) => {
 // Bezpečná funkce pro uložení dat (Supabase + fallback na localStorage)
 export const safeSaveData = async (key: string, value: string) => {
   console.log(`=== SAFE SAVE DATA: ${key} ===`)
+  console.log('Hodnota k uložení:', value)
   
   try {
     if (supabase) {
@@ -89,6 +90,7 @@ export const safeSaveData = async (key: string, value: string) => {
         console.log('Data uložena do Supabase')
         // Také uložíme do localStorage jako backup
         localStorageFallback.setItem(key, value)
+        console.log('Data také uložena do localStorage jako backup')
         return
       } else {
         console.log('Chyba při ukládání do Supabase:', upsertError)
