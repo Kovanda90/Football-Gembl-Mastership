@@ -265,14 +265,18 @@ export default function Dashboard() {
   // Načítání tipů všech hráčů pro admin
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips1_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips1_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips1(tips)
       }
       loadAllTips()
@@ -281,14 +285,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips2_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips2_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips2(tips)
       }
       loadAllTips()
@@ -317,14 +325,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips4_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips4_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips4(tips)
       }
       loadAllTips()
@@ -333,14 +345,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips5_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips5_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips5(tips)
       }
       loadAllTips()
@@ -349,14 +365,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips6_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips6_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips6(tips)
       }
       loadAllTips()
@@ -365,14 +385,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips7_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips7_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips7(tips)
       }
       loadAllTips()
@@ -381,14 +405,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips8_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips8_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips8(tips)
       }
       loadAllTips()
@@ -397,14 +425,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips9_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips9_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips9(tips)
       }
       loadAllTips()
@@ -413,14 +445,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips10_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips10_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips10(tips)
       }
       loadAllTips()
@@ -429,14 +465,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips11_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips11_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips11(tips)
       }
       loadAllTips()
@@ -445,14 +485,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips12_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips12_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips12(tips)
       }
       loadAllTips()
@@ -461,14 +505,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips13_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips13_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips13(tips)
       }
       loadAllTips()
@@ -477,14 +525,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips14_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips14_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips14(tips)
       }
       loadAllTips()
@@ -493,14 +545,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips15_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips15_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips15(tips)
       }
       loadAllTips()
@@ -509,14 +565,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips16_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips16_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips16(tips)
       }
       loadAllTips()
@@ -525,14 +585,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips17_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips17_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips17(tips)
       }
       loadAllTips()
@@ -541,14 +605,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips18_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips18_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips18(tips)
       }
       loadAllTips()
@@ -557,14 +625,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips19_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips19_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips19(tips)
       }
       loadAllTips()
@@ -573,14 +645,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips20_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips20_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips20(tips)
       }
       loadAllTips()
@@ -589,14 +665,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips21_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips21_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips21(tips)
       }
       loadAllTips()
@@ -605,14 +685,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips22_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips22_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips22(tips)
       }
       loadAllTips()
@@ -621,14 +705,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips23_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips23_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips23(tips)
       }
       loadAllTips()
@@ -637,14 +725,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips24_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips24_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips24(tips)
       }
       loadAllTips()
@@ -653,14 +745,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips25_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips25_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips25(tips)
       }
       loadAllTips()
@@ -669,14 +765,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips26_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips26_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips26(tips)
       }
       loadAllTips()
@@ -685,14 +785,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips27_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips27_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips27(tips)
       }
       loadAllTips()
@@ -701,14 +805,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips28_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips28_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips28(tips)
       }
       loadAllTips()
@@ -717,14 +825,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips29_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips29_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips29(tips)
       }
       loadAllTips()
@@ -733,14 +845,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips30_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips30_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips30(tips)
       }
       loadAllTips()
@@ -749,219 +865,309 @@ export default function Dashboard() {
 
   // Načítání tipů pro hráče
   useEffect(() => {
-    const savedTips1 = localStorage.getItem(`tips1_${user?.nickname}`)
-    if (savedTips1) {
-      setTips1(JSON.parse(savedTips1))
+    const loadTips = async () => {
+      const savedTips1 = await safeLoadData(`tips1_${user?.nickname}`)
+      if (savedTips1) {
+        setTips1(JSON.parse(savedTips1))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips2 = localStorage.getItem(`tips2_${user?.nickname}`)
-    if (savedTips2) {
-      console.log(`Načítám tips2 pro ${user?.nickname}:`, savedTips2)
-      setTips2(JSON.parse(savedTips2))
-    } else {
-      console.log(`Žádné tips2 pro ${user?.nickname} v localStorage`)
+    const loadTips = async () => {
+      const savedTips2 = await safeLoadData(`tips2_${user?.nickname}`)
+      if (savedTips2) {
+        console.log(`Načítám tips2 pro ${user?.nickname}:`, savedTips2)
+        setTips2(JSON.parse(savedTips2))
+      } else {
+        console.log(`Žádné tips2 pro ${user?.nickname} v localStorage`)
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips3 = localStorage.getItem(`tips3_${user?.nickname}`)
-    if (savedTips3) {
-      console.log(`Načítám tips3 pro ${user?.nickname}:`, savedTips3)
-      setTips3(JSON.parse(savedTips3))
-    } else {
-      console.log(`Žádné tips3 pro ${user?.nickname} v localStorage`)
+    const loadTips = async () => {
+      const savedTips3 = await safeLoadData(`tips3_${user?.nickname}`)
+      if (savedTips3) {
+        console.log(`Načítám tips3 pro ${user?.nickname}:`, savedTips3)
+        setTips3(JSON.parse(savedTips3))
+      } else {
+        console.log(`Žádné tips3 pro ${user?.nickname} v localStorage`)
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips4 = localStorage.getItem(`tips4_${user?.nickname}`)
-    if (savedTips4) {
-      setTips4(JSON.parse(savedTips4))
+    const loadTips = async () => {
+      const savedTips4 = await safeLoadData(`tips4_${user?.nickname}`)
+      if (savedTips4) {
+        setTips4(JSON.parse(savedTips4))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips5 = localStorage.getItem(`tips5_${user?.nickname}`)
-    if (savedTips5) {
-      setTips5(JSON.parse(savedTips5))
+    const loadTips = async () => {
+      const savedTips5 = await safeLoadData(`tips5_${user?.nickname}`)
+      if (savedTips5) {
+        setTips5(JSON.parse(savedTips5))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips6 = localStorage.getItem(`tips6_${user?.nickname}`)
-    if (savedTips6) {
-      setTips6(JSON.parse(savedTips6))
+    const loadTips = async () => {
+      const savedTips6 = await safeLoadData(`tips6_${user?.nickname}`)
+      if (savedTips6) {
+        setTips6(JSON.parse(savedTips6))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips7 = localStorage.getItem(`tips7_${user?.nickname}`)
-    if (savedTips7) {
-      setTips7(JSON.parse(savedTips7))
+    const loadTips = async () => {
+      const savedTips7 = await safeLoadData(`tips7_${user?.nickname}`)
+      if (savedTips7) {
+        setTips7(JSON.parse(savedTips7))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips8 = localStorage.getItem(`tips8_${user?.nickname}`)
-    if (savedTips8) {
-      setTips8(JSON.parse(savedTips8))
+    const loadTips = async () => {
+      const savedTips8 = await safeLoadData(`tips8_${user?.nickname}`)
+      if (savedTips8) {
+        setTips8(JSON.parse(savedTips8))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips9 = localStorage.getItem(`tips9_${user?.nickname}`)
-    if (savedTips9) {
-      setTips9(JSON.parse(savedTips9))
+    const loadTips = async () => {
+      const savedTips9 = await safeLoadData(`tips9_${user?.nickname}`)
+      if (savedTips9) {
+        setTips9(JSON.parse(savedTips9))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips10 = localStorage.getItem(`tips10_${user?.nickname}`)
-    if (savedTips10) {
-      setTips10(JSON.parse(savedTips10))
+    const loadTips = async () => {
+      const savedTips10 = await safeLoadData(`tips10_${user?.nickname}`)
+      if (savedTips10) {
+        setTips10(JSON.parse(savedTips10))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips11 = localStorage.getItem(`tips11_${user?.nickname}`)
-    if (savedTips11) {
-      setTips11(JSON.parse(savedTips11))
+    const loadTips = async () => {
+      const savedTips11 = await safeLoadData(`tips11_${user?.nickname}`)
+      if (savedTips11) {
+        setTips11(JSON.parse(savedTips11))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips12 = localStorage.getItem(`tips12_${user?.nickname}`)
-    if (savedTips12) {
-      setTips12(JSON.parse(savedTips12))
+    const loadTips = async () => {
+      const savedTips12 = await safeLoadData(`tips12_${user?.nickname}`)
+      if (savedTips12) {
+        setTips12(JSON.parse(savedTips12))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips13 = localStorage.getItem(`tips13_${user?.nickname}`)
-    if (savedTips13) {
-      setTips13(JSON.parse(savedTips13))
+    const loadTips = async () => {
+      const savedTips13 = await safeLoadData(`tips13_${user?.nickname}`)
+      if (savedTips13) {
+        setTips13(JSON.parse(savedTips13))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips14 = localStorage.getItem(`tips14_${user?.nickname}`)
-    if (savedTips14) {
-      setTips14(JSON.parse(savedTips14))
+    const loadTips = async () => {
+      const savedTips14 = await safeLoadData(`tips14_${user?.nickname}`)
+      if (savedTips14) {
+        setTips14(JSON.parse(savedTips14))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips15 = localStorage.getItem(`tips15_${user?.nickname}`)
-    if (savedTips15) {
-      setTips15(JSON.parse(savedTips15))
+    const loadTips = async () => {
+      const savedTips15 = await safeLoadData(`tips15_${user?.nickname}`)
+      if (savedTips15) {
+        setTips15(JSON.parse(savedTips15))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips16 = localStorage.getItem(`tips16_${user?.nickname}`)
-    if (savedTips16) {
-      setTips16(JSON.parse(savedTips16))
+    const loadTips = async () => {
+      const savedTips16 = await safeLoadData(`tips16_${user?.nickname}`)
+      if (savedTips16) {
+        setTips16(JSON.parse(savedTips16))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips17 = localStorage.getItem(`tips17_${user?.nickname}`)
-    if (savedTips17) {
-      setTips17(JSON.parse(savedTips17))
+    const loadTips = async () => {
+      const savedTips17 = await safeLoadData(`tips17_${user?.nickname}`)
+      if (savedTips17) {
+        setTips17(JSON.parse(savedTips17))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips18 = localStorage.getItem(`tips18_${user?.nickname}`)
-    if (savedTips18) {
-      setTips18(JSON.parse(savedTips18))
+    const loadTips = async () => {
+      const savedTips18 = await safeLoadData(`tips18_${user?.nickname}`)
+      if (savedTips18) {
+        setTips18(JSON.parse(savedTips18))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips19 = localStorage.getItem(`tips19_${user?.nickname}`)
-    if (savedTips19) {
-      setTips19(JSON.parse(savedTips19))
+    const loadTips = async () => {
+      const savedTips19 = await safeLoadData(`tips19_${user?.nickname}`)
+      if (savedTips19) {
+        setTips19(JSON.parse(savedTips19))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips20 = localStorage.getItem(`tips20_${user?.nickname}`)
-    if (savedTips20) {
-      setTips20(JSON.parse(savedTips20))
+    const loadTips = async () => {
+      const savedTips20 = await safeLoadData(`tips20_${user?.nickname}`)
+      if (savedTips20) {
+        setTips20(JSON.parse(savedTips20))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips21 = localStorage.getItem(`tips21_${user?.nickname}`)
-    if (savedTips21) {
-      setTips21(JSON.parse(savedTips21))
+    const loadTips = async () => {
+      const savedTips21 = await safeLoadData(`tips21_${user?.nickname}`)
+      if (savedTips21) {
+        setTips21(JSON.parse(savedTips21))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips22 = localStorage.getItem(`tips22_${user?.nickname}`)
-    if (savedTips22) {
-      setTips22(JSON.parse(savedTips22))
+    const loadTips = async () => {
+      const savedTips22 = await safeLoadData(`tips22_${user?.nickname}`)
+      if (savedTips22) {
+        setTips22(JSON.parse(savedTips22))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips23 = localStorage.getItem(`tips23_${user?.nickname}`)
-    if (savedTips23) {
-      setTips23(JSON.parse(savedTips23))
+    const loadTips = async () => {
+      const savedTips23 = await safeLoadData(`tips23_${user?.nickname}`)
+      if (savedTips23) {
+        setTips23(JSON.parse(savedTips23))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips24 = localStorage.getItem(`tips24_${user?.nickname}`)
-    if (savedTips24) {
-      setTips24(JSON.parse(savedTips24))
+    const loadTips = async () => {
+      const savedTips24 = await safeLoadData(`tips24_${user?.nickname}`)
+      if (savedTips24) {
+        setTips24(JSON.parse(savedTips24))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips25 = localStorage.getItem(`tips25_${user?.nickname}`)
-    if (savedTips25) {
-      setTips25(JSON.parse(savedTips25))
+    const loadTips = async () => {
+      const savedTips25 = await safeLoadData(`tips25_${user?.nickname}`)
+      if (savedTips25) {
+        setTips25(JSON.parse(savedTips25))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips26 = localStorage.getItem(`tips26_${user?.nickname}`)
-    if (savedTips26) {
-      setTips26(JSON.parse(savedTips26))
+    const loadTips = async () => {
+      const savedTips26 = await safeLoadData(`tips26_${user?.nickname}`)
+      if (savedTips26) {
+        setTips26(JSON.parse(savedTips26))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips27 = localStorage.getItem(`tips27_${user?.nickname}`)
-    if (savedTips27) {
-      setTips27(JSON.parse(savedTips27))
+    const loadTips = async () => {
+      const savedTips27 = await safeLoadData(`tips27_${user?.nickname}`)
+      if (savedTips27) {
+        setTips27(JSON.parse(savedTips27))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips28 = localStorage.getItem(`tips28_${user?.nickname}`)
-    if (savedTips28) {
-      setTips28(JSON.parse(savedTips28))
+    const loadTips = async () => {
+      const savedTips28 = await safeLoadData(`tips28_${user?.nickname}`)
+      if (savedTips28) {
+        setTips28(JSON.parse(savedTips28))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips29 = localStorage.getItem(`tips29_${user?.nickname}`)
-    if (savedTips29) {
-      setTips29(JSON.parse(savedTips29))
+    const loadTips = async () => {
+      const savedTips29 = await safeLoadData(`tips29_${user?.nickname}`)
+      if (savedTips29) {
+        setTips29(JSON.parse(savedTips29))
+      }
     }
+    loadTips()
   }, [user])
 
   useEffect(() => {
-    const savedTips30 = localStorage.getItem(`tips30_${user?.nickname}`)
-    if (savedTips30) {
-      setTips30(JSON.parse(savedTips30))
+    const loadTips = async () => {
+      const savedTips30 = await safeLoadData(`tips30_${user?.nickname}`)
+      if (savedTips30) {
+        setTips30(JSON.parse(savedTips30))
+      }
     }
+    loadTips()
   }, [user])
 
   // Načítání výsledků pro admin
@@ -1134,14 +1340,14 @@ export default function Dashboard() {
   // Ukládání tipů pro hráče
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips1_${user.nickname}`, JSON.stringify(tips1))
+      safeSaveData(`tips1_${user.nickname}`, JSON.stringify(tips1))
     }
   }, [tips1, user])
 
   useEffect(() => {
     if (user) {
       console.log(`Ukládám tips2 pro ${user.nickname}:`, tips2)
-      localStorage.setItem(`tips2_${user.nickname}`, JSON.stringify(tips2))
+      safeSaveData(`tips2_${user.nickname}`, JSON.stringify(tips2))
     }
   }, [tips2, user])
 
@@ -1154,163 +1360,163 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips4_${user.nickname}`, JSON.stringify(tips4))
+      safeSaveData(`tips4_${user.nickname}`, JSON.stringify(tips4))
     }
   }, [tips4, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips5_${user.nickname}`, JSON.stringify(tips5))
+      safeSaveData(`tips5_${user.nickname}`, JSON.stringify(tips5))
     }
   }, [tips5, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips6_${user.nickname}`, JSON.stringify(tips6))
+      safeSaveData(`tips6_${user.nickname}`, JSON.stringify(tips6))
     }
   }, [tips6, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips7_${user.nickname}`, JSON.stringify(tips7))
+      safeSaveData(`tips7_${user.nickname}`, JSON.stringify(tips7))
     }
   }, [tips7, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips8_${user.nickname}`, JSON.stringify(tips8))
+      safeSaveData(`tips8_${user.nickname}`, JSON.stringify(tips8))
     }
   }, [tips8, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips9_${user.nickname}`, JSON.stringify(tips9))
+      safeSaveData(`tips9_${user.nickname}`, JSON.stringify(tips9))
     }
   }, [tips9, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips10_${user.nickname}`, JSON.stringify(tips10))
+      safeSaveData(`tips10_${user.nickname}`, JSON.stringify(tips10))
     }
   }, [tips10, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips11_${user.nickname}`, JSON.stringify(tips11))
+      safeSaveData(`tips11_${user.nickname}`, JSON.stringify(tips11))
     }
   }, [tips11, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips12_${user.nickname}`, JSON.stringify(tips12))
+      safeSaveData(`tips12_${user.nickname}`, JSON.stringify(tips12))
     }
   }, [tips12, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips13_${user.nickname}`, JSON.stringify(tips13))
+      safeSaveData(`tips13_${user.nickname}`, JSON.stringify(tips13))
     }
   }, [tips13, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips14_${user.nickname}`, JSON.stringify(tips14))
+      safeSaveData(`tips14_${user.nickname}`, JSON.stringify(tips14))
     }
   }, [tips14, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips15_${user.nickname}`, JSON.stringify(tips15))
+      safeSaveData(`tips15_${user.nickname}`, JSON.stringify(tips15))
     }
   }, [tips15, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips16_${user.nickname}`, JSON.stringify(tips16))
+      safeSaveData(`tips16_${user.nickname}`, JSON.stringify(tips16))
     }
   }, [tips16, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips17_${user.nickname}`, JSON.stringify(tips17))
+      safeSaveData(`tips17_${user.nickname}`, JSON.stringify(tips17))
     }
   }, [tips17, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips18_${user.nickname}`, JSON.stringify(tips18))
+      safeSaveData(`tips18_${user.nickname}`, JSON.stringify(tips18))
     }
   }, [tips18, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips19_${user.nickname}`, JSON.stringify(tips19))
+      safeSaveData(`tips19_${user.nickname}`, JSON.stringify(tips19))
     }
   }, [tips19, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips20_${user.nickname}`, JSON.stringify(tips20))
+      safeSaveData(`tips20_${user.nickname}`, JSON.stringify(tips20))
     }
   }, [tips20, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips21_${user.nickname}`, JSON.stringify(tips21))
+      safeSaveData(`tips21_${user.nickname}`, JSON.stringify(tips21))
     }
   }, [tips21, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips22_${user.nickname}`, JSON.stringify(tips22))
+      safeSaveData(`tips22_${user.nickname}`, JSON.stringify(tips22))
     }
   }, [tips22, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips23_${user.nickname}`, JSON.stringify(tips23))
+      safeSaveData(`tips23_${user.nickname}`, JSON.stringify(tips23))
     }
   }, [tips23, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips24_${user.nickname}`, JSON.stringify(tips24))
+      safeSaveData(`tips24_${user.nickname}`, JSON.stringify(tips24))
     }
   }, [tips24, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips25_${user.nickname}`, JSON.stringify(tips25))
+      safeSaveData(`tips25_${user.nickname}`, JSON.stringify(tips25))
     }
   }, [tips25, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips26_${user.nickname}`, JSON.stringify(tips26))
+      safeSaveData(`tips26_${user.nickname}`, JSON.stringify(tips26))
     }
   }, [tips26, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips27_${user.nickname}`, JSON.stringify(tips27))
+      safeSaveData(`tips27_${user.nickname}`, JSON.stringify(tips27))
     }
   }, [tips27, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips28_${user.nickname}`, JSON.stringify(tips28))
+      safeSaveData(`tips28_${user.nickname}`, JSON.stringify(tips28))
     }
   }, [tips28, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips29_${user.nickname}`, JSON.stringify(tips29))
+      safeSaveData(`tips29_${user.nickname}`, JSON.stringify(tips29))
     }
   }, [tips29, user])
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(`tips30_${user.nickname}`, JSON.stringify(tips30))
+      safeSaveData(`tips30_${user.nickname}`, JSON.stringify(tips30))
     }
   }, [tips30, user])
 
