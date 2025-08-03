@@ -1,8 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
+  // App directory je už defaultní v Next.js 15
 }
 
 module.exports = nextConfig 

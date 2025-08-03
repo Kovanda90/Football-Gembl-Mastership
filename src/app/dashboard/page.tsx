@@ -4498,64 +4498,6 @@ export default function Dashboard() {
                   }
                 });
                 
-                // Bonusový bod pro vítěze ve střelcích - POČÍTÁM JEDNOU PRO CELÉ KOLO
-                console.log('=== ZAČÁTEK BONUSOVÉ LOGIKY ===');
-                
-                // Nejdříve spočítám body za střelce pro každého hráče v každém kole
-                const scorerPointsByRound: { [roundNumber: number]: { [nickname: string]: number } } = {};
-                
-                rounds.forEach((round) => {
-                  const hasResults = round.results && round.results.length > 0 && 
-                    round.results.every((result: any) => 
-                      result && result.home !== '' && result.home !== null && result.home !== undefined &&
-                      result.away !== '' && result.away !== null && result.away !== undefined
-                    );
-                  
-                  console.log(`Kolo ${round.roundNumber} - hasResults pro bonus:`, hasResults);
-                  
-                  if (hasResults) {
-                    scorerPointsByRound[round.roundNumber] = {};
-                    
-                    USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(user => {
-                      let roundScorerPoints = 0;
-                      round.allTips[user.nickname]?.forEach((tip: any, idx: number) => {
-                        const res = round.results[idx];
-                        if (!tip || tip.home === '' || tip.away === '' || !res || res.home === '' || res.away === '') return;
-                        const parsedTip = {
-                          matchIndex: idx,
-                          predictedResult: { home: Number(tip.home), away: Number(tip.away) },
-                          predictedScorer: tip.scorer || ''
-                        };
-                        const parsedResult = { home: Number(res.home), away: Number(res.away) };
-                        const scorers = (res.scorers || '').split(',').map(s => s.trim()).filter(Boolean);
-                        const points = calculatePoints(parsedTip, parsedResult, scorers);
-                        roundScorerPoints += points.correctScorer + points.noScorer + points.bonusPoints;
-                      });
-                      
-                      scorerPointsByRound[round.roundNumber][user.nickname] = roundScorerPoints;
-                      
-                      // Debug pro Kořdu
-                      if (user.nickname === 'Kořda') {
-                        console.log(`Kolo ${round.roundNumber} - Kořda body za střelce:`, roundScorerPoints);
-                      }
-                    });
-                    
-                    // Najdu vítěze ve střelcích pro toto kolo
-                    const roundScorerPointsArray = Object.entries(scorerPointsByRound[round.roundNumber]).map(([nickname, points]) => ({ nickname, points }));
-                    const maxScorerPoints = Math.max(...roundScorerPointsArray.map(p => p.points));
-                    const scorerWinners = roundScorerPointsArray.filter(p => p.points === maxScorerPoints);
-                    
-                    console.log(`Kolo ${round.roundNumber} - Body za střelce:`, roundScorerPointsArray);
-                    console.log(`Kolo ${round.roundNumber} - Vítězové:`, scorerWinners.map(w => w.nickname));
-                    
-                    // Pokud je aktuální hráč vítězem ve střelcích, přidá +1 bod do výsledků
-                    if (scorerWinners.some(w => w.nickname === u.nickname)) {
-                      console.log(`Kolo ${round.roundNumber} - Přidávám bonusový bod pro ${u.nickname}`);
-                      totalResultPoints += 1;
-                    }
-                  }
-                });
-                
                 // Final debug log for totalResultPoints
                 console.log(`FINAL DEBUG - ${u.nickname}: totalResultPoints = ${totalResultPoints}, totalScorerPoints = ${totalScorerPoints}, totalPoints = ${totalResultPoints + totalScorerPoints}`);
                 
