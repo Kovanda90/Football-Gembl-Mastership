@@ -42,6 +42,13 @@ export const localStorageFallback = {
 export const safeLoadData = async (key: string) => {
   console.log(`=== SAFE LOAD DATA: ${key} ===`)
   
+  // Pro tipy hráčů prioritně používáme localStorage
+  if (key.startsWith('tips')) {
+    const localData = localStorageFallback.getItem(key)
+    console.log('Načítám tipy z localStorage:', key, localData ? 'EXISTUJE' : 'NEEXISTUJE')
+    return localData
+  }
+  
   try {
     if (supabase) {
       console.log('Zkouším Supabase pro:', key)
@@ -77,7 +84,7 @@ export const safeLoadData = async (key: string) => {
 export const safeSaveData = async (key: string, value: string) => {
   try {
     if (supabase) {
-      // Zkusíme Supabase - nejdřív smažeme stará data, pak vložíme nová
+      // Zkusíme Supabase - nejdřív smažeme stará data pro tento klíč, pak vložíme nová
       const { error: deleteError } = await supabase
         .from('app_data')
         .delete()
