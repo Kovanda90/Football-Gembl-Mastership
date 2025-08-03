@@ -140,6 +140,8 @@ function getInitialResults(matches: any[]): Result[] {
 
 export default function Dashboard() {
   const [user, setUser] = useState<any>(null)
+  const [migrationStatus, setMigrationStatus] = useState<string>('')
+  const [isMigrating, setIsMigrating] = useState<boolean>(false)
 
   const [tips1, setTips1] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_1))
   const [tips2, setTips2] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_2))
