@@ -4447,12 +4447,22 @@ export default function Dashboard() {
                 ];
                 
                 rounds.forEach((round) => {
-                  // Kontrola, zda je kolo kompletně uzavřené
-                  if (isRoundComplete(round.results)) {
+                  // Kontrola, zda jsou alespoň výsledky vyplněny (pro bonusový bod za střelce)
+                  const hasResults = round.results && round.results.length > 0 && 
+                    round.results.every((result: any) => 
+                      result && result.home !== '' && result.home !== null && result.home !== undefined &&
+                      result.away !== '' && result.away !== null && result.away !== undefined
+                    );
+                  
+                  if (hasResults) {
                     const { roundResultPoints, roundScorerPoints } = calculateRoundPoints(round.allTips, round.results, round.roundNumber);
                     totalResultPoints += roundResultPoints;
                     totalScorerPoints += roundScorerPoints;
-                    totalFinance += calculateRoundFinance(round.allTips, round.results);
+                    
+                    // Finance pouze pro uzavřená kola
+                    if (isRoundComplete(round.results)) {
+                      totalFinance += calculateRoundFinance(round.allTips, round.results);
+                    }
                   }
                 });
                 
