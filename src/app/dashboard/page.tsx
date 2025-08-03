@@ -1310,167 +1310,173 @@ export default function Dashboard() {
   // Načítání výsledků pro admin
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const savedResults1 = localStorage.getItem('results1_2025_26')
-      if (savedResults1) {
-        setResults1(JSON.parse(savedResults1))
-      } else {
-        // Pokud nejsou uložené výsledky, použijeme výchozí hodnoty
-        setResults1([
-          { home: "1", away: "5", scorers: "Vydra, Spáčil, Šulc, Vydra, Durosinmi" },
-          { home: "1", away: "0", scorers: "Yusuf" },
-          { home: "1", away: "3", scorers: "Pulkrab, Cupák, Kanu, Nombil" },
-          { home: "2", away: "0", scorers: "Singateh, Šigut" },
-          { home: "1", away: "1", scorers: "Jawo, Kuchta" },
-          { home: "0", away: "1", scorers: "Vašulín" },
-          { home: "3", away: "3", scorers: "Pech, Krollis, Macek, Ševčík, Hlavatý, Mašek" },
-          { home: "2", away: "2", scorers: "Sojka, Chorý, Zafeiris, Hodek" }
-        ])
+      const loadResults = async () => {
+        const currentUser = user.nickname
+        
+        // Načítání výsledků z Supabase/localStorage
+        const savedResults1 = await safeLoadData('results1_2025_26')
+        if (savedResults1 && user.nickname === currentUser) {
+          setResults1(JSON.parse(savedResults1))
+        } else if (user.nickname === currentUser) {
+          // Pokud nejsou uložené výsledky, použijeme výchozí hodnoty
+          setResults1([
+            { home: "1", away: "5", scorers: "Vydra, Spáčil, Šulc, Vydra, Durosinmi" },
+            { home: "1", away: "0", scorers: "Yusuf" },
+            { home: "1", away: "3", scorers: "Pulkrab, Cupák, Kanu, Nombil" },
+            { home: "2", away: "0", scorers: "Singateh, Šigut" },
+            { home: "1", away: "1", scorers: "Jawo, Kuchta" },
+            { home: "0", away: "1", scorers: "Vašulín" },
+            { home: "3", away: "3", scorers: "Pech, Krollis, Macek, Ševčík, Hlavatý, Mašek" },
+            { home: "2", away: "2", scorers: "Sojka, Chorý, Zafeiris, Hodek" }
+          ])
+        }
+        
+        const savedResults2 = await safeLoadData('results2_2025_26')
+        if (savedResults2 && user.nickname === currentUser) {
+          setResults2(JSON.parse(savedResults2))
+        }
+        
+        const savedResults3 = await safeLoadData('results3_2025_26')
+        if (savedResults3 && user.nickname === currentUser) {
+          setResults3(JSON.parse(savedResults3))
+        }
+        
+        const savedResults4 = await safeLoadData('results4_2025_26')
+        if (savedResults4 && user.nickname === currentUser) {
+          setResults4(JSON.parse(savedResults4))
+        }
+        
+        const savedResults5 = await safeLoadData('results5_2025_26')
+        if (savedResults5 && user.nickname === currentUser) {
+          setResults5(JSON.parse(savedResults5))
+        }
+        
+        const savedResults6 = await safeLoadData('results6_2025_26')
+        if (savedResults6 && user.nickname === currentUser) {
+          setResults6(JSON.parse(savedResults6))
+        }
+        
+        const savedResults7 = await safeLoadData('results7_2025_26')
+        if (savedResults7 && user.nickname === currentUser) {
+          setResults7(JSON.parse(savedResults7))
+        }
+        
+        const savedResults8 = await safeLoadData('results8_2025_26')
+        if (savedResults8 && user.nickname === currentUser) {
+          setResults8(JSON.parse(savedResults8))
+        }
+        
+        const savedResults9 = await safeLoadData('results9_2025_26')
+        if (savedResults9 && user.nickname === currentUser) {
+          setResults9(JSON.parse(savedResults9))
+        }
+        
+        const savedResults10 = await safeLoadData('results10_2025_26')
+        if (savedResults10 && user.nickname === currentUser) {
+          setResults10(JSON.parse(savedResults10))
+        }
+        
+        const savedResults11 = await safeLoadData('results11_2025_26')
+        if (savedResults11 && user.nickname === currentUser) {
+          setResults11(JSON.parse(savedResults11))
+        }
+        
+        const savedResults12 = await safeLoadData('results12_2025_26')
+        if (savedResults12 && user.nickname === currentUser) {
+          setResults12(JSON.parse(savedResults12))
+        }
+        
+        const savedResults13 = await safeLoadData('results13_2025_26')
+        if (savedResults13 && user.nickname === currentUser) {
+          setResults13(JSON.parse(savedResults13))
+        }
+        
+        const savedResults14 = await safeLoadData('results14_2025_26')
+        if (savedResults14 && user.nickname === currentUser) {
+          setResults14(JSON.parse(savedResults14))
+        }
+        
+        const savedResults15 = await safeLoadData('results15_2025_26')
+        if (savedResults15 && user.nickname === currentUser) {
+          setResults15(JSON.parse(savedResults15))
+        }
+        
+        const savedResults16 = await safeLoadData('results16_2025_26')
+        if (savedResults16 && user.nickname === currentUser) {
+          setResults16(JSON.parse(savedResults16))
+        }
+        
+        const savedResults17 = await safeLoadData('results17_2025_26')
+        if (savedResults17 && user.nickname === currentUser) {
+          setResults17(JSON.parse(savedResults17))
+        }
+        
+        const savedResults18 = await safeLoadData('results18_2025_26')
+        if (savedResults18 && user.nickname === currentUser) {
+          setResults18(JSON.parse(savedResults18))
+        }
+        
+        const savedResults19 = await safeLoadData('results19_2025_26')
+        if (savedResults19 && user.nickname === currentUser) {
+          setResults19(JSON.parse(savedResults19))
+        }
+        
+        const savedResults20 = await safeLoadData('results20_2025_26')
+        if (savedResults20 && user.nickname === currentUser) {
+          setResults20(JSON.parse(savedResults20))
+        }
+        
+        const savedResults21 = await safeLoadData('results21_2025_26')
+        if (savedResults21 && user.nickname === currentUser) {
+          setResults21(JSON.parse(savedResults21))
+        }
+        
+        const savedResults22 = await safeLoadData('results22_2025_26')
+        if (savedResults22 && user.nickname === currentUser) {
+          setResults22(JSON.parse(savedResults22))
+        }
+        
+        const savedResults23 = await safeLoadData('results23_2025_26')
+        if (savedResults23 && user.nickname === currentUser) {
+          setResults23(JSON.parse(savedResults23))
+        }
+        
+        const savedResults24 = await safeLoadData('results24_2025_26')
+        if (savedResults24 && user.nickname === currentUser) {
+          setResults24(JSON.parse(savedResults24))
+        }
+        
+        const savedResults25 = await safeLoadData('results25_2025_26')
+        if (savedResults25 && user.nickname === currentUser) {
+          setResults25(JSON.parse(savedResults25))
+        }
+        
+        const savedResults26 = await safeLoadData('results26_2025_26')
+        if (savedResults26 && user.nickname === currentUser) {
+          setResults26(JSON.parse(savedResults26))
+        }
+        
+        const savedResults27 = await safeLoadData('results27_2025_26')
+        if (savedResults27 && user.nickname === currentUser) {
+          setResults27(JSON.parse(savedResults27))
+        }
+        
+        const savedResults28 = await safeLoadData('results28_2025_26')
+        if (savedResults28 && user.nickname === currentUser) {
+          setResults28(JSON.parse(savedResults28))
+        }
+        
+        const savedResults29 = await safeLoadData('results29_2025_26')
+        if (savedResults29 && user.nickname === currentUser) {
+          setResults29(JSON.parse(savedResults29))
+        }
+        
+        const savedResults30 = await safeLoadData('results30_2025_26')
+        if (savedResults30 && user.nickname === currentUser) {
+          setResults30(JSON.parse(savedResults30))
+        }
       }
-      
-      const savedResults2 = localStorage.getItem('results2_2025_26')
-      if (savedResults2) {
-        setResults2(JSON.parse(savedResults2))
-      }
-      
-      const savedResults3 = localStorage.getItem('results3_2025_26')
-      if (savedResults3) {
-        setResults3(JSON.parse(savedResults3))
-      }
-      
-      const savedResults4 = localStorage.getItem('results4_2025_26')
-      if (savedResults4) {
-        setResults4(JSON.parse(savedResults4))
-      }
-      
-      const savedResults5 = localStorage.getItem('results5_2025_26')
-      if (savedResults5) {
-        setResults5(JSON.parse(savedResults5))
-      }
-      
-      const savedResults6 = localStorage.getItem('results6_2025_26')
-      if (savedResults6) {
-        setResults6(JSON.parse(savedResults6))
-      }
-      
-      const savedResults7 = localStorage.getItem('results7_2025_26')
-      if (savedResults7) {
-        setResults7(JSON.parse(savedResults7))
-      }
-      
-      const savedResults8 = localStorage.getItem('results8_2025_26')
-      if (savedResults8) {
-        setResults8(JSON.parse(savedResults8))
-      }
-      
-      const savedResults9 = localStorage.getItem('results9_2025_26')
-      if (savedResults9) {
-        setResults9(JSON.parse(savedResults9))
-      }
-      
-      const savedResults10 = localStorage.getItem('results10_2025_26')
-      if (savedResults10) {
-        setResults10(JSON.parse(savedResults10))
-      }
-      
-      const savedResults11 = localStorage.getItem('results11_2025_26')
-      if (savedResults11) {
-        setResults11(JSON.parse(savedResults11))
-      }
-      
-      const savedResults12 = localStorage.getItem('results12_2025_26')
-      if (savedResults12) {
-        setResults12(JSON.parse(savedResults12))
-      }
-      
-      const savedResults13 = localStorage.getItem('results13_2025_26')
-      if (savedResults13) {
-        setResults13(JSON.parse(savedResults13))
-      }
-      
-      const savedResults14 = localStorage.getItem('results14_2025_26')
-      if (savedResults14) {
-        setResults14(JSON.parse(savedResults14))
-      }
-      
-      const savedResults15 = localStorage.getItem('results15_2025_26')
-      if (savedResults15) {
-        setResults15(JSON.parse(savedResults15))
-      }
-      
-      const savedResults16 = localStorage.getItem('results16_2025_26')
-      if (savedResults16) {
-        setResults16(JSON.parse(savedResults16))
-      }
-      
-      const savedResults17 = localStorage.getItem('results17_2025_26')
-      if (savedResults17) {
-        setResults17(JSON.parse(savedResults17))
-      }
-      
-      const savedResults18 = localStorage.getItem('results18_2025_26')
-      if (savedResults18) {
-        setResults18(JSON.parse(savedResults18))
-      }
-      
-      const savedResults19 = localStorage.getItem('results19_2025_26')
-      if (savedResults19) {
-        setResults19(JSON.parse(savedResults19))
-      }
-      
-      const savedResults20 = localStorage.getItem('results20_2025_26')
-      if (savedResults20) {
-        setResults20(JSON.parse(savedResults20))
-      }
-      
-      const savedResults21 = localStorage.getItem('results21_2025_26')
-      if (savedResults21) {
-        setResults21(JSON.parse(savedResults21))
-      }
-      
-      const savedResults22 = localStorage.getItem('results22_2025_26')
-      if (savedResults22) {
-        setResults22(JSON.parse(savedResults22))
-      }
-      
-      const savedResults23 = localStorage.getItem('results23_2025_26')
-      if (savedResults23) {
-        setResults23(JSON.parse(savedResults23))
-      }
-      
-      const savedResults24 = localStorage.getItem('results24_2025_26')
-      if (savedResults24) {
-        setResults24(JSON.parse(savedResults24))
-      }
-      
-      const savedResults25 = localStorage.getItem('results25_2025_26')
-      if (savedResults25) {
-        setResults25(JSON.parse(savedResults25))
-      }
-      
-      const savedResults26 = localStorage.getItem('results26_2025_26')
-      if (savedResults26) {
-        setResults26(JSON.parse(savedResults26))
-      }
-      
-      const savedResults27 = localStorage.getItem('results27_2025_26')
-      if (savedResults27) {
-        setResults27(JSON.parse(savedResults27))
-      }
-      
-      const savedResults28 = localStorage.getItem('results28_2025_26')
-      if (savedResults28) {
-        setResults28(JSON.parse(savedResults28))
-      }
-      
-      const savedResults29 = localStorage.getItem('results29_2025_26')
-      if (savedResults29) {
-        setResults29(JSON.parse(savedResults29))
-      }
-      
-      const savedResults30 = localStorage.getItem('results30_2025_26')
-      if (savedResults30) {
-        setResults30(JSON.parse(savedResults30))
-      }
+      loadResults()
     }
   }, [user])
 
@@ -1852,36 +1858,42 @@ export default function Dashboard() {
   // Ukládání výsledků pro admin
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      localStorage.setItem('results1_2025_26', JSON.stringify(results1))
-      localStorage.setItem('results2_2025_26', JSON.stringify(results2))
-      localStorage.setItem('results3_2025_26', JSON.stringify(results3))
-      localStorage.setItem('results4_2025_26', JSON.stringify(results4))
-      localStorage.setItem('results5_2025_26', JSON.stringify(results5))
-      localStorage.setItem('results6_2025_26', JSON.stringify(results6))
-      localStorage.setItem('results7_2025_26', JSON.stringify(results7))
-      localStorage.setItem('results8_2025_26', JSON.stringify(results8))
-      localStorage.setItem('results9_2025_26', JSON.stringify(results9))
-      localStorage.setItem('results10_2025_26', JSON.stringify(results10))
-      localStorage.setItem('results11_2025_26', JSON.stringify(results11))
-      localStorage.setItem('results12_2025_26', JSON.stringify(results12))
-      localStorage.setItem('results13_2025_26', JSON.stringify(results13))
-      localStorage.setItem('results14_2025_26', JSON.stringify(results14))
-      localStorage.setItem('results15_2025_26', JSON.stringify(results15))
-      localStorage.setItem('results16_2025_26', JSON.stringify(results16))
-      localStorage.setItem('results17_2025_26', JSON.stringify(results17))
-      localStorage.setItem('results18_2025_26', JSON.stringify(results18))
-      localStorage.setItem('results19_2025_26', JSON.stringify(results19))
-      localStorage.setItem('results20_2025_26', JSON.stringify(results20))
-      localStorage.setItem('results21_2025_26', JSON.stringify(results21))
-      localStorage.setItem('results22_2025_26', JSON.stringify(results22))
-      localStorage.setItem('results23_2025_26', JSON.stringify(results23))
-      localStorage.setItem('results24_2025_26', JSON.stringify(results24))
-      localStorage.setItem('results25_2025_26', JSON.stringify(results25))
-      localStorage.setItem('results26_2025_26', JSON.stringify(results26))
-      localStorage.setItem('results27_2025_26', JSON.stringify(results27))
-      localStorage.setItem('results28_2025_26', JSON.stringify(results28))
-      localStorage.setItem('results29_2025_26', JSON.stringify(results29))
-      localStorage.setItem('results30_2025_26', JSON.stringify(results30))
+      const saveResults = async () => {
+        const currentUser = user.nickname
+        if (user.nickname === currentUser) {
+          await safeSaveData('results1_2025_26', JSON.stringify(results1))
+          await safeSaveData('results2_2025_26', JSON.stringify(results2))
+          await safeSaveData('results3_2025_26', JSON.stringify(results3))
+          await safeSaveData('results4_2025_26', JSON.stringify(results4))
+          await safeSaveData('results5_2025_26', JSON.stringify(results5))
+          await safeSaveData('results6_2025_26', JSON.stringify(results6))
+          await safeSaveData('results7_2025_26', JSON.stringify(results7))
+          await safeSaveData('results8_2025_26', JSON.stringify(results8))
+          await safeSaveData('results9_2025_26', JSON.stringify(results9))
+          await safeSaveData('results10_2025_26', JSON.stringify(results10))
+          await safeSaveData('results11_2025_26', JSON.stringify(results11))
+          await safeSaveData('results12_2025_26', JSON.stringify(results12))
+          await safeSaveData('results13_2025_26', JSON.stringify(results13))
+          await safeSaveData('results14_2025_26', JSON.stringify(results14))
+          await safeSaveData('results15_2025_26', JSON.stringify(results15))
+          await safeSaveData('results16_2025_26', JSON.stringify(results16))
+          await safeSaveData('results17_2025_26', JSON.stringify(results17))
+          await safeSaveData('results18_2025_26', JSON.stringify(results18))
+          await safeSaveData('results19_2025_26', JSON.stringify(results19))
+          await safeSaveData('results20_2025_26', JSON.stringify(results20))
+          await safeSaveData('results21_2025_26', JSON.stringify(results21))
+          await safeSaveData('results22_2025_26', JSON.stringify(results22))
+          await safeSaveData('results23_2025_26', JSON.stringify(results23))
+          await safeSaveData('results24_2025_26', JSON.stringify(results24))
+          await safeSaveData('results25_2025_26', JSON.stringify(results25))
+          await safeSaveData('results26_2025_26', JSON.stringify(results26))
+          await safeSaveData('results27_2025_26', JSON.stringify(results27))
+          await safeSaveData('results28_2025_26', JSON.stringify(results28))
+          await safeSaveData('results29_2025_26', JSON.stringify(results29))
+          await safeSaveData('results30_2025_26', JSON.stringify(results30))
+        }
+      }
+      saveResults()
     }
   }, [results1, results2, results3, results4, results5, results6, results7, results8, results9, results10, results11, results12, results13, results14, results15, results16, results17, results18, results19, results20, results21, results22, results23, results24, results25, results26, results27, results28, results29, results30, user])
 
