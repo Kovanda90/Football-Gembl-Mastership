@@ -175,7 +175,7 @@ export default function LeaderboardPage() {
           <div className="mt-8 p-4 bg-green-50 rounded-lg">
             <h3 className="text-lg font-semibold text-green-800 mb-2">ℹ️ Bonusové body</h3>
             <p className="text-green-700 text-sm">
-              Vítěz ve střelcích v každém kole získává <strong>+1 bonusový bod</strong> do "bodů za výsledek". 
+              Vítěz ve střelcích v každém kole získává <strong>+1 bonusový bod</strong> do &quot;bodů za výsledek&quot;. 
               Pokud je více hráčů se stejným počtem bodů za střelce, všichni získají bonusový bod.
             </p>
           </div>
