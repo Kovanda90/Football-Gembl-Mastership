@@ -1328,183 +1328,273 @@ export default function Dashboard() {
   // Ukládání tipů pro hráče
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips1_${user.nickname}`, JSON.stringify(tips1))
+      const saveTips = async () => {
+        await safeSaveData(`tips1_${user.nickname}`, JSON.stringify(tips1))
+      }
+      saveTips()
     }
   }, [tips1, user])
 
   useEffect(() => {
     if (user) {
-      console.log(`Ukládám tips2 pro ${user.nickname}:`, tips2)
-      safeSaveData(`tips2_${user.nickname}`, JSON.stringify(tips2))
+      const saveTips = async () => {
+        console.log(`Ukládám tips2 pro ${user.nickname}:`, tips2)
+        await safeSaveData(`tips2_${user.nickname}`, JSON.stringify(tips2))
+      }
+      saveTips()
     }
   }, [tips2, user])
 
   useEffect(() => {
     if (user) {
-      console.log(`Ukládám tips3 pro ${user.nickname}:`, tips3)
-      safeSaveData(`tips3_${user.nickname}`, JSON.stringify(tips3))
+      const saveTips = async () => {
+        console.log(`Ukládám tips3 pro ${user.nickname}:`, tips3)
+        await safeSaveData(`tips3_${user.nickname}`, JSON.stringify(tips3))
+      }
+      saveTips()
     }
   }, [tips3, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips4_${user.nickname}`, JSON.stringify(tips4))
+      const saveTips = async () => {
+        await safeSaveData(`tips4_${user.nickname}`, JSON.stringify(tips4))
+      }
+      saveTips()
     }
   }, [tips4, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips5_${user.nickname}`, JSON.stringify(tips5))
+      const saveTips = async () => {
+        await safeSaveData(`tips5_${user.nickname}`, JSON.stringify(tips5))
+      }
+      saveTips()
     }
   }, [tips5, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips6_${user.nickname}`, JSON.stringify(tips6))
+      const saveTips = async () => {
+        await safeSaveData(`tips6_${user.nickname}`, JSON.stringify(tips6))
+      }
+      saveTips()
     }
   }, [tips6, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips7_${user.nickname}`, JSON.stringify(tips7))
+      const saveTips = async () => {
+        await safeSaveData(`tips7_${user.nickname}`, JSON.stringify(tips7))
+      }
+      saveTips()
     }
   }, [tips7, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips8_${user.nickname}`, JSON.stringify(tips8))
+      const saveTips = async () => {
+        await safeSaveData(`tips8_${user.nickname}`, JSON.stringify(tips8))
+      }
+      saveTips()
     }
   }, [tips8, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips9_${user.nickname}`, JSON.stringify(tips9))
+      const saveTips = async () => {
+        await safeSaveData(`tips9_${user.nickname}`, JSON.stringify(tips9))
+      }
+      saveTips()
     }
   }, [tips9, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips10_${user.nickname}`, JSON.stringify(tips10))
+      const saveTips = async () => {
+        await safeSaveData(`tips10_${user.nickname}`, JSON.stringify(tips10))
+      }
+      saveTips()
     }
   }, [tips10, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips11_${user.nickname}`, JSON.stringify(tips11))
+      const saveTips = async () => {
+        await safeSaveData(`tips11_${user.nickname}`, JSON.stringify(tips11))
+      }
+      saveTips()
     }
   }, [tips11, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips12_${user.nickname}`, JSON.stringify(tips12))
+      const saveTips = async () => {
+        await safeSaveData(`tips12_${user.nickname}`, JSON.stringify(tips12))
+      }
+      saveTips()
     }
   }, [tips12, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips13_${user.nickname}`, JSON.stringify(tips13))
+      const saveTips = async () => {
+        await safeSaveData(`tips13_${user.nickname}`, JSON.stringify(tips13))
+      }
+      saveTips()
     }
   }, [tips13, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips14_${user.nickname}`, JSON.stringify(tips14))
+      const saveTips = async () => {
+        await safeSaveData(`tips14_${user.nickname}`, JSON.stringify(tips14))
+      }
+      saveTips()
     }
   }, [tips14, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips15_${user.nickname}`, JSON.stringify(tips15))
+      const saveTips = async () => {
+        await safeSaveData(`tips15_${user.nickname}`, JSON.stringify(tips15))
+      }
+      saveTips()
     }
   }, [tips15, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips16_${user.nickname}`, JSON.stringify(tips16))
+      const saveTips = async () => {
+        await safeSaveData(`tips16_${user.nickname}`, JSON.stringify(tips16))
+      }
+      saveTips()
     }
   }, [tips16, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips17_${user.nickname}`, JSON.stringify(tips17))
+      const saveTips = async () => {
+        await safeSaveData(`tips17_${user.nickname}`, JSON.stringify(tips17))
+      }
+      saveTips()
     }
   }, [tips17, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips18_${user.nickname}`, JSON.stringify(tips18))
+      const saveTips = async () => {
+        await safeSaveData(`tips18_${user.nickname}`, JSON.stringify(tips18))
+      }
+      saveTips()
     }
   }, [tips18, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips19_${user.nickname}`, JSON.stringify(tips19))
+      const saveTips = async () => {
+        await safeSaveData(`tips19_${user.nickname}`, JSON.stringify(tips19))
+      }
+      saveTips()
     }
   }, [tips19, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips20_${user.nickname}`, JSON.stringify(tips20))
+      const saveTips = async () => {
+        await safeSaveData(`tips20_${user.nickname}`, JSON.stringify(tips20))
+      }
+      saveTips()
     }
   }, [tips20, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips21_${user.nickname}`, JSON.stringify(tips21))
+      const saveTips = async () => {
+        await safeSaveData(`tips21_${user.nickname}`, JSON.stringify(tips21))
+      }
+      saveTips()
     }
   }, [tips21, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips22_${user.nickname}`, JSON.stringify(tips22))
+      const saveTips = async () => {
+        await safeSaveData(`tips22_${user.nickname}`, JSON.stringify(tips22))
+      }
+      saveTips()
     }
   }, [tips22, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips23_${user.nickname}`, JSON.stringify(tips23))
+      const saveTips = async () => {
+        await safeSaveData(`tips23_${user.nickname}`, JSON.stringify(tips23))
+      }
+      saveTips()
     }
   }, [tips23, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips24_${user.nickname}`, JSON.stringify(tips24))
+      const saveTips = async () => {
+        await safeSaveData(`tips24_${user.nickname}`, JSON.stringify(tips24))
+      }
+      saveTips()
     }
   }, [tips24, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips25_${user.nickname}`, JSON.stringify(tips25))
+      const saveTips = async () => {
+        await safeSaveData(`tips25_${user.nickname}`, JSON.stringify(tips25))
+      }
+      saveTips()
     }
   }, [tips25, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips26_${user.nickname}`, JSON.stringify(tips26))
+      const saveTips = async () => {
+        await safeSaveData(`tips26_${user.nickname}`, JSON.stringify(tips26))
+      }
+      saveTips()
     }
   }, [tips26, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips27_${user.nickname}`, JSON.stringify(tips27))
+      const saveTips = async () => {
+        await safeSaveData(`tips27_${user.nickname}`, JSON.stringify(tips27))
+      }
+      saveTips()
     }
   }, [tips27, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips28_${user.nickname}`, JSON.stringify(tips28))
+      const saveTips = async () => {
+        await safeSaveData(`tips28_${user.nickname}`, JSON.stringify(tips28))
+      }
+      saveTips()
     }
   }, [tips28, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips29_${user.nickname}`, JSON.stringify(tips29))
+      const saveTips = async () => {
+        await safeSaveData(`tips29_${user.nickname}`, JSON.stringify(tips29))
+      }
+      saveTips()
     }
   }, [tips29, user])
 
   useEffect(() => {
     if (user) {
-      safeSaveData(`tips30_${user.nickname}`, JSON.stringify(tips30))
+      const saveTips = async () => {
+        await safeSaveData(`tips30_${user.nickname}`, JSON.stringify(tips30))
+      }
+      saveTips()
     }
   }, [tips30, user])
 
