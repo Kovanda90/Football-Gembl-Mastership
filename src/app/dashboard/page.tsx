@@ -36,7 +36,7 @@ import {
 } from '../../lib/matches-2025-26'
 import { calculatePoints } from '@/lib/points'
 import { migrateAllData, testSupabaseConnection } from '@/lib/migrate'
-import { supabase } from '@/lib/supabase'
+import { supabase, safeLoadData } from '@/lib/supabase'
 
 // Debug informace pro kontrolu Supabase
 console.log('=== DASHBOARD DEBUG ===')
@@ -297,14 +297,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user?.nickname === ADMIN_NICK) {
-      const loadAllTips = () => {
+      const loadAllTips = async () => {
         const tips: {[key: string]: Tip[]} = {}
-        USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(u => {
-          const saved = localStorage.getItem(`tips3_${u.nickname}`)
-          if (saved) {
-            tips[u.nickname] = JSON.parse(saved)
+        for (const u of USERS.filter(u => u.nickname !== ADMIN_NICK)) {
+          try {
+            const saved = await safeLoadData(`tips3_${u.nickname}`)
+            if (saved) {
+              tips[u.nickname] = JSON.parse(saved)
+            }
+          } catch (error) {
+            console.log(`Chyba při načítání tipů pro ${u.nickname}:`, error)
           }
-        })
+        }
         setAllTips3(tips)
       }
       loadAllTips()
