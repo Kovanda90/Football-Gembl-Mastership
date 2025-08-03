@@ -36,6 +36,14 @@ import {
 } from '../../lib/matches-2025-26'
 import { calculatePoints } from '@/lib/points'
 import { migrateAllData, testSupabaseConnection } from '@/lib/migrate'
+import { supabase } from '@/lib/supabase'
+
+// Debug informace pro kontrolu Supabase
+console.log('=== DASHBOARD DEBUG ===')
+console.log('supabase objekt:', supabase)
+console.log('process.env.NEXT_PUBLIC_SUPABASE_URL:', process.env.NEXT_PUBLIC_SUPABASE_URL)
+console.log('process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY:', process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? 'EXISTUJE' : 'NEEXISTUJE')
+console.log('=== KONEC DASHBOARD DEBUG ===')
 
 // Automatický import dat z lokálního localStorage
 const importLocalData = () => {

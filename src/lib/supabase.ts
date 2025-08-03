@@ -1,8 +1,16 @@
 import { createClient } from '@supabase/supabase-js'
 
-// Supabase konfigurace - zatím prázdné, budeme doplňovat
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+// Supabase konfigurace - přímé nastavení
+const supabaseUrl = 'https://itymhcieyeonpzfbqzth.supabase.co'
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml0eW1oY2lleWVvbnB6ZmJxenRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyMDAzNDYsImV4cCI6MjA2OTc3NjM0Nn0.QcJ2XHSlksbpQSzEQB6g72xRXJsy1M8C94Cl4AzEoJs'
+
+// Debug informace
+console.log('=== SUPABASE DEBUG START ===')
+console.log('supabaseUrl:', supabaseUrl)
+console.log('supabaseAnonKey:', supabaseAnonKey ? 'EXISTUJE' : 'NEEXISTUJE')
+console.log('Supabase URL: NASTAVENO')
+console.log('Supabase Key: NASTAVENO')
+console.log('=== SUPABASE DEBUG END ===')
 
 // Vytvoření Supabase klienta (pokud jsou k dispozici credentials)
 export const supabase = supabaseUrl && supabaseAnonKey 

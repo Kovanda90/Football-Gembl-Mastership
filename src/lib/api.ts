@@ -1,5 +1,11 @@
 import { safeLoadData, safeSaveData } from './supabase'
 
+// Debug informace pro kontrolu načtení supabase
+console.log('=== API DEBUG ===')
+console.log('safeLoadData importován:', typeof safeLoadData)
+console.log('safeSaveData importován:', typeof safeSaveData)
+console.log('=== KONEC API DEBUG ===')
+
 // API funkce pro načítání dat z oficiálních zdrojů
 export interface Match {
   home: string;
