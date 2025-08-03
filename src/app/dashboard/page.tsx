@@ -4278,6 +4278,33 @@ export default function Dashboard() {
                     roundScorerPoints += points.correctScorer + points.noScorer + points.bonusPoints;
                   });
                   
+                  // Bonusový bod pro vítěze ve střelcích
+                  const allScorerPoints = USERS.filter(u => u.nickname !== ADMIN_NICK).map(user => {
+                    let points = 0;
+                    allTips[user.nickname]?.forEach((tip: any, idx: number) => {
+                      const res = results[idx];
+                      if (!tip || tip.home === '' || tip.away === '' || !res || res.home === '' || res.away === '') return;
+                      const parsedTip = {
+                        matchIndex: idx,
+                        predictedResult: { home: Number(tip.home), away: Number(tip.away) },
+                        predictedScorer: tip.scorer || ''
+                      };
+                      const parsedResult = { home: Number(res.home), away: Number(res.away) };
+                      const scorers = (res.scorers || '').split(',').map((s: string) => s.trim()).filter(Boolean);
+                      const pointsCalc = calculatePoints(parsedTip, parsedResult, scorers);
+                      points += pointsCalc.correctScorer + pointsCalc.noScorer + pointsCalc.bonusPoints;
+                    });
+                    return { nickname: user.nickname, points };
+                  });
+                  
+                  const maxScorerPoints = Math.max(...allScorerPoints.map(p => p.points));
+                  const scorerWinners = allScorerPoints.filter(p => p.points === maxScorerPoints && p.points > 0);
+                  
+                  // Pokud je aktuální hráč vítězem ve střelcích, přidá +1 bod do výsledků
+                  if (scorerWinners.some(w => w.nickname === u.nickname)) {
+                    roundResultPoints += 1;
+                  }
+                  
                   return { roundResultPoints, roundScorerPoints };
                 };
                 
