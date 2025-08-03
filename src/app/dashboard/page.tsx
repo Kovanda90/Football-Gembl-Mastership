@@ -128,36 +128,36 @@ export default function Dashboard() {
   const [migrationStatus, setMigrationStatus] = useState<string>('')
   const [isMigrating, setIsMigrating] = useState<boolean>(false)
 
-  const [tips1, setTips1] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_1))
-  const [tips2, setTips2] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_2))
-  const [tips3, setTips3] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_3))
-  const [tips4, setTips4] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_4))
-  const [tips5, setTips5] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_5))
-  const [tips6, setTips6] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_6))
-  const [tips7, setTips7] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_7))
-  const [tips8, setTips8] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_8))
-  const [tips9, setTips9] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_9))
-  const [tips10, setTips10] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_10))
-  const [tips11, setTips11] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_11))
-  const [tips12, setTips12] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_12))
-  const [tips13, setTips13] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_13))
-  const [tips14, setTips14] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_14))
-  const [tips15, setTips15] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_15))
-  const [tips16, setTips16] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_16))
-  const [tips17, setTips17] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_17))
-  const [tips18, setTips18] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_18))
-  const [tips19, setTips19] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_19))
-  const [tips20, setTips20] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_20))
-  const [tips21, setTips21] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_21))
-  const [tips22, setTips22] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_22))
-  const [tips23, setTips23] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_23))
-  const [tips24, setTips24] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_24))
-  const [tips25, setTips25] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_25))
-  const [tips26, setTips26] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_26))
-  const [tips27, setTips27] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_27))
-  const [tips28, setTips28] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_28))
-  const [tips29, setTips29] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_29))
-  const [tips30, setTips30] = useState<Tip[]>(getInitialTips(MATCHES_ROUND_30))
+  const [tips1, setTips1] = useState<Tip[]>([])
+  const [tips2, setTips2] = useState<Tip[]>([])
+  const [tips3, setTips3] = useState<Tip[]>([])
+  const [tips4, setTips4] = useState<Tip[]>([])
+  const [tips5, setTips5] = useState<Tip[]>([])
+  const [tips6, setTips6] = useState<Tip[]>([])
+  const [tips7, setTips7] = useState<Tip[]>([])
+  const [tips8, setTips8] = useState<Tip[]>([])
+  const [tips9, setTips9] = useState<Tip[]>([])
+  const [tips10, setTips10] = useState<Tip[]>([])
+  const [tips11, setTips11] = useState<Tip[]>([])
+  const [tips12, setTips12] = useState<Tip[]>([])
+  const [tips13, setTips13] = useState<Tip[]>([])
+  const [tips14, setTips14] = useState<Tip[]>([])
+  const [tips15, setTips15] = useState<Tip[]>([])
+  const [tips16, setTips16] = useState<Tip[]>([])
+  const [tips17, setTips17] = useState<Tip[]>([])
+  const [tips18, setTips18] = useState<Tip[]>([])
+  const [tips19, setTips19] = useState<Tip[]>([])
+  const [tips20, setTips20] = useState<Tip[]>([])
+  const [tips21, setTips21] = useState<Tip[]>([])
+  const [tips22, setTips22] = useState<Tip[]>([])
+  const [tips23, setTips23] = useState<Tip[]>([])
+  const [tips24, setTips24] = useState<Tip[]>([])
+  const [tips25, setTips25] = useState<Tip[]>([])
+  const [tips26, setTips26] = useState<Tip[]>([])
+  const [tips27, setTips27] = useState<Tip[]>([])
+  const [tips28, setTips28] = useState<Tip[]>([])
+  const [tips29, setTips29] = useState<Tip[]>([])
+  const [tips30, setTips30] = useState<Tip[]>([])
   
   const [results1, setResults1] = useState<Result[]>([
     { home: "1", away: "5", scorers: "Vydra, Vydra, Šulc" },
@@ -860,6 +860,9 @@ export default function Dashboard() {
       const savedTips1 = await safeLoadData(`tips1_${currentUser}`)
       if (savedTips1 && user.nickname === currentUser) {
         setTips1(JSON.parse(savedTips1))
+      } else if (user.nickname === currentUser) {
+        // Inicializuj s prázdnými tipy, pokud nejsou k dispozici
+        setTips1(getInitialTips(MATCHES_ROUND_1))
       }
     }
     loadTips()
@@ -874,8 +877,9 @@ export default function Dashboard() {
       if (savedTips2 && user.nickname === currentUser) {
         console.log(`Načítám tips2 pro ${currentUser}:`, savedTips2)
         setTips2(JSON.parse(savedTips2))
-      } else {
+      } else if (user.nickname === currentUser) {
         console.log(`Žádné tips2 pro ${currentUser} v localStorage`)
+        setTips2(getInitialTips(MATCHES_ROUND_2))
       }
     }
     loadTips()
@@ -890,8 +894,9 @@ export default function Dashboard() {
       if (savedTips3 && user.nickname === currentUser) {
         console.log(`Načítám tips3 pro ${currentUser}:`, savedTips3)
         setTips3(JSON.parse(savedTips3))
-      } else {
+      } else if (user.nickname === currentUser) {
         console.log(`Žádné tips3 pro ${currentUser} v localStorage`)
+        setTips3(getInitialTips(MATCHES_ROUND_3))
       }
     }
     loadTips()
@@ -905,6 +910,8 @@ export default function Dashboard() {
       const savedTips4 = await safeLoadData(`tips4_${currentUser}`)
       if (savedTips4 && user.nickname === currentUser) {
         setTips4(JSON.parse(savedTips4))
+      } else if (user.nickname === currentUser) {
+        setTips4(getInitialTips(MATCHES_ROUND_4))
       }
     }
     loadTips()
@@ -918,6 +925,8 @@ export default function Dashboard() {
       const savedTips5 = await safeLoadData(`tips5_${currentUser}`)
       if (savedTips5 && user.nickname === currentUser) {
         setTips5(JSON.parse(savedTips5))
+      } else if (user.nickname === currentUser) {
+        setTips5(getInitialTips(MATCHES_ROUND_5))
       }
     }
     loadTips()
@@ -931,6 +940,8 @@ export default function Dashboard() {
       const savedTips6 = await safeLoadData(`tips6_${currentUser}`)
       if (savedTips6 && user.nickname === currentUser) {
         setTips6(JSON.parse(savedTips6))
+      } else if (user.nickname === currentUser) {
+        setTips6(getInitialTips(MATCHES_ROUND_6))
       }
     }
     loadTips()
@@ -944,6 +955,8 @@ export default function Dashboard() {
       const savedTips7 = await safeLoadData(`tips7_${currentUser}`)
       if (savedTips7 && user.nickname === currentUser) {
         setTips7(JSON.parse(savedTips7))
+      } else if (user.nickname === currentUser) {
+        setTips7(getInitialTips(MATCHES_ROUND_7))
       }
     }
     loadTips()
@@ -957,6 +970,8 @@ export default function Dashboard() {
       const savedTips8 = await safeLoadData(`tips8_${currentUser}`)
       if (savedTips8 && user.nickname === currentUser) {
         setTips8(JSON.parse(savedTips8))
+      } else if (user.nickname === currentUser) {
+        setTips8(getInitialTips(MATCHES_ROUND_8))
       }
     }
     loadTips()
@@ -970,6 +985,8 @@ export default function Dashboard() {
       const savedTips9 = await safeLoadData(`tips9_${currentUser}`)
       if (savedTips9 && user.nickname === currentUser) {
         setTips9(JSON.parse(savedTips9))
+      } else if (user.nickname === currentUser) {
+        setTips9(getInitialTips(MATCHES_ROUND_9))
       }
     }
     loadTips()
@@ -983,6 +1000,8 @@ export default function Dashboard() {
       const savedTips10 = await safeLoadData(`tips10_${currentUser}`)
       if (savedTips10 && user.nickname === currentUser) {
         setTips10(JSON.parse(savedTips10))
+      } else if (user.nickname === currentUser) {
+        setTips10(getInitialTips(MATCHES_ROUND_10))
       }
     }
     loadTips()
@@ -996,6 +1015,8 @@ export default function Dashboard() {
       const savedTips11 = await safeLoadData(`tips11_${currentUser}`)
       if (savedTips11 && user.nickname === currentUser) {
         setTips11(JSON.parse(savedTips11))
+      } else if (user.nickname === currentUser) {
+        setTips11(getInitialTips(MATCHES_ROUND_11))
       }
     }
     loadTips()
@@ -1009,6 +1030,8 @@ export default function Dashboard() {
       const savedTips12 = await safeLoadData(`tips12_${currentUser}`)
       if (savedTips12 && user.nickname === currentUser) {
         setTips12(JSON.parse(savedTips12))
+      } else if (user.nickname === currentUser) {
+        setTips12(getInitialTips(MATCHES_ROUND_12))
       }
     }
     loadTips()
@@ -1022,176 +1045,263 @@ export default function Dashboard() {
       const savedTips13 = await safeLoadData(`tips13_${currentUser}`)
       if (savedTips13 && user.nickname === currentUser) {
         setTips13(JSON.parse(savedTips13))
+      } else if (user.nickname === currentUser) {
+        setTips13(getInitialTips(MATCHES_ROUND_13))
       }
     }
     loadTips()
   }, [user])
 
   useEffect(() => {
+    if (!user?.nickname) return
+    
     const loadTips = async () => {
-      const savedTips14 = await safeLoadData(`tips14_${user?.nickname}`)
-      if (savedTips14) {
+      const currentUser = user.nickname
+      const savedTips14 = await safeLoadData(`tips14_${currentUser}`)
+      if (savedTips14 && user.nickname === currentUser) {
         setTips14(JSON.parse(savedTips14))
+      } else if (user.nickname === currentUser) {
+        setTips14(getInitialTips(MATCHES_ROUND_14))
       }
     }
     loadTips()
   }, [user])
 
   useEffect(() => {
+    if (!user?.nickname) return
+    
     const loadTips = async () => {
-      const savedTips15 = await safeLoadData(`tips15_${user?.nickname}`)
-      if (savedTips15) {
+      const currentUser = user.nickname
+      const savedTips15 = await safeLoadData(`tips15_${currentUser}`)
+      if (savedTips15 && user.nickname === currentUser) {
         setTips15(JSON.parse(savedTips15))
+      } else if (user.nickname === currentUser) {
+        setTips15(getInitialTips(MATCHES_ROUND_15))
       }
     }
     loadTips()
   }, [user])
 
   useEffect(() => {
+    if (!user?.nickname) return
+    
     const loadTips = async () => {
-      const savedTips16 = await safeLoadData(`tips16_${user?.nickname}`)
-      if (savedTips16) {
+      const currentUser = user.nickname
+      const savedTips16 = await safeLoadData(`tips16_${currentUser}`)
+      if (savedTips16 && user.nickname === currentUser) {
         setTips16(JSON.parse(savedTips16))
+      } else if (user.nickname === currentUser) {
+        setTips16(getInitialTips(MATCHES_ROUND_16))
       }
     }
     loadTips()
   }, [user])
 
   useEffect(() => {
+    if (!user?.nickname) return
+    
     const loadTips = async () => {
-      const savedTips17 = await safeLoadData(`tips17_${user?.nickname}`)
-      if (savedTips17) {
+      const currentUser = user.nickname
+      const savedTips17 = await safeLoadData(`tips17_${currentUser}`)
+      if (savedTips17 && user.nickname === currentUser) {
         setTips17(JSON.parse(savedTips17))
+      } else if (user.nickname === currentUser) {
+        setTips17(getInitialTips(MATCHES_ROUND_17))
       }
     }
     loadTips()
   }, [user])
 
   useEffect(() => {
+    if (!user?.nickname) return
+    
     const loadTips = async () => {
-      const savedTips18 = await safeLoadData(`tips18_${user?.nickname}`)
-      if (savedTips18) {
+      const currentUser = user.nickname
+      const savedTips18 = await safeLoadData(`tips18_${currentUser}`)
+      if (savedTips18 && user.nickname === currentUser) {
         setTips18(JSON.parse(savedTips18))
+      } else if (user.nickname === currentUser) {
+        setTips18(getInitialTips(MATCHES_ROUND_18))
       }
     }
     loadTips()
   }, [user])
 
   useEffect(() => {
+    if (!user?.nickname) return
+    
     const loadTips = async () => {
-      const savedTips19 = await safeLoadData(`tips19_${user?.nickname}`)
-      if (savedTips19) {
+      const currentUser = user.nickname
+      const savedTips19 = await safeLoadData(`tips19_${currentUser}`)
+      if (savedTips19 && user.nickname === currentUser) {
         setTips19(JSON.parse(savedTips19))
+      } else if (user.nickname === currentUser) {
+        setTips19(getInitialTips(MATCHES_ROUND_19))
       }
     }
     loadTips()
   }, [user])
 
   useEffect(() => {
+    if (!user?.nickname) return
+    
     const loadTips = async () => {
-      const savedTips20 = await safeLoadData(`tips20_${user?.nickname}`)
-      if (savedTips20) {
+      const currentUser = user.nickname
+      const savedTips20 = await safeLoadData(`tips20_${currentUser}`)
+      if (savedTips20 && user.nickname === currentUser) {
         setTips20(JSON.parse(savedTips20))
+      } else if (user.nickname === currentUser) {
+        setTips20(getInitialTips(MATCHES_ROUND_20))
       }
     }
     loadTips()
   }, [user])
 
   useEffect(() => {
+    if (!user?.nickname) return
+    
     const loadTips = async () => {
-      const savedTips21 = await safeLoadData(`tips21_${user?.nickname}`)
-      if (savedTips21) {
+      const currentUser = user.nickname
+      const savedTips21 = await safeLoadData(`tips21_${currentUser}`)
+      if (savedTips21 && user.nickname === currentUser) {
         setTips21(JSON.parse(savedTips21))
+      } else if (user.nickname === currentUser) {
+        setTips21(getInitialTips(MATCHES_ROUND_21))
       }
     }
     loadTips()
   }, [user])
 
   useEffect(() => {
+    if (!user?.nickname) return
+    
     const loadTips = async () => {
-      const savedTips22 = await safeLoadData(`tips22_${user?.nickname}`)
-      if (savedTips22) {
+      const currentUser = user.nickname
+      const savedTips22 = await safeLoadData(`tips22_${currentUser}`)
+      if (savedTips22 && user.nickname === currentUser) {
         setTips22(JSON.parse(savedTips22))
+      } else if (user.nickname === currentUser) {
+        setTips22(getInitialTips(MATCHES_ROUND_22))
       }
     }
     loadTips()
   }, [user])
 
   useEffect(() => {
+    if (!user?.nickname) return
+    
     const loadTips = async () => {
-      const savedTips23 = await safeLoadData(`tips23_${user?.nickname}`)
-      if (savedTips23) {
+      const currentUser = user.nickname
+      const savedTips23 = await safeLoadData(`tips23_${currentUser}`)
+      if (savedTips23 && user.nickname === currentUser) {
         setTips23(JSON.parse(savedTips23))
+      } else if (user.nickname === currentUser) {
+        setTips23(getInitialTips(MATCHES_ROUND_23))
       }
     }
     loadTips()
   }, [user])
 
   useEffect(() => {
+    if (!user?.nickname) return
+    
     const loadTips = async () => {
-      const savedTips24 = await safeLoadData(`tips24_${user?.nickname}`)
-      if (savedTips24) {
+      const currentUser = user.nickname
+      const savedTips24 = await safeLoadData(`tips24_${currentUser}`)
+      if (savedTips24 && user.nickname === currentUser) {
         setTips24(JSON.parse(savedTips24))
+      } else if (user.nickname === currentUser) {
+        setTips24(getInitialTips(MATCHES_ROUND_24))
       }
     }
     loadTips()
   }, [user])
 
   useEffect(() => {
+    if (!user?.nickname) return
+    
     const loadTips = async () => {
-      const savedTips25 = await safeLoadData(`tips25_${user?.nickname}`)
-      if (savedTips25) {
+      const currentUser = user.nickname
+      const savedTips25 = await safeLoadData(`tips25_${currentUser}`)
+      if (savedTips25 && user.nickname === currentUser) {
         setTips25(JSON.parse(savedTips25))
+      } else if (user.nickname === currentUser) {
+        setTips25(getInitialTips(MATCHES_ROUND_25))
       }
     }
     loadTips()
   }, [user])
 
   useEffect(() => {
+    if (!user?.nickname) return
+    
     const loadTips = async () => {
-      const savedTips26 = await safeLoadData(`tips26_${user?.nickname}`)
-      if (savedTips26) {
+      const currentUser = user.nickname
+      const savedTips26 = await safeLoadData(`tips26_${currentUser}`)
+      if (savedTips26 && user.nickname === currentUser) {
         setTips26(JSON.parse(savedTips26))
+      } else if (user.nickname === currentUser) {
+        setTips26(getInitialTips(MATCHES_ROUND_26))
       }
     }
     loadTips()
   }, [user])
 
   useEffect(() => {
+    if (!user?.nickname) return
+    
     const loadTips = async () => {
-      const savedTips27 = await safeLoadData(`tips27_${user?.nickname}`)
-      if (savedTips27) {
+      const currentUser = user.nickname
+      const savedTips27 = await safeLoadData(`tips27_${currentUser}`)
+      if (savedTips27 && user.nickname === currentUser) {
         setTips27(JSON.parse(savedTips27))
+      } else if (user.nickname === currentUser) {
+        setTips27(getInitialTips(MATCHES_ROUND_27))
       }
     }
     loadTips()
   }, [user])
 
   useEffect(() => {
+    if (!user?.nickname) return
+    
     const loadTips = async () => {
-      const savedTips28 = await safeLoadData(`tips28_${user?.nickname}`)
-      if (savedTips28) {
+      const currentUser = user.nickname
+      const savedTips28 = await safeLoadData(`tips28_${currentUser}`)
+      if (savedTips28 && user.nickname === currentUser) {
         setTips28(JSON.parse(savedTips28))
+      } else if (user.nickname === currentUser) {
+        setTips28(getInitialTips(MATCHES_ROUND_28))
       }
     }
     loadTips()
   }, [user])
 
   useEffect(() => {
+    if (!user?.nickname) return
+    
     const loadTips = async () => {
-      const savedTips29 = await safeLoadData(`tips29_${user?.nickname}`)
-      if (savedTips29) {
+      const currentUser = user.nickname
+      const savedTips29 = await safeLoadData(`tips29_${currentUser}`)
+      if (savedTips29 && user.nickname === currentUser) {
         setTips29(JSON.parse(savedTips29))
+      } else if (user.nickname === currentUser) {
+        setTips29(getInitialTips(MATCHES_ROUND_29))
       }
     }
     loadTips()
   }, [user])
 
   useEffect(() => {
+    if (!user?.nickname) return
+    
     const loadTips = async () => {
-      const savedTips30 = await safeLoadData(`tips30_${user?.nickname}`)
-      if (savedTips30) {
+      const currentUser = user.nickname
+      const savedTips30 = await safeLoadData(`tips30_${currentUser}`)
+      if (savedTips30 && user.nickname === currentUser) {
         setTips30(JSON.parse(savedTips30))
+      } else if (user.nickname === currentUser) {
+        setTips30(getInitialTips(MATCHES_ROUND_30))
       }
     }
     loadTips()
