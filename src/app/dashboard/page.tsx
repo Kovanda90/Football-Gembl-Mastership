@@ -860,9 +860,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips1 = await safeLoadData(`tips1_${currentUser}`)
-      if (savedTips1 && user.nickname === currentUser) {
+      if (savedTips1) {
         setTips1(JSON.parse(savedTips1))
-      } else if (user.nickname === currentUser) {
+      } else {
         // Inicializuj s prázdnými tipy, pokud nejsou k dispozici
         setTips1(getInitialTips(MATCHES_ROUND_1))
       }
@@ -876,10 +876,10 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips2 = await safeLoadData(`tips2_${currentUser}`)
-      if (savedTips2 && user.nickname === currentUser) {
+      if (savedTips2) {
         console.log(`Načítám tips2 pro ${currentUser}:`, savedTips2)
         setTips2(JSON.parse(savedTips2))
-      } else if (user.nickname === currentUser) {
+      } else {
         console.log(`Žádné tips2 pro ${currentUser} v localStorage`)
         setTips2(getInitialTips(MATCHES_ROUND_2))
       }
@@ -893,10 +893,10 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips3 = await safeLoadData(`tips3_${currentUser}`)
-      if (savedTips3 && user.nickname === currentUser) {
+      if (savedTips3) {
         console.log(`Načítám tips3 pro ${currentUser}:`, savedTips3)
         setTips3(JSON.parse(savedTips3))
-      } else if (user.nickname === currentUser) {
+      } else {
         console.log(`Žádné tips3 pro ${currentUser} v localStorage`)
         setTips3(getInitialTips(MATCHES_ROUND_3))
       }
@@ -910,9 +910,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips4 = await safeLoadData(`tips4_${currentUser}`)
-      if (savedTips4 && user.nickname === currentUser) {
+      if (savedTips4) {
         setTips4(JSON.parse(savedTips4))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips4(getInitialTips(MATCHES_ROUND_4))
       }
     }
@@ -925,9 +925,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips5 = await safeLoadData(`tips5_${currentUser}`)
-      if (savedTips5 && user.nickname === currentUser) {
+      if (savedTips5) {
         setTips5(JSON.parse(savedTips5))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips5(getInitialTips(MATCHES_ROUND_5))
       }
     }
@@ -940,9 +940,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips6 = await safeLoadData(`tips6_${currentUser}`)
-      if (savedTips6 && user.nickname === currentUser) {
+      if (savedTips6) {
         setTips6(JSON.parse(savedTips6))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips6(getInitialTips(MATCHES_ROUND_6))
       }
     }
@@ -955,9 +955,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips7 = await safeLoadData(`tips7_${currentUser}`)
-      if (savedTips7 && user.nickname === currentUser) {
+      if (savedTips7) {
         setTips7(JSON.parse(savedTips7))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips7(getInitialTips(MATCHES_ROUND_7))
       }
     }
@@ -970,9 +970,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips8 = await safeLoadData(`tips8_${currentUser}`)
-      if (savedTips8 && user.nickname === currentUser) {
+      if (savedTips8) {
         setTips8(JSON.parse(savedTips8))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips8(getInitialTips(MATCHES_ROUND_8))
       }
     }
@@ -985,9 +985,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips9 = await safeLoadData(`tips9_${currentUser}`)
-      if (savedTips9 && user.nickname === currentUser) {
+      if (savedTips9) {
         setTips9(JSON.parse(savedTips9))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips9(getInitialTips(MATCHES_ROUND_9))
       }
     }
@@ -1000,9 +1000,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips10 = await safeLoadData(`tips10_${currentUser}`)
-      if (savedTips10 && user.nickname === currentUser) {
+      if (savedTips10) {
         setTips10(JSON.parse(savedTips10))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips10(getInitialTips(MATCHES_ROUND_10))
       }
     }
@@ -1015,9 +1015,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips11 = await safeLoadData(`tips11_${currentUser}`)
-      if (savedTips11 && user.nickname === currentUser) {
+      if (savedTips11) {
         setTips11(JSON.parse(savedTips11))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips11(getInitialTips(MATCHES_ROUND_11))
       }
     }
@@ -1030,9 +1030,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips12 = await safeLoadData(`tips12_${currentUser}`)
-      if (savedTips12 && user.nickname === currentUser) {
+      if (savedTips12) {
         setTips12(JSON.parse(savedTips12))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips12(getInitialTips(MATCHES_ROUND_12))
       }
     }
@@ -1045,9 +1045,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips13 = await safeLoadData(`tips13_${currentUser}`)
-      if (savedTips13 && user.nickname === currentUser) {
+      if (savedTips13) {
         setTips13(JSON.parse(savedTips13))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips13(getInitialTips(MATCHES_ROUND_13))
       }
     }
@@ -1060,9 +1060,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips14 = await safeLoadData(`tips14_${currentUser}`)
-      if (savedTips14 && user.nickname === currentUser) {
+      if (savedTips14) {
         setTips14(JSON.parse(savedTips14))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips14(getInitialTips(MATCHES_ROUND_14))
       }
     }
@@ -1075,9 +1075,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips15 = await safeLoadData(`tips15_${currentUser}`)
-      if (savedTips15 && user.nickname === currentUser) {
+      if (savedTips15) {
         setTips15(JSON.parse(savedTips15))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips15(getInitialTips(MATCHES_ROUND_15))
       }
     }
@@ -1090,9 +1090,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips16 = await safeLoadData(`tips16_${currentUser}`)
-      if (savedTips16 && user.nickname === currentUser) {
+      if (savedTips16) {
         setTips16(JSON.parse(savedTips16))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips16(getInitialTips(MATCHES_ROUND_16))
       }
     }
@@ -1105,9 +1105,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips17 = await safeLoadData(`tips17_${currentUser}`)
-      if (savedTips17 && user.nickname === currentUser) {
+      if (savedTips17) {
         setTips17(JSON.parse(savedTips17))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips17(getInitialTips(MATCHES_ROUND_17))
       }
     }
@@ -1120,9 +1120,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips18 = await safeLoadData(`tips18_${currentUser}`)
-      if (savedTips18 && user.nickname === currentUser) {
+      if (savedTips18) {
         setTips18(JSON.parse(savedTips18))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips18(getInitialTips(MATCHES_ROUND_18))
       }
     }
@@ -1135,9 +1135,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips19 = await safeLoadData(`tips19_${currentUser}`)
-      if (savedTips19 && user.nickname === currentUser) {
+      if (savedTips19) {
         setTips19(JSON.parse(savedTips19))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips19(getInitialTips(MATCHES_ROUND_19))
       }
     }
@@ -1150,9 +1150,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips20 = await safeLoadData(`tips20_${currentUser}`)
-      if (savedTips20 && user.nickname === currentUser) {
+      if (savedTips20) {
         setTips20(JSON.parse(savedTips20))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips20(getInitialTips(MATCHES_ROUND_20))
       }
     }
@@ -1165,9 +1165,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips21 = await safeLoadData(`tips21_${currentUser}`)
-      if (savedTips21 && user.nickname === currentUser) {
+      if (savedTips21) {
         setTips21(JSON.parse(savedTips21))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips21(getInitialTips(MATCHES_ROUND_21))
       }
     }
@@ -1180,9 +1180,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips22 = await safeLoadData(`tips22_${currentUser}`)
-      if (savedTips22 && user.nickname === currentUser) {
+      if (savedTips22) {
         setTips22(JSON.parse(savedTips22))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips22(getInitialTips(MATCHES_ROUND_22))
       }
     }
@@ -1195,9 +1195,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips23 = await safeLoadData(`tips23_${currentUser}`)
-      if (savedTips23 && user.nickname === currentUser) {
+      if (savedTips23) {
         setTips23(JSON.parse(savedTips23))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips23(getInitialTips(MATCHES_ROUND_23))
       }
     }
@@ -1210,9 +1210,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips24 = await safeLoadData(`tips24_${currentUser}`)
-      if (savedTips24 && user.nickname === currentUser) {
+      if (savedTips24) {
         setTips24(JSON.parse(savedTips24))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips24(getInitialTips(MATCHES_ROUND_24))
       }
     }
@@ -1225,9 +1225,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips25 = await safeLoadData(`tips25_${currentUser}`)
-      if (savedTips25 && user.nickname === currentUser) {
+      if (savedTips25) {
         setTips25(JSON.parse(savedTips25))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips25(getInitialTips(MATCHES_ROUND_25))
       }
     }
@@ -1240,9 +1240,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips26 = await safeLoadData(`tips26_${currentUser}`)
-      if (savedTips26 && user.nickname === currentUser) {
+      if (savedTips26) {
         setTips26(JSON.parse(savedTips26))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips26(getInitialTips(MATCHES_ROUND_26))
       }
     }
@@ -1255,9 +1255,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips27 = await safeLoadData(`tips27_${currentUser}`)
-      if (savedTips27 && user.nickname === currentUser) {
+      if (savedTips27) {
         setTips27(JSON.parse(savedTips27))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips27(getInitialTips(MATCHES_ROUND_27))
       }
     }
@@ -1270,9 +1270,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips28 = await safeLoadData(`tips28_${currentUser}`)
-      if (savedTips28 && user.nickname === currentUser) {
+      if (savedTips28) {
         setTips28(JSON.parse(savedTips28))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips28(getInitialTips(MATCHES_ROUND_28))
       }
     }
@@ -1285,9 +1285,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips29 = await safeLoadData(`tips29_${currentUser}`)
-      if (savedTips29 && user.nickname === currentUser) {
+      if (savedTips29) {
         setTips29(JSON.parse(savedTips29))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips29(getInitialTips(MATCHES_ROUND_29))
       }
     }
@@ -1300,9 +1300,9 @@ export default function Dashboard() {
     const loadTips = async () => {
       const currentUser = user.nickname
       const savedTips30 = await safeLoadData(`tips30_${currentUser}`)
-      if (savedTips30 && user.nickname === currentUser) {
+      if (savedTips30) {
         setTips30(JSON.parse(savedTips30))
-      } else if (user.nickname === currentUser) {
+      } else {
         setTips30(getInitialTips(MATCHES_ROUND_30))
       }
     }
