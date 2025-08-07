@@ -4421,6 +4421,33 @@ export default function Dashboard() {
                   { allTips: allTips30, results: results30, roundNumber: 30 }
                 ];
                 
+                // Bonusový bod pro vítěze ve střelcích - POČÍTÁM JEDNOU PRO CELÉ KOLO
+                rounds.forEach((round) => {
+                  // Kontrola, zda jsou alespoň výsledky vyplněny (pro bonusový bod za střelce)
+                  const hasResults = round.results && round.results.length > 0 && 
+                    round.results.every((result: any) => 
+                      result && result.home !== '' && result.home !== null && result.home !== undefined &&
+                      result.away !== '' && result.away !== null && result.away !== undefined
+                    );
+                  
+                  console.log(`Kolo ${round.roundNumber} - hasResults:`, hasResults);
+                  console.log(`Kolo ${round.roundNumber} - results:`, round.results);
+                  
+                  if (hasResults) {
+                    const { roundResultPoints, roundScorerPoints } = calculateRoundPoints(round.allTips, round.results, round.roundNumber);
+                    totalResultPoints += roundResultPoints;
+                    totalScorerPoints += roundScorerPoints;
+                    
+                    // Finance pouze pro uzavřená kola
+                    if (isRoundComplete(round.results)) {
+                      totalFinance += calculateRoundFinance(round.allTips, round.results);
+                    }
+                  }
+                });
+                
+                // Bonusový bod pro vítěze ve střelcích - POČÍTÁM JEDNOU PRO CELÉ KOLO
+                console.log('=== ZAČÁTEK BONUSOVÉ LOGIKY ===');
+                
                 // Nejdříve spočítám body za střelce pro každého hráče v každém kole
                 const scorerPointsByRound: { [roundNumber: number]: { [nickname: string]: number } } = {};
                 
@@ -4454,14 +4481,16 @@ export default function Dashboard() {
                       
                       scorerPointsByRound[round.roundNumber][user.nickname] = roundScorerPoints;
                       
-                      // Debug pro všechny hráče
-                      console.log(`Kolo ${round.roundNumber} - ${user.nickname} body za střelce:`, roundScorerPoints);
+                      // Debug pro Kořdu
+                      if (user.nickname === 'Kořda') {
+                        console.log(`Kolo ${round.roundNumber} - Kořda body za střelce:`, roundScorerPoints);
+                      }
                     });
                     
                     // Najdu vítěze ve střelcích pro toto kolo
                     const roundScorerPointsArray = Object.entries(scorerPointsByRound[round.roundNumber]).map(([nickname, points]) => ({ nickname, points }));
                     const maxScorerPoints = Math.max(...roundScorerPointsArray.map(p => p.points));
-                    const scorerWinners = roundScorerPointsArray.filter(p => p.points === maxScorerPoints && p.points > 0);
+                    const scorerWinners = roundScorerPointsArray.filter(p => p.points === maxScorerPoints);
                     
                     console.log(`Kolo ${round.roundNumber} - Body za střelce:`, roundScorerPointsArray);
                     console.log(`Kolo ${round.roundNumber} - Vítězové:`, scorerWinners.map(w => w.nickname));
@@ -4470,30 +4499,6 @@ export default function Dashboard() {
                     if (scorerWinners.some(w => w.nickname === u.nickname)) {
                       console.log(`Kolo ${round.roundNumber} - Přidávám bonusový bod pro ${u.nickname}`);
                       totalResultPoints += 1;
-                    }
-                  }
-                });
-                
-                // Nyní počítám normální body za všechna kola
-                rounds.forEach((round) => {
-                  // Kontrola, zda jsou alespoň výsledky vyplněny (pro bonusový bod za střelce)
-                  const hasResults = round.results && round.results.length > 0 && 
-                    round.results.every((result: any) => 
-                      result && result.home !== '' && result.home !== null && result.home !== undefined &&
-                      result.away !== '' && result.away !== null && result.away !== undefined
-                    );
-                  
-                  console.log(`Kolo ${round.roundNumber} - hasResults:`, hasResults);
-                  console.log(`Kolo ${round.roundNumber} - results:`, round.results);
-                  
-                  if (hasResults) {
-                    const { roundResultPoints, roundScorerPoints } = calculateRoundPoints(round.allTips, round.results, round.roundNumber);
-                    totalResultPoints += roundResultPoints;
-                    totalScorerPoints += roundScorerPoints;
-                    
-                    // Finance pouze pro uzavřená kola
-                    if (isRoundComplete(round.results)) {
-                      totalFinance += calculateRoundFinance(round.allTips, round.results);
                     }
                   }
                 });
@@ -4591,6 +4596,47 @@ export default function Dashboard() {
                     const points = calculatePoints(parsedTip, parsedResult, scorers);
                     sum += points.exactResult + points.correctWinnerAndDifference + points.correctWinner + points.correctDraw;
                   });
+                  
+                  // Přidání bonusového bodu za vítězství ve střelcích pro toto kolo
+                  const hasResults = results1 && results1.length > 0 && 
+                    results1.every((result: any) => 
+                      result && result.home !== '' && result.home !== null && result.home !== undefined &&
+                      result.away !== '' && result.away !== null && result.away !== undefined
+                    );
+                  
+                  if (hasResults) {
+                    // Spočítám body za střelce pro všechny hráče v tomto kole
+                    const scorerPointsForRound: { [nickname: string]: number } = {};
+                    
+                    USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(user => {
+                      let userScorerPoints = 0;
+                      allTips1[user.nickname]?.forEach((tip: any, idx: number) => {
+                        const res = results1[idx];
+                        if (!tip || tip.home === '' || tip.away === '' || !res || res.home === '' || res.away === '') return;
+                        const parsedTip = {
+                          matchIndex: idx,
+                          predictedResult: { home: Number(tip.home), away: Number(tip.away) },
+                          predictedScorer: tip.scorer || ''
+                        };
+                        const parsedResult = { home: Number(res.home), away: Number(res.away) };
+                        const scorers = (res.scorers || '').split(',').map(s => s.trim()).filter(Boolean);
+                        const points = calculatePoints(parsedTip, parsedResult, scorers);
+                        userScorerPoints += points.correctScorer + points.noScorer + points.bonusPoints;
+                      });
+                      scorerPointsForRound[user.nickname] = userScorerPoints;
+                    });
+                    
+                    // Najdu vítěze ve střelcích pro toto kolo
+                    const roundScorerPointsArray = Object.entries(scorerPointsForRound).map(([nickname, points]) => ({ nickname, points }));
+                    const maxScorerPoints = Math.max(...roundScorerPointsArray.map(p => p.points));
+                    const scorerWinners = roundScorerPointsArray.filter(p => p.points === maxScorerPoints && p.points > 0);
+                    
+                    // Pokud je aktuální hráč vítězem ve střelcích, přidá +1 bod do výsledků
+                    if (scorerWinners.some(w => w.nickname === u.nickname)) {
+                      sum += 1;
+                    }
+                  }
+                  
                   return <td key={u.nickname} className="py-2 px-3 text-center text-blue-900">{sum}</td>;
                 })}
                 <td colSpan={2}></td>
@@ -6530,6 +6576,47 @@ export default function Dashboard() {
                        const points = calculatePoints(parsedTip, parsedResult, scorers);
                        sum += points.exactResult + points.correctWinnerAndDifference + points.correctWinner + points.correctDraw;
                      });
+                     
+                     // Přidání bonusového bodu za vítězství ve střelcích pro toto kolo
+                     const hasResults = results11 && results11.length > 0 && 
+                       results11.every((result: any) => 
+                         result && result.home !== '' && result.home !== null && result.home !== undefined &&
+                         result.away !== '' && result.away !== null && result.away !== undefined
+                       );
+                     
+                     if (hasResults) {
+                       // Spočítám body za střelce pro všechny hráče v tomto kole
+                       const scorerPointsForRound: { [nickname: string]: number } = {};
+                       
+                       USERS.filter(u => u.nickname !== ADMIN_NICK).forEach(user => {
+                         let userScorerPoints = 0;
+                         allTips11[user.nickname]?.forEach((tip: any, idx: number) => {
+                           const res = results11[idx];
+                           if (!tip || tip.home === '' || tip.away === '' || !res || res.home === '' || res.away === '') return;
+                           const parsedTip = {
+                             matchIndex: idx,
+                             predictedResult: { home: Number(tip.home), away: Number(tip.away) },
+                             predictedScorer: tip.scorer || ''
+                           };
+                           const parsedResult = { home: Number(res.home), away: Number(res.away) };
+                           const scorers = (res.scorers || '').split(',').map(s => s.trim()).filter(Boolean);
+                           const points = calculatePoints(parsedTip, parsedResult, scorers);
+                           userScorerPoints += points.correctScorer + points.noScorer + points.bonusPoints;
+                         });
+                         scorerPointsForRound[user.nickname] = userScorerPoints;
+                       });
+                       
+                       // Najdu vítěze ve střelcích pro toto kolo
+                       const roundScorerPointsArray = Object.entries(scorerPointsForRound).map(([nickname, points]) => ({ nickname, points }));
+                       const maxScorerPoints = Math.max(...roundScorerPointsArray.map(p => p.points));
+                       const scorerWinners = roundScorerPointsArray.filter(p => p.points === maxScorerPoints && p.points > 0);
+                       
+                       // Pokud je aktuální hráč vítězem ve střelcích, přidá +1 bod do výsledků
+                       if (scorerWinners.some(w => w.nickname === u.nickname)) {
+                         sum += 1;
+                       }
+                     }
+                     
                      return <td key={u.nickname} className="py-2 px-3 text-center text-blue-900">{sum}</td>;
                    })}
                    <td colSpan={2}></td>
