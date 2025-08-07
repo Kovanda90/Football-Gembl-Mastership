@@ -191,7 +191,7 @@ function calculateScorerBonus(allTips: any, results: any, roundNumber: number, u
         predictedScorer: tip.scorer || ''
       };
       const parsedResult = { home: Number(res.home), away: Number(res.away) };
-      const scorers = (res.scorers || '').split(',').map((s: string) => s.trim()).filter(Boolean);
+      const scorers = (res.scorers || '').split(',').map(s => s.trim()).filter(Boolean);
       const points = calculatePoints(parsedTip, parsedResult, scorers);
       roundScorerPoints += points.correctScorer + points.noScorer + points.bonusPoints;
     });
@@ -200,8 +200,8 @@ function calculateScorerBonus(allTips: any, results: any, roundNumber: number, u
   });
   
   // Najdu vítěze ve střelcích
-  const scorerPointsArray = Object.entries(scorerPointsByUser).map(([nickname, points]: [string, number]) => ({ nickname, points }));
-  const maxScorerPoints = Math.max(...scorerPointsArray.map((p: any) => p.points));
+  const scorerPointsArray = Object.entries(scorerPointsByUser).map(([nickname, points]) => ({ nickname, points }));
+  const maxScorerPoints = Math.max(...scorerPointsArray.map(p => p.points));
   const scorerWinners = scorerPointsArray.filter(p => p.points === maxScorerPoints && p.points > 0);
   
   // Pokud je aktuální hráč vítězem ve střelcích, vrátí 1 bonusový bod
@@ -219,7 +219,7 @@ export async function GET() {
       { allTips: allTips2, results: results2, roundNumber: 2 }
     ];
     
-    const leaderboard = USERS.filter(u => u.nickname !== ADMIN_NICK).map((user: any) => {
+    const leaderboard = USERS.filter(u => u.nickname !== ADMIN_NICK).map(user => {
       let totalResultPoints = 0;
       let totalScorerPoints = 0;
       let totalBonusPoints = 0;
@@ -257,7 +257,7 @@ export async function GET() {
       success: true,
       data: {
         leaderboard,
-        rounds: rounds.map((round: any) => ({
+        rounds: rounds.map(round => ({
           roundNumber: round.roundNumber,
           hasResults: round.results && round.results.length > 0 && 
             round.results.every((result: any) => 
